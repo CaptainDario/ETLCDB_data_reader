@@ -48,45 +48,26 @@ On the [ETL website](http://etlcdb.db.aist.go.jp/file-formats-and-sample-unpacki
 The folder structure should look like this now: <br/>
 ```bash
 ETL_data_set_folder (main folder)
-│   euc_co59.dat
-│
-├───ETL1
-│       ETL1_1
-│          ⋮
-│       ETL1_13
-├───ETL2
-│       ETL2_1
-│          ⋮
-│       ETL2_5
-├───ETL3
-│       ETL3_1
-│       ETL3_2
-├───ETL4
-│       ETL4_1
-├───ETL5
-│       ETL5_1
-├───ETL6
-│       ETL6_1
-│          ⋮
-│       ETL6_12
-├───ETL7
-│       ETL7_1
-│       ETL7_2
-├───ETL8
-│       ETL8_1
-│          ⋮
-│       ETL8_3
-├───ETL9
-│       ETL9_1
-│          ⋮
-│       ETL9_33
-├───ETL10
-│       ETL10_1
-│          ⋮
-│       ETL10_5
-└───ETL11
+|   euc_co59.dat
+|
+|---ETL1
+|       ETL1_1
+|          |
+|       ETL1_13
+|---ETL2
+|       ETL2_1
+|          |
+|       ETL2_5
+|
+|--- |
+|
+|---ETL10
+|       ETL10_1
+|          |
+|       ETL10_5
+|---ETL11
         ETL11_1
-           ⋮
+           |
         ETL11_50
 ```
 
@@ -106,30 +87,42 @@ where ```path_to_data_set``` should be the path to the main folder of your data 
 Example: "E:/data/ETL_data_set/" <br/>
 <br/>
 
-
 Now there are basically three ways to load data.
 
 ### Load one data set file
 ```python
+from etl_data_names import ETL_data_names
+
 katakana, number = ETL_character_groups.katakana, ETL_character_groups.number
 
-reader.read_dataset_file()
+imgs, labels = reader.read_dataset_file(part=2, data_set=ETL_data_names.ETL7, katakana, number)
 ```
+This will load "...\ETL_data_set_folder\ETL7\ETL7_2". <br/>
+
+And store the images and labels which are either *katakana* or *number* in the variables ```imgs``` and ```labels```.
 
 ### Load one data set part
 ```python
+from etl_data_names import ETL_data_names
+
 kanji, hiragana = ETL_character_groups.kanji, ETL_character_groups.hiragana
 
-reader.read_dataset_part()
+imgs, labels = reader.read_dataset_part(data_set=ETL_data_names.ETL2, kanji, hiragana)
 ```
+This will load all files in the folder "...\ETL_data_set_folder\ETL2\".
+Namely: ...\ETL2\ETL2_1, ...\ETL2\ETL2_1 ,..., ...\ETL2\ETL2_5. <br/>
+
+And store the images and labels which are either *kanji* or *hiragana* in the variables ```imgs``` and ```labels```.
 
 ### Load the whole data set
 ```python
+from etl_data_names import ETL_data_names
+
 roman, symbol = ETL_character_groups.roman, ETL_character_groups.symbols
 
-reader.read_dataset_whole(roman, symbol)
+imgs, labels = reader.read_dataset_whole(roman, symbol)
 ```
-This will load all *kanji* and *hiragana* characters from the whole ETL data set.
+This will load all *roman* and *symbol* characters from the whole ETL data set.
 
 #### **Note: filtering data set entries**
 As the examples above already showed the loading of data set entries can be restricted to certain groups.
@@ -147,10 +140,6 @@ The ```normalize```-parameter normalizes the grayscale values of the images betw
 If those parameters are set to negative values no resizing/normalization will be done. <br/>
 **This will lead to an error if the data set is read with ```read_dataset_whole()```!**
 
-## Development
-For development *python 3.8* was used. <br/>
-The documentation was made with Sphinx.
-
 ## Limitations
 This implementation **does not** allow to access all the stored data.
 Currently one can load:
@@ -160,6 +149,12 @@ Currently one can load:
 of every ETL data set entry.
 
 However this package should be easily extendable to add support for accessing the other data.
+## Development notes
+For development *python 3.8* was used. <br/>
+The documentation was made with Sphinx and m2r.
+m2r is being used to automatically convert this README.md to .rst.
+This happens when the ```sphinx-build```-command is invoked.
+
 
 ## Additional Notes
 Pull requests and issues are welcome.
