@@ -1,0 +1,2 @@
+#run this command in this folder
+python setup.py sdist bdist_wheel
