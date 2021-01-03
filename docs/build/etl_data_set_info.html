@@ -1,0 +1,154 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>etl_data_set_info.py &#8212; ETL_data_reader 1.0 documentation</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Indices and tables" href="indices_and_tables.html" />
+    <link rel="prev" title="etl_data_reader.py" href="etl_data_reader.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="indices_and_tables.html" title="Indices and tables"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="etl_data_reader.html" title="etl_data_reader.py"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">ETL_data_reader 1.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="API.html" accesskey="U">API</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">etl_data_set_info.py</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-etl_data_set_info">
+<span id="etl-data-set-info-py"></span><h1>etl_data_set_info.py<a class="headerlink" href="#module-etl_data_set_info" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="etl_data_set_info.ETL_data_set_info">
+<em class="property">class </em><code class="sig-prename descclassname">etl_data_set_info.</code><code class="sig-name descname">ETL_data_set_info</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">code</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">struct_size</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">img_size</span><span class="p">:</span> <span class="n">Tuple<span class="p">[</span>int<span class="p">, </span>int<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">img_depth</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">label_index</span><span class="p">:</span> <span class="n">List<span class="p">[</span>int<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">decoder</span><span class="p">:</span> <span class="n">Callable<span class="p">[</span><span class="p">[</span>List<span class="p">[</span>bytes<span class="p">]</span><span class="p">]</span><span class="p">, </span>str<span class="p">]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#etl_data_set_info.ETL_data_set_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>A convenience class for storing information about a data set part.</p>
+<dl class="py attribute">
+<dt>
+<code class="sig-name descname">code               [str]</code></dt>
+<dd><p>The code which can be used to decode the
+stored data files of this data set.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt>
+<code class="sig-name descname">struct_size        [int]</code></dt>
+<dd><p>The size (in bytes) of one entry of this data set type.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt>
+<code class="sig-name descname">img_size Tuple[int, int]</code></dt>
+<dd><p>A Tuple with the dimensions of the images in this data set.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt>
+<code class="sig-name descname">img_depth          [int]</code></dt>
+<dd><p>The depth of the gray channel of this entry’s image.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt>
+<code class="sig-name descname">label_index        [int]</code></dt>
+<dd><p>The index of the loaded struct in which the label is coded.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt>
+<code class="sig-name descname">decoder       [function]</code></dt>
+<dd><p>The function which can be used to decode an entry of this data set.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="etl_data_reader.html"
+                        title="previous chapter">etl_data_reader.py</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="indices_and_tables.html"
+                        title="next chapter">Indices and tables</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/etl_data_set_info.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="indices_and_tables.html" title="Indices and tables"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="etl_data_reader.html" title="etl_data_reader.py"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">ETL_data_reader 1.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="API.html" >API</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">etl_data_set_info.py</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, CaptainDario.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.1.
+    </div>
+  </body>
+</html>

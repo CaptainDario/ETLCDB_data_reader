@@ -1,0 +1,410 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Getting started &#8212; ETL_data_reader 1.0 documentation</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="API" href="API.html" />
+    <link rel="prev" title="Welcome to ETL_data_reader’s documentation!" href="index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="API.html" title="API"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to ETL_data_reader’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">ETL_data_reader 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Getting started</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="getting-started">
+<h1>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+</div>
+<div class="section" id="etl-data-reader">
+<h1>ETL_data_reader<a class="headerlink" href="#etl-data-reader" title="Permalink to this headline">¶</a></h1>
+<p>A python package for conveniently loading the ETL data set.</p>
+<div class="section" id="intro">
+<h2>Intro<a class="headerlink" href="#intro" title="Permalink to this headline">¶</a></h2>
+<p>The ETL data set is a collection of roughly 1.600.000 handwritten characters.
+Notably it includes Japanese Kanji, Hiragana and Katakana.
+The data set can be found <a class="reference external" href="http://etlcdb.db.aist.go.jp/">on the ETL website</a> (a registration is needed to download the data set).
+<span class="raw-html-m2r"><br/></span>
+Because the data set is stored in a custom data structure it can be hard to load.
+This python package provides an easy way to load this data set and filter entries.<span class="raw-html-m2r"><br/></span>
+An example of using this package can be found in my application: <a class="reference external" href="https://github.com/CaptainDario/DaKanjiRecognizer">DaKanjiRecognizer</a>. There it was used for <a class="reference external" href="UPDATEHEREPLEASE">training an CNN to recognize japanese kanji characters</a>.<span class="raw-html-m2r"><br/></span>
+General information about the data set can be found in the table below.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>name</p></th>
+<th class="head"><p>type</p></th>
+<th class="head"><p>content</p></th>
+<th class="head"><p>res</p></th>
+<th class="head"><p>Bit depth</p></th>
+<th class="head"><p>code</p></th>
+<th class="head"><p>samples perlabel</p></th>
+<th class="head"><p>total samples</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>ETL1</p></td>
+<td><p>M-Type</p></td>
+<td><p>Numbers <span class="raw-html-m2r"><br/></span> Roman <span class="raw-html-m2r"><br/></span> Symbols <span class="raw-html-m2r"><br/></span> Katakana</p></td>
+<td><p>64x63</p></td>
+<td><p>4</p></td>
+<td><p>JIS X 0201</p></td>
+<td><p>~1400</p></td>
+<td><p>141319</p></td>
+</tr>
+<tr class="row-odd"><td><p>ETL2</p></td>
+<td><p>K-Type</p></td>
+<td><p>Hiragana <span class="raw-html-m2r"><br/></span> Katakana <span class="raw-html-m2r"><br/></span> Kanji <span class="raw-html-m2r"><br/></span> Roman <span class="raw-html-m2r"><br/></span> Symbols</p></td>
+<td><p>60x60</p></td>
+<td><p>6</p></td>
+<td><p>CO59</p></td>
+<td><p>~24</p></td>
+<td><p>52796</p></td>
+</tr>
+<tr class="row-even"><td><p>ETL3</p></td>
+<td><p>C-Type</p></td>
+<td><p>Numeric <span class="raw-html-m2r"><br/></span> Capital Roman <span class="raw-html-m2r"><br/></span> Symbols</p></td>
+<td><p>72x76</p></td>
+<td><p>4</p></td>
+<td><p>JIS X 0201</p></td>
+<td><p>200</p></td>
+<td><p>9600</p></td>
+</tr>
+<tr class="row-odd"><td><p>ETL4</p></td>
+<td><p>C-Type</p></td>
+<td><p>Hiragana</p></td>
+<td><p>72x76</p></td>
+<td><p>4</p></td>
+<td><p>JIS X 0201</p></td>
+<td><p>120</p></td>
+<td><p>6120</p></td>
+</tr>
+<tr class="row-even"><td><p>ETL5</p></td>
+<td><p>C-Type</p></td>
+<td><p>Katakana</p></td>
+<td><p>72x76</p></td>
+<td><p>4</p></td>
+<td><p>JIS X 0201</p></td>
+<td><p>~200</p></td>
+<td><p>10608</p></td>
+</tr>
+<tr class="row-odd"><td><p>ETL6</p></td>
+<td><p>M-Type</p></td>
+<td><p>Katakana <span class="raw-html-m2r"><br/></span> Symbols</p></td>
+<td><p>64x63</p></td>
+<td><p>4</p></td>
+<td><p>JIS X 0201</p></td>
+<td><p>1383</p></td>
+<td><p>157662</p></td>
+</tr>
+<tr class="row-even"><td><p>ETL7</p></td>
+<td><p>M-Type</p></td>
+<td><p>Hiragana <span class="raw-html-m2r"><br/></span> Symbols</p></td>
+<td><p>64x63</p></td>
+<td><p>4</p></td>
+<td><p>JIS X 0201</p></td>
+<td><p>160</p></td>
+<td><p>16800</p></td>
+</tr>
+<tr class="row-odd"><td><p>ETL8  (8B)</p></td>
+<td><p>8B-Type</p></td>
+<td><p>Hiragana <span class="raw-html-m2r"><br/></span> Kanji</p></td>
+<td><p>64x63</p></td>
+<td><p>1</p></td>
+<td><p>JIS X 0208</p></td>
+<td><p>160</p></td>
+<td><p>157662</p></td>
+</tr>
+<tr class="row-even"><td><p>ETL9  (8G)</p></td>
+<td><p>8G-Type</p></td>
+<td><p>Hiragana <span class="raw-html-m2r"><br/></span> Kanji</p></td>
+<td><p>128x127</p></td>
+<td><p>4</p></td>
+<td><p>JIS X 0208</p></td>
+<td><p>200</p></td>
+<td><p>607200</p></td>
+</tr>
+<tr class="row-odd"><td><p>ETL10 (9B)</p></td>
+<td><p>9B-Type</p></td>
+<td><p>Hiragana <span class="raw-html-m2r"><br/></span> Kanji</p></td>
+<td><p>64x63</p></td>
+<td><p>1</p></td>
+<td><p>JIS X 0208</p></td>
+<td><p>160</p></td>
+<td><p>152960</p></td>
+</tr>
+<tr class="row-even"><td><p>ETL11 (9G)</p></td>
+<td><p>9G-Type</p></td>
+<td><p>Hiragana <span class="raw-html-m2r"><br/></span> Kanji</p></td>
+<td><p>128x127</p></td>
+<td><p>4</p></td>
+<td><p>JIS X 0208</p></td>
+<td><p>200</p></td>
+<td><p>607200</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
+<p>First download the source code from this repository.
+Next install the necessary packages from the <em>“requirements.txt”</em>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+<p>The second step is to do some renaming of the data set folders and files.
+First rename the folders like this:</p>
+<ul class="simple">
+<li><p>ETL8B -&gt; ETL1</p></li>
+<li><p>ETL8G -&gt; ETL9</p></li>
+<li><p>ETL9B -&gt; ETL10</p></li>
+<li><p>ETL9G -&gt; ETL11.<span class="raw-html-m2r"><br/></span></p></li>
+</ul>
+<p>Finally rename all files in the folders to have a naming scheme like: <span class="raw-html-m2r"><br/></span></p>
+<ul class="simple">
+<li><p>ETL_data_setETLXETLX_Y <span class="raw-html-m2r"><br/></span>
+(<em>X and Y are numbers</em>)</p></li>
+</ul>
+<p>On the <a class="reference external" href="http://etlcdb.db.aist.go.jp/file-formats-and-sample-unpacking-code">ETL website</a> is also a file called “euc_co59.dat” given. This <strong>file should also be included</strong> in the “data set”-folder on the same level as the data set part folders.</p>
+<p>The folder structure should look like this now: <span class="raw-html-m2r"><br/></span></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ETL_data_set_folder <span class="o">(</span>main folder<span class="o">)</span>
+<span class="p">|</span>   euc_co59.dat
+<span class="p">|</span>
+<span class="p">|</span>---ETL1
+<span class="p">|</span>       ETL1_1
+<span class="p">|</span>          <span class="p">|</span>
+<span class="p">|</span>       ETL1_13
+<span class="p">|</span>---ETL2
+<span class="p">|</span>       ETL2_1
+<span class="p">|</span>          <span class="p">|</span>
+<span class="p">|</span>       ETL2_5
+<span class="p">|</span>
+<span class="p">|</span>--- <span class="p">|</span>
+<span class="p">|</span>
+<span class="p">|</span>---ETL10
+<span class="p">|</span>       ETL10_1
+<span class="p">|</span>          <span class="p">|</span>
+<span class="p">|</span>       ETL10_5
+<span class="p">|</span>---ETL11
+        ETL11_1
+           <span class="p">|</span>
+        ETL11_50
+</pre></div>
+</div>
+</div>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>You can import the package with:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">etl_data_reader</span> <span class="kn">import</span> <span class="n">ETL_data_reader</span>
+</pre></div>
+</div>
+<p>To load the data set you need an <code class="docutils literal notranslate"><span class="pre">ETL_data_reader</span></code>-instance.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">path_to_data_set</span> <span class="o">=</span> <span class="s2">&quot;the\path</span><span class="se">\t</span><span class="s2">o</span><span class="se">\t</span><span class="s2">he\data\set&quot;</span>
+
+<span class="n">reader</span> <span class="o">=</span> <span class="n">ETL_data_reader</span><span class="p">(</span><span class="n">path_to_data_set</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">path_to_data_set</span></code> should be the path to the main folder of your data set copy.<span class="raw-html-m2r"><br/></span>
+Example: “E:/data/ETL_data_set/” <span class="raw-html-m2r"><br/></span>
+<span class="raw-html-m2r"><br/></span></p>
+<p>Now there are basically three ways to load data.</p>
+<div class="section" id="load-one-data-set-file">
+<h3>Load one data set file<a class="headerlink" href="#load-one-data-set-file" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">etl_data_names</span> <span class="kn">import</span> <span class="n">ETL_data_names</span>
+
+<span class="n">katakana</span><span class="p">,</span> <span class="n">number</span> <span class="o">=</span> <span class="n">ETL_character_groups</span><span class="o">.</span><span class="n">katakana</span><span class="p">,</span> <span class="n">ETL_character_groups</span><span class="o">.</span><span class="n">number</span>
+
+<span class="n">imgs</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read_dataset_file</span><span class="p">(</span><span class="n">part</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">data_set</span><span class="o">=</span><span class="n">ETL_data_names</span><span class="o">.</span><span class="n">ETL7</span><span class="p">,</span> <span class="n">katakana</span><span class="p">,</span> <span class="n">number</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This will load “…ETL_data_set_folderETL7ETL7_2”. <span class="raw-html-m2r"><br/></span></p>
+<p>And store the images and labels which are either <em>katakana</em> or <em>number</em> in the variables <code class="docutils literal notranslate"><span class="pre">imgs</span></code> and <code class="docutils literal notranslate"><span class="pre">labels</span></code>.</p>
+</div>
+<div class="section" id="load-one-data-set-part">
+<h3>Load one data set part<a class="headerlink" href="#load-one-data-set-part" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">etl_data_names</span> <span class="kn">import</span> <span class="n">ETL_data_names</span>
+
+<span class="n">kanji</span><span class="p">,</span> <span class="n">hiragana</span> <span class="o">=</span> <span class="n">ETL_character_groups</span><span class="o">.</span><span class="n">kanji</span><span class="p">,</span> <span class="n">ETL_character_groups</span><span class="o">.</span><span class="n">hiragana</span>
+
+<span class="n">imgs</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read_dataset_part</span><span class="p">(</span><span class="n">data_set</span><span class="o">=</span><span class="n">ETL_data_names</span><span class="o">.</span><span class="n">ETL2</span><span class="p">,</span> <span class="n">kanji</span><span class="p">,</span> <span class="n">hiragana</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This will load all files in the folder “…ETL_data_set_folderETL2&quot;.
+Namely: …ETL2ETL2_1, …ETL2ETL2_1 ,…, …ETL2ETL2_5. <span class="raw-html-m2r"><br/></span></p>
+<p>And store the images and labels which are either <em>kanji</em> or <em>hiragana</em> in the variables <code class="docutils literal notranslate"><span class="pre">imgs</span></code> and <code class="docutils literal notranslate"><span class="pre">labels</span></code>.</p>
+</div>
+<div class="section" id="load-the-whole-data-set">
+<h3>Load the whole data set<a class="headerlink" href="#load-the-whole-data-set" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">etl_data_names</span> <span class="kn">import</span> <span class="n">ETL_data_names</span>
+
+<span class="n">roman</span><span class="p">,</span> <span class="n">symbol</span> <span class="o">=</span> <span class="n">ETL_character_groups</span><span class="o">.</span><span class="n">roman</span><span class="p">,</span> <span class="n">ETL_character_groups</span><span class="o">.</span><span class="n">symbols</span>
+
+<span class="n">imgs</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read_dataset_whole</span><span class="p">(</span><span class="n">roman</span><span class="p">,</span> <span class="n">symbol</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This will load all <em>roman</em> and <em>symbol</em> characters from the whole ETL data set.</p>
+<div class="section" id="note-filtering-data-set-entries">
+<h4><strong>Note: filtering data set entries</strong><a class="headerlink" href="#note-filtering-data-set-entries" title="Permalink to this headline">¶</a></h4>
+<p>As the examples above already showed the loading of data set entries can be restricted to certain groups.
+Those groups can be seen in: <a class="reference external" href="src/etl_character_groups.py">etl_character_groups.py</a></p>
+</div>
+<div class="section" id="note-processing-the-images-while-loading">
+<h4><strong>Note: processing the images while loading</strong><a class="headerlink" href="#note-processing-the-images-while-loading" title="Permalink to this headline">¶</a></h4>
+<p>All of the above methods have the optional parameters: <span class="raw-html-m2r"><br/></span>
+<code class="docutils literal notranslate"><span class="pre">resize</span> <span class="pre">:</span> <span class="pre">Tuple[int,</span> <span class="pre">int]</span> <span class="pre">=</span> <span class="pre">(64,</span> <span class="pre">64)</span></code> <span class="raw-html-m2r"><br/></span>
+and <span class="raw-html-m2r"><br/></span>
+<code class="docutils literal notranslate"><span class="pre">normalize</span> <span class="pre">:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True</span></code><span class="raw-html-m2r"><br/></span>
+The <code class="docutils literal notranslate"><span class="pre">resize</span></code>-parameter resizes all images to the given size.<span class="raw-html-m2r"><br/></span>
+The <code class="docutils literal notranslate"><span class="pre">normalize</span></code>-parameter normalizes the grayscale values of the images between $[0.0, 1.0]$.</p>
+<p><strong>Warning:</strong>
+If those parameters are set to negative values no resizing/normalization will be done. <span class="raw-html-m2r"><br/></span>
+<strong>This will lead to an error if the data set is read with ``read_dataset_whole()``!</strong></p>
+</div>
+</div>
+</div>
+<div class="section" id="development">
+<h2>Development<a class="headerlink" href="#development" title="Permalink to this headline">¶</a></h2>
+<p>For development <em>python 3.8</em> was used. <span class="raw-html-m2r"><br/></span>
+The documentation was made with Sphinx and m2r.
+m2r is being used to automatically convert this README.md to .rst.
+This happens when the <code class="docutils literal notranslate"><span class="pre">sphinx-build</span></code>-command is invoked.</p>
+</div>
+<div class="section" id="limitations">
+<h2>Limitations<a class="headerlink" href="#limitations" title="Permalink to this headline">¶</a></h2>
+<p>This implementation <strong>does not</strong> allow to access all the stored data.
+Currently one can load:</p>
+<ul class="simple">
+<li><p>images</p></li>
+<li><p>label of the image</p></li>
+</ul>
+<p>of every ETL data set entry.</p>
+<p>However this package should be easily extendable to add support for accessing the other data.</p>
+</div>
+<div class="section" id="additional-notes">
+<h2>Additional Notes<a class="headerlink" href="#additional-notes" title="Permalink to this headline">¶</a></h2>
+<p>Pull requests and issues are welcome.</p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Getting started</a></li>
+<li><a class="reference internal" href="#etl-data-reader">ETL_data_reader</a><ul>
+<li><a class="reference internal" href="#intro">Intro</a></li>
+<li><a class="reference internal" href="#setup">Setup</a></li>
+<li><a class="reference internal" href="#usage">Usage</a><ul>
+<li><a class="reference internal" href="#load-one-data-set-file">Load one data set file</a></li>
+<li><a class="reference internal" href="#load-one-data-set-part">Load one data set part</a></li>
+<li><a class="reference internal" href="#load-the-whole-data-set">Load the whole data set</a><ul>
+<li><a class="reference internal" href="#note-filtering-data-set-entries"><strong>Note: filtering data set entries</strong></a></li>
+<li><a class="reference internal" href="#note-processing-the-images-while-loading"><strong>Note: processing the images while loading</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#development">Development</a></li>
+<li><a class="reference internal" href="#limitations">Limitations</a></li>
+<li><a class="reference internal" href="#additional-notes">Additional Notes</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to ETL_data_reader’s documentation!</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="API.html"
+                        title="next chapter">API</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/getting_started.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="API.html" title="API"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to ETL_data_reader’s documentation!"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">ETL_data_reader 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Getting started</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, CaptainDario.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.1.
+    </div>
+  </body>
+</html>

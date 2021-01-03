@@ -1,0 +1,262 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>etl_codes.py &#8212; ETL_data_reader 1.0 documentation</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="etl_data_names.py" href="etl_data_names.html" />
+    <link rel="prev" title="etl_character_groups.py" href="etl_character_groups.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="etl_data_names.html" title="etl_data_names.py"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="etl_character_groups.html" title="etl_character_groups.py"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">ETL_data_reader 1.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="API.html" accesskey="U">API</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">etl_codes.py</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-etl_codes">
+<span id="etl-codes-py"></span><h1>etl_codes.py<a class="headerlink" href="#module-etl_codes" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="etl_codes.ETL_codes">
+<em class="property">class </em><code class="sig-prename descclassname">etl_codes.</code><code class="sig-name descname">ETL_codes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">euc_co59_file_path</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#etl_codes.ETL_codes" title="Permalink to this definition">¶</a></dt>
+<dd><p>A convenience class for using all codecs which are used in the ETL data set.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The ‘euc_co59.dat’-file from the ETL data set is required in the data set directory.</p>
+</div>
+<dl class="py method">
+<dt id="etl_codes.ETL_codes.T56">
+<code class="sig-name descname">T56</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">c</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#etl_codes.ETL_codes.T56" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decodes c into a string using the T56-code.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>c</strong> – An integer which should be decoded using the T56-code.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The decoded str.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="etl_codes.ETL_codes.co59_to_utf8">
+<code class="sig-name descname">co59_to_utf8</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">co59</span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#etl_codes.ETL_codes.co59_to_utf8" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decodes co59 to utf-8.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>co59</strong> – The string which should be decoded from co59 to utf-8.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The decoded utf-8 string</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="etl_codes.ETL_codes.decode_8B_type_character">
+<code class="sig-name descname">decode_8B_type_character</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">_bytes</span><span class="p">:</span> <span class="n">bytes</span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#etl_codes.ETL_codes.decode_8B_type_character" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decodes _bytes which encode the label from an entry which has the ETL-8B type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>_bytes</strong> – The bytes object which should be decoded.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The decoded label.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="etl_codes.ETL_codes.decode_8G_type_character">
+<code class="sig-name descname">decode_8G_type_character</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">_bytes</span><span class="p">:</span> <span class="n">bytes</span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#etl_codes.ETL_codes.decode_8G_type_character" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decodes _bytes which encode the label from an entry which has the ETL-8G type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>_bytes</strong> – The bytes object which should be decoded.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The decoded label.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="etl_codes.ETL_codes.decode_9B_type_character">
+<code class="sig-name descname">decode_9B_type_character</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">_bytes</span><span class="p">:</span> <span class="n">bytes</span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#etl_codes.ETL_codes.decode_9B_type_character" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decodes _bytes which encode the label from an entry which has the ETL-9B type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>_bytes</strong> – The bytes object which should be decoded.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The decoded label.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="etl_codes.ETL_codes.decode_9G_type_character">
+<code class="sig-name descname">decode_9G_type_character</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">_bytes</span><span class="p">:</span> <span class="n">bytes</span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#etl_codes.ETL_codes.decode_9G_type_character" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decodes _bytes which encode the label from an entry which has the ETL-9G type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>_bytes</strong> – The bytes object which should be decoded.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The decoded label.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="etl_codes.ETL_codes.decode_C_type_character">
+<code class="sig-name descname">decode_C_type_character</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">_bytes</span><span class="p">:</span> <span class="n">bytes</span></em>, <em class="sig-param"><span class="n">char_code</span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#etl_codes.ETL_codes.decode_C_type_character" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decodes _bytes which encode the label from an entry which has the ETL-C type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>_bytes</strong> – The bytes object which should be decoded.</p></li>
+<li><p><strong>char_code</strong> – The T56 code of the entry.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>[description]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="etl_codes.ETL_codes.decode_K_type_character">
+<code class="sig-name descname">decode_K_type_character</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">_bytes</span><span class="p">:</span> <span class="n">bytes</span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#etl_codes.ETL_codes.decode_K_type_character" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decodes _bytes which encode the label from an entry which has the ETL-K type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>_bytes</strong> – The bytes object which should be decoded.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The decoded label.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="etl_codes.ETL_codes.decode_M_type_character">
+<code class="sig-name descname">decode_M_type_character</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">_bytes</span><span class="p">:</span> <span class="n">bytes</span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#etl_codes.ETL_codes.decode_M_type_character" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decodes _bytes which encode the label from an entry which has the ETL-M type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>_bytes</strong> – The bytes object which should be decoded.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The decoded label.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="etl_codes.ETL_codes.init_co59">
+<code class="sig-name descname">init_co59</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">euc_co59_file_path</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#etl_codes.ETL_codes.init_co59" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize reading of “co59”-codes</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="etl_codes.ETL_codes.init_codes">
+<code class="sig-name descname">init_codes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#etl_codes.ETL_codes.init_codes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Setup a dict which contains ETL_data_set_info-instances with the necessary info about the data set types.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="etl_character_groups.html"
+                        title="previous chapter">etl_character_groups.py</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="etl_data_names.html"
+                        title="next chapter">etl_data_names.py</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/etl_codes.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="etl_data_names.html" title="etl_data_names.py"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="etl_character_groups.html" title="etl_character_groups.py"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">ETL_data_reader 1.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="API.html" >API</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">etl_codes.py</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, CaptainDario.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.1.
+    </div>
+  </body>
+</html>

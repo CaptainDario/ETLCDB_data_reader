@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>etl_character_groups.py &#8212; ETL_data_reader 1.0 documentation</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="etl_codes.py" href="etl_codes.html" />
+    <link rel="prev" title="API" href="API.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="etl_codes.html" title="etl_codes.py"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="API.html" title="API"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">ETL_data_reader 1.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="API.html" accesskey="U">API</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">etl_character_groups.py</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-etl_character_groups">
+<span id="etl-character-groups-py"></span><h1>etl_character_groups.py<a class="headerlink" href="#module-etl_character_groups" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="etl_character_groups.ETL_character_groups">
+<em class="property">class </em><code class="sig-prename descclassname">etl_character_groups.</code><code class="sig-name descname">ETL_character_groups</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#etl_character_groups.ETL_character_groups" title="Permalink to this definition">¶</a></dt>
+<dd><p>An enumeration.</p>
+<dl class="py attribute">
+<dt id="etl_character_groups.ETL_character_groups.all">
+<code class="sig-name descname">all</code><em class="property"> = '.*'</em><a class="headerlink" href="#etl_character_groups.ETL_character_groups.all" title="Permalink to this definition">¶</a></dt>
+<dd><p>include everything</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="etl_character_groups.ETL_character_groups.hiragana">
+<code class="sig-name descname">hiragana</code><em class="property"> = '[ぁ-ん]'</em><a class="headerlink" href="#etl_character_groups.ETL_character_groups.hiragana" title="Permalink to this definition">¶</a></dt>
+<dd><p>all hiragana characters</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="etl_character_groups.ETL_character_groups.kanji">
+<code class="sig-name descname">kanji</code><em class="property"> = '[一-龯]'</em><a class="headerlink" href="#etl_character_groups.ETL_character_groups.kanji" title="Permalink to this definition">¶</a></dt>
+<dd><p>kanji characters</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="etl_character_groups.ETL_character_groups.katakana">
+<code class="sig-name descname">katakana</code><em class="property"> = '[ァ-ン]'</em><a class="headerlink" href="#etl_character_groups.ETL_character_groups.katakana" title="Permalink to this definition">¶</a></dt>
+<dd><p>all katakana characters</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="etl_character_groups.ETL_character_groups.number">
+<code class="sig-name descname">number</code><em class="property"> = '[0-9]'</em><a class="headerlink" href="#etl_character_groups.ETL_character_groups.number" title="Permalink to this definition">¶</a></dt>
+<dd><p>numbers</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="etl_character_groups.ETL_character_groups.roman">
+<code class="sig-name descname">roman</code><em class="property"> = '[A-Za-z]'</em><a class="headerlink" href="#etl_character_groups.ETL_character_groups.roman" title="Permalink to this definition">¶</a></dt>
+<dd><p>roman characters (capital and not capital)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="etl_character_groups.ETL_character_groups.symbols">
+<code class="sig-name descname">symbols</code><em class="property"> = '^(?![一-龯]|[ァ-ン]|[ぁ-ん]|[0-9]|[A-Za-z])'</em><a class="headerlink" href="#etl_character_groups.ETL_character_groups.symbols" title="Permalink to this definition">¶</a></dt>
+<dd><p>if it is none of the above, it has to be a symbol</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="API.html"
+                        title="previous chapter">API</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="etl_codes.html"
+                        title="next chapter">etl_codes.py</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/etl_character_groups.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="etl_codes.html" title="etl_codes.py"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="API.html" title="API"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">ETL_data_reader 1.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="API.html" >API</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">etl_character_groups.py</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, CaptainDario.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.1.
+    </div>
+  </body>
+</html>
