@@ -1,3 +1,4 @@
+
 from etldr.etl_codes import ETLCodes
 from etldr.etl_data_names import ETLDataNames
 from etldr.etl_character_groups import ETLCharacterGroups 
@@ -130,6 +131,7 @@ class ETLDataReader():
 
         Warning:
             Will throw an error if not all parts of the data set can be found in 'self.path\data_set'.
+            Also if the images do not get resized to the same size.
 
         Args:
             data_set : The data set part which should be loaded.
@@ -176,6 +178,7 @@ class ETLDataReader():
 
         Warning:
             Will throw an error if not all parts and files of the data set can be found in 'self.path'.
+            Also if the images do not get resized to the same size.
 
         Arguments:
             *include  : All character types (Kanji, Hiragana, Symbols, stc.) which should be included. If unset everyting will be loaded.
@@ -253,7 +256,7 @@ class ETLDataReader():
 
         #if the parameter is unset load everything
         if(not include):
-            include = ETLCharacterGroups.all
+            include = [ETLCharacterGroups.all]
 
         #list of regex's for filtering the different groups
         regex = "|".join([i.value for i in include])
