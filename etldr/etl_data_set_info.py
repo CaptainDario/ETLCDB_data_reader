@@ -1,10 +1,8 @@
 from typing import Tuple, List, Callable
 
-from etl_data_names import ETL_data_names
 
 
-
-class ETL_data_set_info():
+class ETLDataSetInfo():
     """A convenience class for storing information about a data set part.
         
         Attributes:

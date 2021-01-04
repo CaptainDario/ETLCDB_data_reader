@@ -1,6 +1,6 @@
-from etl_codes import ETL_codes
-from etl_data_names import ETL_data_names
-from etl_character_groups import ETL_character_groups 
+from etldr.etl_codes import ETLCodes
+from etldr.etl_data_names import ETLDataNames
+from etldr.etl_character_groups import ETLCharacterGroups 
 
 import os
 import re
@@ -15,14 +15,14 @@ from typing import Tuple
 
 
 
-class ETL_data_reader():
+class ETLDataReader():
     """A class which contains helper functions to load, process and filter the data from the ETL data set.
 
     Attributes:
-        codes    (ETL_codes) : ETL_codes instance for decoding the ETL data set labels. 
+        codes     (ETLCodes) : ETLCodes instance for decoding the ETL data set labels. 
         dataset_types (dict) : A dict which maps the data set parts to their type.
         path           (str) : The path to the folder with the data set (should also contain 'euc_c059.dat').
-        data_set_parts_with_dummy [ETL_data_names] : A list of the data set parts which have a dummy entry at the beginning.
+        data_set_parts_with_dummy [ETLDataNames] : A list of the data set parts which have a dummy entry at the beginning.
     """
 
 
@@ -32,13 +32,13 @@ class ETL_data_reader():
         self.dataset_types = {}
         self.path          = path
         
-        #create an instance of ETL_codes to decode loaded data
-        self.codes = ETL_codes(os.path.join(self.path, "euc_co59.dat"))
+        #create an instance of ETLCodes to decode loaded data
+        self.codes = ETLCodes(os.path.join(self.path, "euc_co59.dat"))
         
         self.init_dataset_types()
 
         #ETL8B and 9B have a dummy entry at the beginning
-        self.data_set_parts_with_dummy = [ETL_data_names.ETL8B, ETL_data_names.ETL9B]
+        self.data_set_parts_with_dummy = [ETLDataNames.ETL8B, ETLDataNames.ETL9B]
 
 
     def init_dataset_types(self):
@@ -46,22 +46,22 @@ class ETL_data_reader():
         Initialize the dictionary of dataset_types and their codes
         """
 
-        self.dataset_types[ETL_data_names.ETL1 ] = self.codes.code_M
-        self.dataset_types[ETL_data_names.ETL2 ] = self.codes.code_K
-        self.dataset_types[ETL_data_names.ETL3 ] = self.codes.code_C
-        self.dataset_types[ETL_data_names.ETL4 ] = self.codes.code_C
-        self.dataset_types[ETL_data_names.ETL5 ] = self.codes.code_C
-        self.dataset_types[ETL_data_names.ETL6 ] = self.codes.code_M
-        self.dataset_types[ETL_data_names.ETL7 ] = self.codes.code_M
-        self.dataset_types[ETL_data_names.ETL8B] = self.codes.code_8B
-        self.dataset_types[ETL_data_names.ETL8G] = self.codes.code_8G
-        self.dataset_types[ETL_data_names.ETL9B] = self.codes.code_9B
-        self.dataset_types[ETL_data_names.ETL9G] = self.codes.code_9G
+        self.dataset_types[ETLDataNames.ETL1 ] = self.codes.code_M
+        self.dataset_types[ETLDataNames.ETL2 ] = self.codes.code_K
+        self.dataset_types[ETLDataNames.ETL3 ] = self.codes.code_C
+        self.dataset_types[ETLDataNames.ETL4 ] = self.codes.code_C
+        self.dataset_types[ETLDataNames.ETL5 ] = self.codes.code_C
+        self.dataset_types[ETLDataNames.ETL6 ] = self.codes.code_M
+        self.dataset_types[ETLDataNames.ETL7 ] = self.codes.code_M
+        self.dataset_types[ETLDataNames.ETL8B] = self.codes.code_8B
+        self.dataset_types[ETLDataNames.ETL8G] = self.codes.code_8G
+        self.dataset_types[ETLDataNames.ETL9B] = self.codes.code_9B
+        self.dataset_types[ETLDataNames.ETL9G] = self.codes.code_9G
 
 
     def read_dataset_file(self, part : int,
-                            data_set : ETL_data_names,
-                            *include : ETL_character_groups,
+                            data_set : ETLDataNames,
+                            *include : ETLCharacterGroups,
                             resize : Tuple[int, int] = (64, 64),
                             normalize : bool = True) -> Tuple[np.array, np.array]:
         """Reads, process and filters all entries from the ETL data set file.
@@ -122,8 +122,8 @@ class ETL_data_reader():
         #convert lists to numpy arrays
         return np.array(imgs, dtype="float16"), np.array(labels, dtype="str")
 
-    def read_dataset_part(self, data_set : ETL_data_names,
-                            *include : ETL_character_groups,
+    def read_dataset_part(self, data_set : ETLDataNames,
+                            *include : ETLCharacterGroups,
                             resize : Tuple[int, int] = (64, 64),
                             normalize : bool = True) -> Tuple[np.array, np.array]:
         """Read, process and filter one part (ex.: ETL1) of the ETL data set.
@@ -166,7 +166,7 @@ class ETL_data_reader():
 
         return imgs, labels
 
-    def read_dataset_whole(self, *include : ETL_character_groups,
+    def read_dataset_whole(self, *include : ETLCharacterGroups,
                             resize : Tuple[int, int] = (64, 64),
                             normalize : bool = True) -> Tuple[np.array, np.array]:
         """ Read, process and filter the whole ETL data set (ETL1 - ETL9G).
@@ -189,7 +189,7 @@ class ETL_data_reader():
         imgs, labels = [], []
 
         #iterate over all available data_set parts
-        for _type in ETL_data_names:
+        for _type in ETLDataNames:
 
             #read all parts
             _imgs, _labels = self.read_dataset_part(_type, *include, resize=resize, normalize=normalize)
@@ -226,7 +226,7 @@ class ETL_data_reader():
 
         #resize the image
         if(img_size[0] > 1 and img_size[1] > 1):
-            img = img.resize(size=(img_size[0], img_size[1]), resample=Image.LINEAR)
+            img = img.resize(size=(img_size[1], img_size[0]), resample=Image.LINEAR)
 
         img = np.array(img)
 
@@ -240,7 +240,7 @@ class ETL_data_reader():
 
         return img
 
-    def select_entries(self, label : str, *include : ETL_character_groups) -> bool:
+    def select_entries(self, label : str, *include : ETLCharacterGroups) -> bool:
         """ Checks if the given entry given by 'label' should be included in the loaded data set.
 
         Args:
@@ -253,7 +253,7 @@ class ETL_data_reader():
 
         #if the parameter is unset load everything
         if(not include):
-            include = ETL_character_groups.all
+            include = ETLCharacterGroups.all
 
         #list of regex's for filtering the different groups
         regex = "|".join([i.value for i in include])

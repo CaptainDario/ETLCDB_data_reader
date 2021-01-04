@@ -1,10 +1,10 @@
 import codecs
-from etl_data_names import ETL_data_names
 import jaconv
-from etl_data_set_info import ETL_data_set_info
+from etldr.etl_data_names import ETLDataNames 
+from etldr.etl_data_set_info import ETLDataSetInfo
 
 
-class ETL_codes():
+class ETLCodes():
     """
     A convenience class for using all codecs which are used in the ETL data set.
 
@@ -35,29 +35,29 @@ class ETL_codes():
 
     def init_codes(self):
         """
-        Setup a dict which contains ETL_data_set_info-instances with the necessary info about the data set types.
+        Setup a dict which contains ETLDataSetInfo-instances with the necessary info about the data set types.
         """
 
         # TYPE_M -> ETL 1, 6, 7 - works
-        self.code_M = ETL_data_set_info(">H 2s H 6B I 4H 4B 4x 2016s 4x".replace(" ", ""),
+        self.code_M = ETLDataSetInfo(">H 2s H 6B I 4H 4B 4x 2016s 4x".replace(" ", ""),
                                     2052, (64, 63), 4, [1], self.decode_M_type_character)
         # TYPE_K -> ETL 2
-        self.code_K = ETL_data_set_info("uint:36, uint:6, pad:30, bits:36, bits:36, pad:24, bits:12, pad:180, bytes:2700",
+        self.code_K = ETLDataSetInfo("uint:36, uint:6, pad:30, bits:36, bits:36, pad:24, bits:12, pad:180, bytes:2700",
                                     2745, (60, 60), 6, [-2], self.decode_K_type_character)
         # TYPE_C -> ETL 3, 4, 5
-        self.code_C = ETL_data_set_info("uint:36,uint:36,hex:8,pad:28,hex:8,pad:28,bits:24,pad:12,15*uint:36,pad:1008,bytes:2736",
+        self.code_C = ETLDataSetInfo("uint:36,uint:36,hex:8,pad:28,hex:8,pad:28,bits:24,pad:12,15*uint:36,pad:1008,bytes:2736",
                                     2952, (72, 76), 4, [2, 4], self.decode_C_type_character)
         # TYPE_8B -> ETL 8B
-        self.code_8B = ETL_data_set_info(">H 2s 4s 504s".replace(" ", ""),
+        self.code_8B = ETLDataSetInfo(">H 2s 4s 504s".replace(" ", ""),
                                     512, (64, 63), 1, [1], self.decode_8B_type_character)
         # TYPE_8G -> ETL 8G
-        self.code_8G = ETL_data_set_info(">H 2s 8s I 4B 4H 2B 30x 8128s 11x".replace(" ", ""),
+        self.code_8G = ETLDataSetInfo(">H 2s 8s I 4B 4H 2B 30x 8128s 11x".replace(" ", ""),
                                     8199, (128, 127), 4, [1], self.decode_8G_type_character)
         # TYPE_9B -> ETL 9B
-        self.code_9B = ETL_data_set_info(">H 2s 4s 504s 64x".replace(" ", ""),
+        self.code_9B = ETLDataSetInfo(">H 2s 4s 504s 64x".replace(" ", ""),
                                     576, (64, 63), 1, [1], self.decode_9B_type_character)
         # TYPE_9G -> ETL 9G
-        self.code_9G = ETL_data_set_info(">H 2s 8s I 4B 4H 2B 34x 8128s 7x".replace(" ", ""),
+        self.code_9G = ETLDataSetInfo(">H 2s 8s I 4B 4H 2B 34x 8128s 7x".replace(" ", ""),
                                     8199, (128, 127), 4, [1], self.decode_9B_type_character)
 
     def T56(self, c : int) -> str:

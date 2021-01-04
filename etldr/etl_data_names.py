@@ -1,6 +1,6 @@
 from enum import Enum
 
-class ETL_data_names(Enum):
+class ETLDataNames(Enum):
     """An Enumeration which provides easy access to the ETL data set parts names.
     """
 
