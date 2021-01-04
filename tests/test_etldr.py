@@ -103,6 +103,9 @@ class etldr(unittest.TestCase):
         # test katakana filter
         _imgs, _labels = reader.read_dataset_file(1, ETLDataNames.ETL5, ETLCharacterGroups.katakana)
         self.assertEqual(len(_labels), 10608)
+        # test *implicit* all filter with mixed data set file
+        _imgs, _labels = reader.read_dataset_file(5, ETLDataNames.ETL1)
+        self.assertEqual(len(_labels), 11560)
 
 
 
