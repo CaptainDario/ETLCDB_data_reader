@@ -48,23 +48,23 @@
   <div class="section" id="module-etl_data_reader">
 <span id="etl-data-reader-py"></span><h1>etl_data_reader.py<a class="headerlink" href="#module-etl_data_reader" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
-<dt id="etl_data_reader.ETL_data_reader">
-<em class="property">class </em><code class="sig-prename descclassname">etl_data_reader.</code><code class="sig-name descname">ETL_data_reader</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#etl_data_reader.ETL_data_reader" title="Permalink to this definition">¶</a></dt>
+<dt id="etl_data_reader.ETLDataReader">
+<em class="property">class </em><code class="sig-prename descclassname">etl_data_reader.</code><code class="sig-name descname">ETLDataReader</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#etl_data_reader.ETLDataReader" title="Permalink to this definition">¶</a></dt>
 <dd><p>A class which contains helper functions to load, process and filter the data from the ETL data set.</p>
 <dl class="py attribute">
-<dt id="etl_data_reader.ETL_data_reader.codes">
-<code class="sig-name descname">codes</code><a class="headerlink" href="#etl_data_reader.ETL_data_reader.codes" title="Permalink to this definition">¶</a></dt>
-<dd><p>ETL_codes instance for decoding the ETL data set labels.</p>
+<dt id="etl_data_reader.ETLDataReader.codes">
+<code class="sig-name descname">codes</code><a class="headerlink" href="#etl_data_reader.ETLDataReader.codes" title="Permalink to this definition">¶</a></dt>
+<dd><p>ETLCodes instance for decoding the ETL data set labels.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="etl_codes.html#etl_codes.ETL_codes" title="etl_codes.ETL_codes">ETL_codes</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="etl_codes.html#etl_codes.ETLCodes" title="etl_codes.ETLCodes">ETLCodes</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="etl_data_reader.ETL_data_reader.dataset_types">
-<code class="sig-name descname">dataset_types</code><a class="headerlink" href="#etl_data_reader.ETL_data_reader.dataset_types" title="Permalink to this definition">¶</a></dt>
+<dt id="etl_data_reader.ETLDataReader.dataset_types">
+<code class="sig-name descname">dataset_types</code><a class="headerlink" href="#etl_data_reader.ETLDataReader.dataset_types" title="Permalink to this definition">¶</a></dt>
 <dd><p>A dict which maps the data set parts to their type.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -74,8 +74,8 @@
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="etl_data_reader.ETL_data_reader.path">
-<code class="sig-name descname">path</code><a class="headerlink" href="#etl_data_reader.ETL_data_reader.path" title="Permalink to this definition">¶</a></dt>
+<dt id="etl_data_reader.ETLDataReader.path">
+<code class="sig-name descname">path</code><a class="headerlink" href="#etl_data_reader.ETLDataReader.path" title="Permalink to this definition">¶</a></dt>
 <dd><p>The path to the folder with the data set (should also contain ‘euc_c059.dat’).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -86,19 +86,19 @@
 
 <dl class="py attribute">
 <dt>
-<code class="sig-name descname">data_set_parts_with_dummy [ETL_data_names]</code></dt>
+<code class="sig-name descname">data_set_parts_with_dummy [ETLDataNames]</code></dt>
 <dd><p>A list of the data set parts which have a dummy entry at the beginning.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="etl_data_reader.ETL_data_reader.init_dataset_types">
-<code class="sig-name descname">init_dataset_types</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#etl_data_reader.ETL_data_reader.init_dataset_types" title="Permalink to this definition">¶</a></dt>
+<dt id="etl_data_reader.ETLDataReader.init_dataset_types">
+<code class="sig-name descname">init_dataset_types</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#etl_data_reader.ETLDataReader.init_dataset_types" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initialize the dictionary of dataset_types and their codes</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="etl_data_reader.ETL_data_reader.process_image">
-<code class="sig-name descname">process_image</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">imageF</span><span class="p">:</span> <span class="n">PIL.Image.Image</span></em>, <em class="sig-param"><span class="n">img_size</span><span class="p">:</span> <span class="n">Tuple<span class="p">[</span>int<span class="p">, </span>int<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">img_depth</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; numpy.array<a class="headerlink" href="#etl_data_reader.ETL_data_reader.process_image" title="Permalink to this definition">¶</a></dt>
+<dt id="etl_data_reader.ETLDataReader.process_image">
+<code class="sig-name descname">process_image</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">imageF</span><span class="p">:</span> <span class="n">PIL.Image.Image</span></em>, <em class="sig-param"><span class="n">img_size</span><span class="p">:</span> <span class="n">Tuple<span class="p">[</span>int<span class="p">, </span>int<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">img_depth</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; numpy.array<a class="headerlink" href="#etl_data_reader.ETLDataReader.process_image" title="Permalink to this definition">¶</a></dt>
 <dd><p>Processes the given ETL-image.</p>
 <p>The image will be resized to ‘img_size’ and the color channel depth will be normalized to its ‘img_depth’.</p>
 <dl class="field-list simple">
@@ -116,8 +116,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="etl_data_reader.ETL_data_reader.read_dataset_file">
-<code class="sig-name descname">read_dataset_file</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">part</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">data_set</span><span class="p">:</span> <span class="n"><a class="reference internal" href="etl_data_names.html#etl_data_names.ETL_data_names" title="etl_data_names.ETL_data_names">etl_data_names.ETL_data_names</a></span></em>, <em class="sig-param"><span class="o">*</span><span class="n">include</span><span class="p">:</span> <span class="n"><a class="reference internal" href="etl_character_groups.html#etl_character_groups.ETL_character_groups" title="etl_character_groups.ETL_character_groups">etl_character_groups.ETL_character_groups</a></span></em>, <em class="sig-param"><span class="n">resize</span><span class="p">:</span> <span class="n">Tuple<span class="p">[</span>int<span class="p">, </span>int<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">(64, 64)</span></em>, <em class="sig-param"><span class="n">normalize</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em><span class="sig-paren">)</span> &#x2192; Tuple<span class="p">[</span>numpy.array<span class="p">, </span>numpy.array<span class="p">]</span><a class="headerlink" href="#etl_data_reader.ETL_data_reader.read_dataset_file" title="Permalink to this definition">¶</a></dt>
+<dt id="etl_data_reader.ETLDataReader.read_dataset_file">
+<code class="sig-name descname">read_dataset_file</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">part</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">data_set</span><span class="p">:</span> <span class="n">etldr.etl_data_names.ETLDataNames</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">include</span><span class="p">:</span> <span class="n">etldr.etl_character_groups.ETLCharacterGroups</span></em>, <em class="sig-param"><span class="n">resize</span><span class="p">:</span> <span class="n">Tuple<span class="p">[</span>int<span class="p">, </span>int<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">(64, 64)</span></em>, <em class="sig-param"><span class="n">normalize</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em><span class="sig-paren">)</span> &#x2192; Tuple<span class="p">[</span>numpy.array<span class="p">, </span>numpy.array<span class="p">]</span><a class="headerlink" href="#etl_data_reader.ETLDataReader.read_dataset_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads, process and filters all entries from the ETL data set file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -139,12 +139,13 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="etl_data_reader.ETL_data_reader.read_dataset_part">
-<code class="sig-name descname">read_dataset_part</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data_set</span><span class="p">:</span> <span class="n"><a class="reference internal" href="etl_data_names.html#etl_data_names.ETL_data_names" title="etl_data_names.ETL_data_names">etl_data_names.ETL_data_names</a></span></em>, <em class="sig-param"><span class="o">*</span><span class="n">include</span><span class="p">:</span> <span class="n"><a class="reference internal" href="etl_character_groups.html#etl_character_groups.ETL_character_groups" title="etl_character_groups.ETL_character_groups">etl_character_groups.ETL_character_groups</a></span></em>, <em class="sig-param"><span class="n">resize</span><span class="p">:</span> <span class="n">Tuple<span class="p">[</span>int<span class="p">, </span>int<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">(64, 64)</span></em>, <em class="sig-param"><span class="n">normalize</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em><span class="sig-paren">)</span> &#x2192; Tuple<span class="p">[</span>numpy.array<span class="p">, </span>numpy.array<span class="p">]</span><a class="headerlink" href="#etl_data_reader.ETL_data_reader.read_dataset_part" title="Permalink to this definition">¶</a></dt>
+<dt id="etl_data_reader.ETLDataReader.read_dataset_part">
+<code class="sig-name descname">read_dataset_part</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data_set</span><span class="p">:</span> <span class="n">etldr.etl_data_names.ETLDataNames</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">include</span><span class="p">:</span> <span class="n">etldr.etl_character_groups.ETLCharacterGroups</span></em>, <em class="sig-param"><span class="n">resize</span><span class="p">:</span> <span class="n">Tuple<span class="p">[</span>int<span class="p">, </span>int<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">(64, 64)</span></em>, <em class="sig-param"><span class="n">normalize</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em><span class="sig-paren">)</span> &#x2192; Tuple<span class="p">[</span>numpy.array<span class="p">, </span>numpy.array<span class="p">]</span><a class="headerlink" href="#etl_data_reader.ETLDataReader.read_dataset_part" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read, process and filter one part (ex.: ETL1) of the ETL data set.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Will throw an error if not all parts of the data set can be found in ‘self.pathdata_set’.</p>
+<p>Will throw an error if not all parts of the data set can be found in ‘self.pathdata_set’.
+Also if the images do not get resized to the same size.</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -165,8 +166,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="etl_data_reader.ETL_data_reader.read_dataset_whole">
-<code class="sig-name descname">read_dataset_whole</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">include</span><span class="p">:</span> <span class="n"><a class="reference internal" href="etl_character_groups.html#etl_character_groups.ETL_character_groups" title="etl_character_groups.ETL_character_groups">etl_character_groups.ETL_character_groups</a></span></em>, <em class="sig-param"><span class="n">resize</span><span class="p">:</span> <span class="n">Tuple<span class="p">[</span>int<span class="p">, </span>int<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">(64, 64)</span></em>, <em class="sig-param"><span class="n">normalize</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em><span class="sig-paren">)</span> &#x2192; Tuple<span class="p">[</span>numpy.array<span class="p">, </span>numpy.array<span class="p">]</span><a class="headerlink" href="#etl_data_reader.ETL_data_reader.read_dataset_whole" title="Permalink to this definition">¶</a></dt>
+<dt id="etl_data_reader.ETLDataReader.read_dataset_whole">
+<code class="sig-name descname">read_dataset_whole</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">include</span><span class="p">:</span> <span class="n">etldr.etl_character_groups.ETLCharacterGroups</span></em>, <em class="sig-param"><span class="n">resize</span><span class="p">:</span> <span class="n">Tuple<span class="p">[</span>int<span class="p">, </span>int<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">(64, 64)</span></em>, <em class="sig-param"><span class="n">normalize</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em><span class="sig-paren">)</span> &#x2192; Tuple<span class="p">[</span>numpy.array<span class="p">, </span>numpy.array<span class="p">]</span><a class="headerlink" href="#etl_data_reader.ETLDataReader.read_dataset_whole" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read, process and filter the whole ETL data set (ETL1 - ETL9G).</p>
 <div class="admonition caution">
 <p class="admonition-title">Caution</p>
@@ -174,7 +175,8 @@
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Will throw an error if not all parts and files of the data set can be found in ‘self.path’.</p>
+<p>Will throw an error if not all parts and files of the data set can be found in ‘self.path’.
+Also if the images do not get resized to the same size.</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -194,8 +196,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="etl_data_reader.ETL_data_reader.select_entries">
-<code class="sig-name descname">select_entries</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">label</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">include</span><span class="p">:</span> <span class="n"><a class="reference internal" href="etl_character_groups.html#etl_character_groups.ETL_character_groups" title="etl_character_groups.ETL_character_groups">etl_character_groups.ETL_character_groups</a></span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#etl_data_reader.ETL_data_reader.select_entries" title="Permalink to this definition">¶</a></dt>
+<dt id="etl_data_reader.ETLDataReader.select_entries">
+<code class="sig-name descname">select_entries</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">label</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">include</span><span class="p">:</span> <span class="n">etldr.etl_character_groups.ETLCharacterGroups</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#etl_data_reader.ETLDataReader.select_entries" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks if the given entry given by ‘label’ should be included in the loaded data set.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>

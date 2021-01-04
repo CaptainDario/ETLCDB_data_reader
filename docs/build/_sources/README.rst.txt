@@ -6,6 +6,7 @@ ETL_data_reader
 ===============
 
 A python package for conveniently loading the ETL data set.
+The complete documentation including the API can be found `here <https://captaindario.github.io/ETL_data_reader/build/index.html>`_.
 
 Intro
 -----
@@ -123,14 +124,15 @@ General information about the data set can be found in the table below.
 Setup
 -----
 
-First download the source code from this repository.
-Next install the necessary packages from the *"requirements.txt"*.
+First download the wheel from the `releases page <https://github.com/CaptainDario/ETL_data_reader/releases>`_.
+Now install the wheel with:
 
 .. code-block::
 
-   pip install -r requirements.txt
+   pip install .\path\to\ETL_data_reader_xxx.whl
 
-The second step is to do some renaming of the data set folders and files.
+Assuming you already have `downloaded the ETL data set <http://etlcdb.db.aist.go.jp/obtaining-etl-character-database>`_.
+You have to do some renaming of the data set folders and files.
 First rename the folders like this:
 
 
@@ -145,7 +147,7 @@ Finally rename all files in the folders to have a naming scheme like: :raw-html-
 * ETL_data_set\ETLX\ETLX_Y :raw-html-m2r:`<br/>`
   (\ *X and Y are numbers*\ )
 
-On the `ETL website <http://etlcdb.db.aist.go.jp/file-formats-and-sample-unpacking-code>`_ is also a file called "euc_co59.dat" given. This **file should also be included** in the "data set"-folder on the same level as the data set part folders.
+On the `ETL website <http://etlcdb.db.aist.go.jp/file-formats-and-sample-unpacking-code>`_ is also a file called "euc_co59.dat" provided. This **file should also be included in the "data set"-folder** on the same level as the data set part folders.
 
 The folder structure should look like this now: :raw-html-m2r:`<br/>`
 
@@ -177,19 +179,19 @@ The folder structure should look like this now: :raw-html-m2r:`<br/>`
 Usage
 -----
 
-You can import the package with:
+Now you can import the package with:
 
 .. code-block:: python
 
-   from etl_data_reader import ETL_data_reader
+   import etldr
 
-To load the data set you need an ``ETL_data_reader``\ -instance.
+To load the data set you need an ``ETLDataReader``\ -instance.
 
 .. code-block:: python
 
    path_to_data_set = "the\path\to\the\data\set"
 
-   reader = ETL_data_reader(path_to_data_set)
+   reader = ETLDataReader(path_to_data_set)
 
 where ``path_to_data_set`` should be the path to the main folder of your data set copy.\ :raw-html-m2r:`<br/>`
 Example: "E:/data/ETL_data_set/" :raw-html-m2r:`<br/>`
@@ -202,11 +204,11 @@ Load one data set file
 
 .. code-block:: python
 
-   from etl_data_names import ETL_data_names
+   from etldr.etl_data_names import ETLDataNames
 
-   katakana, number = ETL_character_groups.katakana, ETL_character_groups.number
+   katakana, number = ETLCharacterGroups.katakana, ETLCharacterGroups.number
 
-   imgs, labels = reader.read_dataset_file(part=2, data_set=ETL_data_names.ETL7, katakana, number)
+   imgs, labels = reader.read_dataset_file(part=2, data_set=ETLDataNames.ETL7, katakana, number)
 
 This will load "...\ETL_data_set_folder\ETL7\ETL7_2". :raw-html-m2r:`<br/>`
 
@@ -217,9 +219,9 @@ Load one data set part
 
 .. code-block:: python
 
-   from etl_data_names import ETL_data_names
+   from etldr.etl_data_names import ETLDataNames
 
-   kanji, hiragana = ETL_character_groups.kanji, ETL_character_groups.hiragana
+   kanji, hiragana = ETLCharacterGroups.kanji, ETLCharacterGroups.hiragana
 
    imgs, labels = reader.read_dataset_part(data_set=ETL_data_names.ETL2, kanji, hiragana)
 
@@ -231,11 +233,13 @@ And store the images and labels which are either *kanji* or *hiragana* in the va
 Load the whole data set
 ^^^^^^^^^^^^^^^^^^^^^^^
 
+**Warning: This will use a lot of memory.** :raw-html-m2r:`<br/>`
+
 .. code-block:: python
 
-   from etl_data_names import ETL_data_names
+   from etldr.etl_data_names import ETLDataNames
 
-   roman, symbol = ETL_character_groups.roman, ETL_character_groups.symbols
+   roman, symbol = ETLCharacterGroups.roman, ETLCharacterGroups.symbols
 
    imgs, labels = reader.read_dataset_whole(roman, symbol)
 
@@ -245,7 +249,7 @@ This will load all *roman* and *symbol* characters from the whole ETL data set.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 As the examples above already showed the loading of data set entries can be restricted to certain groups.
-Those groups can be seen in: `etl_character_groups.py <src/etl_character_groups.py>`_
+Those groups can be seen in: `etl_character_groups.py <https://captaindario.github.io/ETL_data_reader/build/etl_character_groups.html>`_
 
 **Note: processing the images while loading**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -261,14 +265,6 @@ The ``normalize``\ -parameter normalizes the grayscale values of the images betw
 If those parameters are set to negative values no resizing/normalization will be done. :raw-html-m2r:`<br/>`
 **This will lead to an error if the data set is read with ``read_dataset_whole()``\ !**
 
-Development
------------
-
-For development *python 3.8* was used. :raw-html-m2r:`<br/>`
-The documentation was made with Sphinx and m2r.
-m2r is being used to automatically convert this README.md to .rst.
-This happens when the ``sphinx-build``\ -command is invoked.
-
 Limitations
 -----------
 
@@ -276,14 +272,30 @@ This implementation **does not** allow to access all the stored data.
 Currently one can load:
 
 
-* images
+* image
 * label of the image
 
 of every ETL data set entry.
 
 However this package should be easily extendable to add support for accessing the other data.
 
+Development notes
+-----------------
+
+For development *python 3.8* was used. :raw-html-m2r:`<br/>`
+The documentation was made with Sphinx and m2r.
+m2r is being used to automatically convert this README.md to .rst.
+This happens when the ``sphinx-build``\ -command is invoked in the 'docs'-folder.
+
+A list of all packages needed for development can be found in 'requirements.txt'.
+
+Some `simple test cases <.\tests\test_etldr.py>`_ are defined in the tests folder.
+
+Testing was only performed on Windows 10.
+
 Additional Notes
 ----------------
 
 Pull requests and issues are welcome.
+
+If you open a pull request make sure to `run the tests before <.\run_test>`_.

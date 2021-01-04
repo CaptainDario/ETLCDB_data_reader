@@ -12,8 +12,10 @@
 #
 import os
 import sys
-path = os.path.join(os.path.dirname(os.path.dirname(os.getcwd())), "src")
-sys.path.insert(0, path)
+path_1 = os.path.join(os.path.dirname(os.path.dirname(os.getcwd())), "etldr")
+path_2 = os.path.join(os.path.dirname(os.path.dirname(os.getcwd())))
+sys.path.insert(0, path_1)
+sys.path.insert(0, path_2)
 
 # -- use m2r to convert README to *.rst --------------------------------------
 import m2r

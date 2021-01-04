@@ -48,16 +48,16 @@
   <div class="section" id="module-etl_codes">
 <span id="etl-codes-py"></span><h1>etl_codes.py<a class="headerlink" href="#module-etl_codes" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
-<dt id="etl_codes.ETL_codes">
-<em class="property">class </em><code class="sig-prename descclassname">etl_codes.</code><code class="sig-name descname">ETL_codes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">euc_co59_file_path</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#etl_codes.ETL_codes" title="Permalink to this definition">¶</a></dt>
+<dt id="etl_codes.ETLCodes">
+<em class="property">class </em><code class="sig-prename descclassname">etl_codes.</code><code class="sig-name descname">ETLCodes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">euc_co59_file_path</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#etl_codes.ETLCodes" title="Permalink to this definition">¶</a></dt>
 <dd><p>A convenience class for using all codecs which are used in the ETL data set.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>The ‘euc_co59.dat’-file from the ETL data set is required in the data set directory.</p>
 </div>
 <dl class="py method">
-<dt id="etl_codes.ETL_codes.T56">
-<code class="sig-name descname">T56</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">c</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#etl_codes.ETL_codes.T56" title="Permalink to this definition">¶</a></dt>
+<dt id="etl_codes.ETLCodes.T56">
+<code class="sig-name descname">T56</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">c</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#etl_codes.ETLCodes.T56" title="Permalink to this definition">¶</a></dt>
 <dd><p>Decodes c into a string using the T56-code.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -70,8 +70,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="etl_codes.ETL_codes.co59_to_utf8">
-<code class="sig-name descname">co59_to_utf8</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">co59</span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#etl_codes.ETL_codes.co59_to_utf8" title="Permalink to this definition">¶</a></dt>
+<dt id="etl_codes.ETLCodes.co59_to_utf8">
+<code class="sig-name descname">co59_to_utf8</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">co59</span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#etl_codes.ETLCodes.co59_to_utf8" title="Permalink to this definition">¶</a></dt>
 <dd><p>Decodes co59 to utf-8.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -84,8 +84,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="etl_codes.ETL_codes.decode_8B_type_character">
-<code class="sig-name descname">decode_8B_type_character</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">_bytes</span><span class="p">:</span> <span class="n">bytes</span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#etl_codes.ETL_codes.decode_8B_type_character" title="Permalink to this definition">¶</a></dt>
+<dt id="etl_codes.ETLCodes.decode_8B_type_character">
+<code class="sig-name descname">decode_8B_type_character</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">_bytes</span><span class="p">:</span> <span class="n">bytes</span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#etl_codes.ETLCodes.decode_8B_type_character" title="Permalink to this definition">¶</a></dt>
 <dd><p>Decodes _bytes which encode the label from an entry which has the ETL-8B type.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -98,8 +98,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="etl_codes.ETL_codes.decode_8G_type_character">
-<code class="sig-name descname">decode_8G_type_character</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">_bytes</span><span class="p">:</span> <span class="n">bytes</span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#etl_codes.ETL_codes.decode_8G_type_character" title="Permalink to this definition">¶</a></dt>
+<dt id="etl_codes.ETLCodes.decode_8G_type_character">
+<code class="sig-name descname">decode_8G_type_character</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">_bytes</span><span class="p">:</span> <span class="n">bytes</span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#etl_codes.ETLCodes.decode_8G_type_character" title="Permalink to this definition">¶</a></dt>
 <dd><p>Decodes _bytes which encode the label from an entry which has the ETL-8G type.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -112,8 +112,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="etl_codes.ETL_codes.decode_9B_type_character">
-<code class="sig-name descname">decode_9B_type_character</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">_bytes</span><span class="p">:</span> <span class="n">bytes</span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#etl_codes.ETL_codes.decode_9B_type_character" title="Permalink to this definition">¶</a></dt>
+<dt id="etl_codes.ETLCodes.decode_9B_type_character">
+<code class="sig-name descname">decode_9B_type_character</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">_bytes</span><span class="p">:</span> <span class="n">bytes</span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#etl_codes.ETLCodes.decode_9B_type_character" title="Permalink to this definition">¶</a></dt>
 <dd><p>Decodes _bytes which encode the label from an entry which has the ETL-9B type.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -126,8 +126,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="etl_codes.ETL_codes.decode_9G_type_character">
-<code class="sig-name descname">decode_9G_type_character</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">_bytes</span><span class="p">:</span> <span class="n">bytes</span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#etl_codes.ETL_codes.decode_9G_type_character" title="Permalink to this definition">¶</a></dt>
+<dt id="etl_codes.ETLCodes.decode_9G_type_character">
+<code class="sig-name descname">decode_9G_type_character</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">_bytes</span><span class="p">:</span> <span class="n">bytes</span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#etl_codes.ETLCodes.decode_9G_type_character" title="Permalink to this definition">¶</a></dt>
 <dd><p>Decodes _bytes which encode the label from an entry which has the ETL-9G type.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -140,8 +140,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="etl_codes.ETL_codes.decode_C_type_character">
-<code class="sig-name descname">decode_C_type_character</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">_bytes</span><span class="p">:</span> <span class="n">bytes</span></em>, <em class="sig-param"><span class="n">char_code</span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#etl_codes.ETL_codes.decode_C_type_character" title="Permalink to this definition">¶</a></dt>
+<dt id="etl_codes.ETLCodes.decode_C_type_character">
+<code class="sig-name descname">decode_C_type_character</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">_bytes</span><span class="p">:</span> <span class="n">bytes</span></em>, <em class="sig-param"><span class="n">char_code</span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#etl_codes.ETLCodes.decode_C_type_character" title="Permalink to this definition">¶</a></dt>
 <dd><p>Decodes _bytes which encode the label from an entry which has the ETL-C type.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -157,8 +157,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="etl_codes.ETL_codes.decode_K_type_character">
-<code class="sig-name descname">decode_K_type_character</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">_bytes</span><span class="p">:</span> <span class="n">bytes</span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#etl_codes.ETL_codes.decode_K_type_character" title="Permalink to this definition">¶</a></dt>
+<dt id="etl_codes.ETLCodes.decode_K_type_character">
+<code class="sig-name descname">decode_K_type_character</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">_bytes</span><span class="p">:</span> <span class="n">bytes</span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#etl_codes.ETLCodes.decode_K_type_character" title="Permalink to this definition">¶</a></dt>
 <dd><p>Decodes _bytes which encode the label from an entry which has the ETL-K type.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -171,8 +171,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="etl_codes.ETL_codes.decode_M_type_character">
-<code class="sig-name descname">decode_M_type_character</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">_bytes</span><span class="p">:</span> <span class="n">bytes</span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#etl_codes.ETL_codes.decode_M_type_character" title="Permalink to this definition">¶</a></dt>
+<dt id="etl_codes.ETLCodes.decode_M_type_character">
+<code class="sig-name descname">decode_M_type_character</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">_bytes</span><span class="p">:</span> <span class="n">bytes</span></em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#etl_codes.ETLCodes.decode_M_type_character" title="Permalink to this definition">¶</a></dt>
 <dd><p>Decodes _bytes which encode the label from an entry which has the ETL-M type.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -185,15 +185,15 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="etl_codes.ETL_codes.init_co59">
-<code class="sig-name descname">init_co59</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">euc_co59_file_path</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#etl_codes.ETL_codes.init_co59" title="Permalink to this definition">¶</a></dt>
+<dt id="etl_codes.ETLCodes.init_co59">
+<code class="sig-name descname">init_co59</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">euc_co59_file_path</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#etl_codes.ETLCodes.init_co59" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initialize reading of “co59”-codes</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="etl_codes.ETL_codes.init_codes">
-<code class="sig-name descname">init_codes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#etl_codes.ETL_codes.init_codes" title="Permalink to this definition">¶</a></dt>
-<dd><p>Setup a dict which contains ETL_data_set_info-instances with the necessary info about the data set types.</p>
+<dt id="etl_codes.ETLCodes.init_codes">
+<code class="sig-name descname">init_codes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#etl_codes.ETLCodes.init_codes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Setup a dict which contains ETLDataSetInfo-instances with the necessary info about the data set types.</p>
 </dd></dl>
 
 </dd></dl>
