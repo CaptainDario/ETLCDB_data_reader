@@ -1,0 +1,4 @@
+# to run the tests you should invoke the following command
+# on the top level folder of this package
+
+python tests\test_etldr.py
