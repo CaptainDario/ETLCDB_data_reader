@@ -30,8 +30,12 @@ General information about the data set can be found in the table below.
 ## Setup
 First download the wheel from the [releases page](https://github.com/CaptainDario/ETL_data_reader/releases).
 Now install the wheel with:
-```
+```bash
 pip install .\path\to\ETL_data_reader_xxx.whl
+```
+Or install it directly via https:
+```bash
+pip install https://github.com/CaptainDario/ETL_data_reader/releases/download/1.0/etl_data_reader_v1.0.whl
 ```
 Assuming you already have [downloaded the ETL data set](http://etlcdb.db.aist.go.jp/obtaining-etl-character-database).
 You have to do some renaming of the data set folders and files.
