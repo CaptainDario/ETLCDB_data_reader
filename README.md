@@ -114,7 +114,7 @@ from etldr.etl_data_names import ETLDataNames
 
 kanji, hiragana = ETLCharacterGroups.kanji, ETLCharacterGroups.hiragana
 
-imgs, labels = reader.read_dataset_part(data_set=ETL_data_names.ETL2, kanji, hiragana)
+imgs, labels = reader.read_dataset_part(data_set=ETLDataNames.ETL2, kanji, hiragana)
 ```
 This will load all files in the folder "...\ETL_data_set_folder\ETL2\".
 Namely: ...\ETL2\ETL2_1, ...\ETL2\ETL2_1 ,..., ...\ETL2\ETL2_5. <br/>
