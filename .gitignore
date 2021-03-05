@@ -132,3 +132,6 @@ README.rst
 
 # exclude the data set folder
 etl_data_set/
+
+# exclude the history
+.history
