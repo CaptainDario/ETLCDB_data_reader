@@ -90,4 +90,4 @@ if __name__ == "__main__":
     #load_one_data_set_part(reader)
     #load_the_whole_data_set(reader)
     #load_one_data_set_part_parallel(reader)
-    load_the_whole_data_set_parallel(reader)
+    #load_the_whole_data_set_parallel(reader)
