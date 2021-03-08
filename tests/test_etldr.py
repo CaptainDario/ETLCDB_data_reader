@@ -3,7 +3,9 @@
 # etl-data set is located
 
 import unittest
-import os, sys
+import os
+import sys
+import time
 
 sys.path.append(os.path.abspath(os.getcwd()))
 
@@ -20,13 +22,15 @@ class etldr(unittest.TestCase):
     def test_read_dataset_file(self):
         """Test the ETLDataReader.read_dataset_file method.
         """
+        
+        print("started: test_read_dataset_file")
 
         reader = ETLDataReader(os.path.join(os.getcwd(), "etl_data_set"))
 
         imgs, labels = [], []
 
         for name in ETLDataNames:
-            _imgs, _labels = reader.read_dataset_file(1, name, ETLCharacterGroups.all)
+            _imgs, _labels = reader.read_dataset_file(1, name, [ETLCharacterGroups.all])
             #imgs.append(_imgs)
             labels.append(_labels)
         
@@ -34,11 +38,15 @@ class etldr(unittest.TestCase):
         for i in range(11):
             #compare the byte representation
             self.assertEqual(str.encode(labels[i][0]), str.encode(correct_labels[i]))
+
+        print("finished: test_read_dataset_file")
     
     
     def test_image_resize(self):
         """Test the ETLDataReader.read_dataset_file method with different resizing options.
         """
+
+        print("started: test_image_resize")
 
         size_in = [(12, 12), (12, 37), (-1, 12), (35, 0)]
 
@@ -48,7 +56,7 @@ class etldr(unittest.TestCase):
         imgs, labels = [], []
 
         for i in range(3):
-            _imgs, _labels = reader.read_dataset_file(1, ETLDataNames.ETL1, ETLCharacterGroups.all, resize=size_in[i])
+            _imgs, _labels = reader.read_dataset_file(1, ETLDataNames.ETL1, [ETLCharacterGroups.all], resize=size_in[i])
             imgs.append(_imgs)
             #labels.append(_labels)
 
@@ -56,26 +64,36 @@ class etldr(unittest.TestCase):
             #compare the byte representation
             self.assertEqual(imgs[i][0].shape, correct_out[i])
 
+        print("finished: test_image_resize")
+
     def test_image_normalizing(self):
         """Test the ETLDataReader.read_dataset_file method with normalizing.
         """
         
+        print("started: test_image_normalizing")
+        
         reader = ETLDataReader(os.path.join(os.getcwd(), "etl_data_set"))
 
-        _imgs, _labels = reader.read_dataset_file(1, ETLDataNames.ETL1, ETLCharacterGroups.all, normalize=True)
+        _imgs, _labels = reader.read_dataset_file(1, ETLDataNames.ETL1, [ETLCharacterGroups.all], normalize=True)
 
         self.assertTrue(_imgs[0].max() <= 1.0)
+
+        print("finished: test_image_normalizing")
 
     def test_read_dataset_part(self):
         """Test the ETLDataReader.read_dataset_part method.
         """
         
+        print("started: test_read_dataset_part")
+        
         reader = ETLDataReader(os.path.join(os.getcwd(), "etl_data_set"))
 
-        _imgs, _labels = reader.read_dataset_part(ETLDataNames.ETL1, ETLCharacterGroups.all)
+        _imgs, _labels = reader.read_dataset_part(ETLDataNames.ETL1, [ETLCharacterGroups.all])
 
         self.assertEqual(len(_labels), 141319)
 
+        print("finished: test_read_dataset_part")
+    
     def test_read_dataset_part_parallel(self):
         """Test the ETLDataReader.read_dataset_part method in parallel mode.
         """
@@ -138,6 +156,8 @@ class etldr(unittest.TestCase):
         """Test the ETLDataReader.read_dataset_file method with filtering.
         """
         
+        print("started: test_read_dataset_selection")
+        
         reader = ETLDataReader(os.path.join(os.getcwd(), "etl_data_set"))
 
         # test number filter
@@ -164,6 +184,8 @@ class etldr(unittest.TestCase):
         # test *implicit* all filter with mixed data set file
         _imgs, _labels = reader.read_dataset_file(5, ETLDataNames.ETL1)
         self.assertEqual(len(_labels), 11560)
+
+        print("finished: test_read_dataset_selection")
 
 
 
