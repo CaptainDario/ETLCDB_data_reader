@@ -182,7 +182,7 @@ sphinx-build source build
 
 A list of all packages needed for development can be found in 'requirements.txt'.
 
-Some [simple test cases](.\tests\test_etldr.py) are defined in the tests folder.
+Some [simple test cases](./tests/test_etldr.py) are defined in the tests folder.
 
 Testing was only performed on Windows 10.
 
@@ -190,4 +190,4 @@ Testing was only performed on Windows 10.
 ## Additional Notes
 Pull requests and issues are welcome.
 
-If you open a pull request make sure to [run the tests before](.\run_test).
+If you open a pull request make sure to [run the tests before](./run_test).
