@@ -6,12 +6,14 @@ from etldr.etl_character_groups import ETLCharacterGroups
 import os
 import re
 import struct
+import multiprocessing as mp
+
 from PIL import Image
 import numpy as np
 import bitstring
 
 from tqdm.auto import tqdm
-from typing import Tuple
+from typing import List, Tuple
 
 
 
@@ -27,7 +29,7 @@ class ETLDataReader():
     """
 
 
-    def __init__(self, path : str) -> None:
+    def __init__(self, path : str):
         
         self.codes         = None
         self.dataset_types = {}
@@ -62,15 +64,19 @@ class ETLDataReader():
 
     def read_dataset_file(self, part : int,
                             data_set : ETLDataNames,
-                            *include : ETLCharacterGroups,
+                            include : List[ETLCharacterGroups] = [ETLCharacterGroups.all],
                             resize : Tuple[int, int] = (64, 64),
-                            normalize : bool = True) -> Tuple[np.array, np.array]:
+                            normalize : bool = True,
+                            show_loading_bar : bool = True) -> Tuple[np.array, np.array]:
         """Reads, process and filters all entries from the ETL data set file.
+        
+        Note:
+            The loaded images will be a numpy array with dtype=float16.
 
         Args:
             part      : The part which should be loaded from the given data set part (only the number).
             data_set  : The data set part which should be loaded (ex.: 'ETL1').
-            *include  : All character types (Kanji, Hiragana, Symbols, stc.) which should be included. If unset everyting will be loaded.
+            include   : All character types (Kanji, Hiragana, Symbols, stc.) which should be included.
             resize    : The size the image should be resized (if resize < 1 the images will not be resized). Defaults to (64, 64).
             normalize : Should the gray values be normalized between [0.0, 1.0]. Defaults to True.
 
@@ -100,36 +106,36 @@ class ETLDataReader():
                 prog_bar = tqdm(total=file_size, position=0, leave=False)
                 prog_bar.set_description("Loading: " + os.path.basename(path) + "   ")
 
-                #iterate over the data set entries
-                while(_bytes := f.read(data_info.struct_size)):
-                    #unpack the packed data
-                    if(data_info.code.startswith(">")):
-                        raw = struct.unpack(data_info.code, _bytes)
-                    else:
-                        raw = bitstring.ConstBitStream(bytes=_bytes)
-                        raw = raw.readlist(data_info.code)
+            #iterate over the data set entries
+            while(_bytes := f.read(data_info.struct_size)):
+                #unpack the packed data
+                if(data_info.code.startswith(">")):
+                    raw = struct.unpack(data_info.code, _bytes)
+                else:
+                    raw = bitstring.ConstBitStream(bytes=_bytes)
+                    raw = raw.readlist(data_info.code)
 
-                    #convert the image and process it if given
-                    imageF = Image.frombytes('F', data_info.img_size, raw[-1], 'bit', data_info.img_depth)
-                    img = self.process_image(imageF, resize, data_info.img_depth if normalize else -1)
+                #convert the image and process it if given
+                imageF = Image.frombytes('F', data_info.img_size, raw[-1], 'bit', data_info.img_depth)
+                img = self.process_image(imageF, resize, data_info.img_depth if normalize else -1)
 
-                    #decode the label
-                    label = data_info.decoder(*list(raw[i] for i in data_info.label_index)).replace(" ", "")
+                #decode the label
+                label = data_info.decoder(*list(raw[i] for i in data_info.label_index)).replace(" ", "")
 
                 # apply the filter 
                 if(self.select_entries(label, include)):
-                        imgs.append(img)
-                        labels.append(label)
+                    imgs.append(img)
+                    labels.append(label)
 
                 if(show_loading_bar):
                     prog_bar.update(1)
-
+            
             if(show_loading_bar):
                 prog_bar.close()
 
         #convert lists to numpy arrays
         return np.array(imgs, dtype="float16"), np.array(labels, dtype="str")
-
+    
     
     def read_dataset_part(self, data_set : ETLDataNames,
                             include : List[ETLCharacterGroups] = [ETLCharacterGroups.all],
@@ -167,17 +173,24 @@ class ETLDataReader():
             print("Loading in sequential mode...")
 
             return self.__read_dataset_part_sequential(data_set, include, resize, normalize)
+
+    def __read_dataset_part_sequential(self, data_set : ETLDataNames,
+                            include : List[ETLCharacterGroups] = [ETLCharacterGroups.all],
                             resize : Tuple[int, int] = (64, 64),
                             normalize : bool = True) -> Tuple[np.array, np.array]:
         """Read, process and filter one part (ex.: ETL1) of the ETL data set.
+        
+        Note:
+            The loaded images will be a numpy array with dtype=float16.
+            This method should only be called through the 'read_dataset_part' method.
 
         Warning:
             Will throw an error if not all parts of the data set can be found in 'self.path\data_set'.
             Also if the images do not get resized to the same size.
 
         Args:
-            data_set : The data set part which should be loaded.
-            *include  : All character types (Kanji, Hiragana, Symbols, stc.) which should be included. If unset everyting will be loaded.
+            data_set  : The data set part which should be loaded.
+            include   : All character types (Kanji, Hiragana, Symbols, stc.) which should be included.
             resize    : The size the image should be resized (if resize < 1 the images will not be resized). Defaults to (64, 64).
             normalize : Should the gray values be normalized between [0.0, 1.0]. Defaults to True.
 
@@ -197,7 +210,7 @@ class ETLDataReader():
 
         for cnt, file in enumerate(data_set_files, start=1):
 
-            _imgs, _labels = self.read_dataset_file(cnt, data_set, *include, resize=resize, normalize=normalize)
+            _imgs, _labels = self.read_dataset_file(cnt, data_set, include, resize=resize, normalize=normalize)
 
             #make sure that data was loaded and not empty arrays get appended 
             if(len(_imgs) > 0 and len(_labels) > 0):
@@ -313,9 +326,14 @@ class ETLDataReader():
 
             return self.__read_dataset_whole_sequential(include, resize, normalize)
 
+    def __read_dataset_whole_sequential(self, include : List[ETLCharacterGroups] = [ETLCharacterGroups.all],
                             resize : Tuple[int, int] = (64, 64),
                             normalize : bool = True) -> Tuple[np.array, np.array]:
-        """ Read, process and filter the whole ETL data set (ETL1 - ETL9G).
+        """ Read, process and filter the whole ETL data set (ETL1 - ETL9G) in the main process.
+
+        Note:
+            The loaded images will be a numpy array with dtype=float16.
+            This method should only be called through the 'read_dataset_whole' method.
 
         Caution:
             Reading the whole dataset with all available entries will use up a lot of memory (>50GB).
@@ -325,21 +343,24 @@ class ETLDataReader():
             Also if the images do not get resized to the same size.
 
         Arguments:
-            *include  : All character types (Kanji, Hiragana, Symbols, stc.) which should be included. If unset everyting will be loaded.
+            include   : All character types (Kanji, Hiragana, Symbols, stc.) which should be included.
+            processes : The number of processes which should be used for loading the data.
+                        Every process will run on a separate CPU core.
+                        Therefore it is recommended to not use more than (virtual) processor cores are available.
             resize    : The size the image should be resized (if resize < 1 the images will not be resized). Defaults to (64, 64).
             normalize : Should the gray values be normalized between [0.0, 1.0]. Defaults to True.
 
         Returns:
             The loaded and filtered data set entries in the form: (images, labels).
         """
-
+        
         imgs, labels = [], []
 
         #iterate over all available data_set parts
         for _type in ETLDataNames:
 
             #read all parts
-            _imgs, _labels = self.read_dataset_part(_type, *include, resize=resize, normalize=normalize)
+            _imgs, _labels = self.read_dataset_part(_type, include, resize=resize, normalize=normalize)
 
             #make sure the loaded data is not an empty array
             if(len(_imgs) > 0 and len(_labels) > 0):
@@ -432,7 +453,7 @@ class ETLDataReader():
 
         #resize the image
         if(img_size[0] > 1 and img_size[1] > 1):
-            img = img.resize(size=(img_size[1], img_size[0]), resample=Image.LINEAR)
+            img = img.resize(size=(img_size[1], img_size[0]), resample=Image.ANTIALIAS)
 
         img = np.array(img)
 
@@ -446,12 +467,12 @@ class ETLDataReader():
 
         return img
 
-    def select_entries(self, label : str, *include : ETLCharacterGroups) -> bool:
+    def select_entries(self, label : str, include : List[ETLCharacterGroups] = [ETLCharacterGroups.all]) -> bool:
         """ Checks if the given entry given by 'label' should be included in the loaded data set.
 
         Args:
             label    : The label which should be checked if it should be included.
-            *include : All character types which should be included. Defaults to all if unset.
+            include : All character types which should be included.
 
         Returns:
             bool: True if the entry should be included, False otherwise.
