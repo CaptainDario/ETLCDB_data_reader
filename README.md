@@ -31,11 +31,11 @@ General information about the data set can be found in the table below.
 First download the wheel from the [releases page](https://github.com/CaptainDario/ETL_data_reader/releases).
 Now install the wheel with:
 ```bash
-pip install .\path\to\etl_data_reader_CaptainDario-1.0-py3-none-any.whl
+pip install .\path\to\etl_data_reader_CaptainDario-2.0-py3-none-any.whl
 ```
 Or install it directly via https:
 ```bash
-pip install https://github.com/CaptainDario/ETL_data_reader/releases/download/1.0/etl_data_reader_CaptainDario-1.0-py3-none-any.whl
+pip install https://github.com/CaptainDario/ETL_data_reader/releases/download/2.0/etl_data_reader_CaptainDario-2.0-py3-none-any.whl
 ```
 Assuming you already have [downloaded the ETL data set](http://etlcdb.db.aist.go.jp/obtaining-etl-character-database).
 You have to do some renaming of the data set folders and files.
@@ -101,9 +101,9 @@ Now there are basically three ways to load data.
 from etldr.etl_data_names import ETLDataNames
 from etldr.etl_character_groups import ETLCharacterGroups
 
-katakana, number = ETLCharacterGroups.katakana, ETLCharacterGroups.number
+include = [ETLCharacterGroups.katakana, ETLCharacterGroups.number]
 
-imgs, labels = reader.read_dataset_file(part=2, data_set=ETLDataNames.ETL7, katakana, number)
+imgs, labels = reader.read_dataset_file(2, ETLDataNames.ETL7, include)
 ```
 This will load "...\ETL_data_set_folder\ETL7\ETL7_2". <br/>
 
@@ -114,9 +114,9 @@ And store the images and labels which are either *katakana* or *number* in the v
 from etldr.etl_data_names import ETLDataNames
 from etldr.etl_character_groups import ETLCharacterGroups
 
-kanji, hiragana = ETLCharacterGroups.kanji, ETLCharacterGroups.hiragana
+include = [ETLCharacterGroups.kanji, ETLCharacterGroups.hiragana]
 
-imgs, labels = reader.read_dataset_part(ETLDataNames.ETL2, kanji, hiragana)
+imgs, labels = reader.read_dataset_part(ETLDataNames.ETL2, include)
 ```
 This will load all files in the folder "...\ETL_data_set_folder\ETL2\".
 Namely: ...\ETL2\ETL2_1, ...\ETL2\ETL2_1 ,..., ...\ETL2\ETL2_5. <br/>
