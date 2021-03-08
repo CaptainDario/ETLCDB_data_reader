@@ -345,6 +345,65 @@ class ETLDataReader():
 
         return imgs, labels
 
+    def __read_dataset_whole_parallel(self, include : List[ETLCharacterGroups] = [ETLCharacterGroups.all],
+                            processes : int = 1,
+                            resize : Tuple[int, int] = (64, 64),
+                            normalize : bool = True) -> Tuple[np.array, np.array]:
+        """ Read, process and filter the whole ETL data set (ETL1 - ETL9G) in multiple processes.
+
+        Note:
+            The loaded images will be a numpy array with dtype=float16.
+            This method should only be called through the 'read_dataset_whole' method.
+
+        Caution:
+            Reading the whole dataset with all available entries will use up a lot of memory (>50GB).
+
+        Warning:
+            Will throw an error if not all parts and files of the data set can be found in 'self.path'.
+            Also if the images do not get resized to the same size.
+
+        Arguments:
+            include   : All character types (Kanji, Hiragana, Symbols, stc.) which should be included.
+            processes : The number of processes which should be used for loading the data.
+                        Every process will run on a separate CPU core.
+                        Therefore it is recommended to not use more than (virtual) processor cores are available.
+            resize    : The size the image should be resized (if resize < 1 the images will not be resized). Defaults to (64, 64).
+            normalize : Should the gray values be normalized between [0.0, 1.0]. Defaults to True.
+
+        Returns:
+            The loaded and filtered data set entries in the form: (images, labels).
+        """
+
+        imgs, labels = [], []
+
+        #iterate over all available data_set parts
+        arguments = []
+        for _type in ETLDataNames:
+
+            #regex to check if file is valid
+            reg = re.compile((_type.value + r"_\d+"))
+
+            #get all ETL files in the directory
+            _type_files = [f for f in os.listdir(os.path.join(self.path, _type.value)) if not (reg.match(f) is None)]
+
+            # get a list of arguments for all processes
+            for cnt, file in enumerate(_type_files, start=1):
+                arguments.append([cnt, _type, include, resize, normalize, False])
+
+        # run the function in all processes
+        return_values = []
+        with mp.Pool(processes=processes) as pool:
+            return_values = pool.starmap(self.read_dataset_file, tqdm(arguments, total=len(arguments)))
+
+        #only concatenate if there were arrays loaded
+        for _imgs, _labels in return_values: 
+            if(len(_imgs) > 0 and len(_labels) > 0):
+                imgs.append(_imgs)
+                labels.append(_labels)
+
+        return np.concatenate(imgs), np.concatenate(labels)
+
+
     def process_image(self, imageF : Image.Image,
                             img_size : Tuple[int, int],
                             img_depth : int) -> np.array:
