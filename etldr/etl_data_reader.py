@@ -203,6 +203,71 @@ class ETLDataReader():
 
         return imgs, labels
 
+    def __read_dataset_part_parallel(self, data_set : ETLDataNames,
+                            include : List[ETLCharacterGroups] = [ETLCharacterGroups.all],
+                            processes : int = 1,
+                            resize : Tuple[int, int] = (64, 64),
+                            normalize : bool = True) -> Tuple[np.array, np.array]:
+        """Read, process and filter one part (ex.: ETL1) of the ETL data set.
+
+        Note:
+            The loaded images will be a numpy array with dtype=float16.
+            This method should only be called through the 'read_dataset_part' method.
+
+        Warning:
+            Will throw an error if not all parts of the data set can be found in 'self.path\data_set'.
+            Also if the images do not get resized to the same size.
+
+        Args:
+            data_set  : The data set part which should be loaded.
+            include   : All character types (Kanji, Hiragana, Symbols, stc.) which should be included.
+            processes : The number of processes which should be used for loading the data.
+                        Every process will run on a separate CPU core.
+                        Therefore it is recommended to not use more than (virtual) processor cores are available.
+            resize    : The size the image should be resized (if resize < 1 the images will not be resized). Defaults to (64, 64).
+            normalize : Should the gray values be normalized between [0.0, 1.0]. Defaults to True.
+
+        Returns:
+            The loaded and filtered data set entries in the form: (images, labels).
+        """
+
+        imgs, labels = [], []
+
+        print("Loading all data set files (" + data_set.value + "_x) from: " + os.path.join(self.path, data_set.value) + "...", flush=True)
+
+        #regex to check if file is valid
+        reg = re.compile((data_set.value + r"_\d+"))
+
+        #get all ETL files in the directory
+        data_set_files = [f for f in os.listdir(os.path.join(self.path, data_set.value)) if not (reg.match(f) is None)]
+
+        # get the arguments for all processes
+        arguments = []
+        for cnt, file in enumerate(data_set_files, start=1):
+            arguments.append([cnt, data_set, include, resize, normalize, False])
+
+        # run the function in all processes
+        return_values = []
+        with mp.Pool(processes=processes) as pool:
+            return_values = pool.starmap(self.read_dataset_file, tqdm(arguments, total=len(arguments)))
+
+        # separate the labels and images
+        imgs, labels = [], []
+        for img, label in return_values:
+            # only append when images were loaded
+            if(len(img) > 0):
+                imgs.append(img)
+            # only append when labels were loaded
+            if(len(label) > 0):
+                labels.append(label)
+        
+        #only concatenate if there were arrays loaded
+        if(len(imgs) > 0 and len(labels) > 0):
+            imgs, labels = np.concatenate(imgs), np.concatenate(labels)
+
+        return imgs, labels
+
+
     def read_dataset_whole(self, include : List[ETLCharacterGroups] = [ETLCharacterGroups.all],
                             processes : int = 1,
                             resize : Tuple[int, int] = (64, 64),
