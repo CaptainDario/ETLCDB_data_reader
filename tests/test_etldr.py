@@ -141,25 +141,25 @@ class etldr(unittest.TestCase):
         reader = ETLDataReader(os.path.join(os.getcwd(), "etl_data_set"))
 
         # test number filter
-        _imgs, _labels = reader.read_dataset_file(1, ETLDataNames.ETL1, ETLCharacterGroups.number)
+        _imgs, _labels = reader.read_dataset_file(1, ETLDataNames.ETL1, [ETLCharacterGroups.number])
         self.assertEqual(len(_labels), 11560)
         # test number roman latter filter
-        _imgs, _labels = reader.read_dataset_file(3, ETLDataNames.ETL1, ETLCharacterGroups.roman)
+        _imgs, _labels = reader.read_dataset_file(3, ETLDataNames.ETL1, [ETLCharacterGroups.roman])
         self.assertEqual(len(_labels), 11560)
         # test symbol filter
-        _imgs, _labels = reader.read_dataset_file(6, ETLDataNames.ETL1, ETLCharacterGroups.symbols)
+        _imgs, _labels = reader.read_dataset_file(6, ETLDataNames.ETL1, [ETLCharacterGroups.symbols])
         self.assertEqual(len(_labels), 11560)
         # test all filter with mixed data set file
-        _imgs, _labels = reader.read_dataset_file(5, ETLDataNames.ETL1, ETLCharacterGroups.all)
+        _imgs, _labels = reader.read_dataset_file(5, ETLDataNames.ETL1, [ETLCharacterGroups.all])
         self.assertEqual(len(_labels), 11560)
         # test kanji filter
-        _imgs, _labels = reader.read_dataset_file(1, ETLDataNames.ETL8G, ETLCharacterGroups.kanji)
+        _imgs, _labels = reader.read_dataset_file(1, ETLDataNames.ETL8G, [ETLCharacterGroups.kanji])
         self.assertEqual(len(_labels), 4405)
         # test hiragana filter
-        _imgs, _labels = reader.read_dataset_file(1, ETLDataNames.ETL4, ETLCharacterGroups.hiragana)
+        _imgs, _labels = reader.read_dataset_file(1, ETLDataNames.ETL4, [ETLCharacterGroups.hiragana])
         self.assertEqual(len(_labels), 6120)
         # test katakana filter
-        _imgs, _labels = reader.read_dataset_file(1, ETLDataNames.ETL5, ETLCharacterGroups.katakana)
+        _imgs, _labels = reader.read_dataset_file(1, ETLDataNames.ETL5, [ETLCharacterGroups.katakana])
         self.assertEqual(len(_labels), 10608)
         # test *implicit* all filter with mixed data set file
         _imgs, _labels = reader.read_dataset_file(5, ETLDataNames.ETL1)
