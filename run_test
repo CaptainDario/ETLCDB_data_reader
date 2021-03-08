@@ -1,7 +1,0 @@
-# to run the tests you should invoke the following command
-# on the top level folder of this package
-
-python tests\test_etldr.py
-
-# specific tests can be run like this
-python tests\test_etldr.py etldr.test_read_dataset_part_parallel
