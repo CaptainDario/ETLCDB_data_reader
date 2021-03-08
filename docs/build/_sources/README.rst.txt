@@ -306,6 +306,10 @@ Development notes
 -----------------
 
 For development *python 3.9* was used. :raw-html-m2r:`<br/>`
+
+documentation
+^^^^^^^^^^^^^
+
 The documentation was made with Sphinx and m2r.
 m2r is being used to automatically convert this README.md to .rst.
 This happens when the ``sphinx-build``\ -command is invoked in the 'docs'-folder. :raw-html-m2r:`<br>`
@@ -315,15 +319,42 @@ Build the docs (should be run in docs folder): :raw-html-m2r:`<br>`
 
    sphinx-build source build
 
+packages
+^^^^^^^^
+
 A list of all packages needed for development can be found in 'requirements.txt'.
 
-Some `simple test cases <.\tests\test_etldr.py>`_ are defined in the tests folder.
+testing
+^^^^^^^
 
-Testing was only performed on Windows 10.
+Some `simple test cases <./tests/test_etldr.py>`_ are defined in the tests folder.
+Testing was only performed on Windows 10.\ :raw-html-m2r:`<br>`
+All tests can be executed with:
+
+.. code-block::
+
+   python tests\test_etldr.py
+
+Specific tests can be run with:
+
+.. code-block::
+
+   python tests\test_etldr.py etldr.test_read_dataset_part_parallel
+
+Those commands should be executed on the top level of this package.
+
+building the wheel
+^^^^^^^^^^^^^^^^^^
+
+The wheel can be build with:
+
+.. code-block::
+
+   python setup.py sdist bdist_wheel
 
 Additional Notes
 ----------------
 
 Pull requests and issues are welcome.
 
-If you open a pull request make sure to `run the tests before <.\run_test>`_.
+If you open a pull request make sure to `run the tests before <./run_test>`_.

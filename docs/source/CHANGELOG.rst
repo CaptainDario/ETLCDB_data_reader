@@ -10,6 +10,13 @@ features:
 
 * multi processed loading of the data is now possible
 
+changes:
+
+
+* breaking
+
+  * the parameter 'include' expects now a list 
+
 ----
 
 v 1.0:

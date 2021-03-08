@@ -325,22 +325,47 @@ Currently one can load:</p>
 </div>
 <div class="section" id="development-notes">
 <h2>Development notes<a class="headerlink" href="#development-notes" title="Permalink to this headline">¶</a></h2>
-<p>For development <em>python 3.9</em> was used. <span class="raw-html-m2r"><br/></span>
-The documentation was made with Sphinx and m2r.
+<p>For development <em>python 3.9</em> was used. <span class="raw-html-m2r"><br/></span></p>
+<div class="section" id="documentation">
+<h3>documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h3>
+<p>The documentation was made with Sphinx and m2r.
 m2r is being used to automatically convert this README.md to .rst.
 This happens when the <code class="docutils literal notranslate"><span class="pre">sphinx-build</span></code>-command is invoked in the ‘docs’-folder. <span class="raw-html-m2r"><br></span>
 Build the docs (should be run in docs folder): <span class="raw-html-m2r"><br></span></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sphinx</span><span class="o">-</span><span class="n">build</span> <span class="n">source</span> <span class="n">build</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="packages">
+<h3>packages<a class="headerlink" href="#packages" title="Permalink to this headline">¶</a></h3>
 <p>A list of all packages needed for development can be found in ‘requirements.txt’.</p>
-<p>Some <a class="reference external" href=".teststest_etldr.py">simple test cases</a> are defined in the tests folder.</p>
-<p>Testing was only performed on Windows 10.</p>
+</div>
+<div class="section" id="testing">
+<h3>testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h3>
+<p>Some <a class="reference external" href="./tests/test_etldr.py">simple test cases</a> are defined in the tests folder.
+Testing was only performed on Windows 10.<span class="raw-html-m2r"><br></span>
+All tests can be executed with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">tests</span>\<span class="n">test_etldr</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>Specific tests can be run with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">tests</span>\<span class="n">test_etldr</span><span class="o">.</span><span class="n">py</span> <span class="n">etldr</span><span class="o">.</span><span class="n">test_read_dataset_part_parallel</span>
+</pre></div>
+</div>
+<p>Those commands should be executed on the top level of this package.</p>
+</div>
+<div class="section" id="building-the-wheel">
+<h3>building the wheel<a class="headerlink" href="#building-the-wheel" title="Permalink to this headline">¶</a></h3>
+<p>The wheel can be build with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">sdist</span> <span class="n">bdist_wheel</span>
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="additional-notes">
 <h2>Additional Notes<a class="headerlink" href="#additional-notes" title="Permalink to this headline">¶</a></h2>
 <p>Pull requests and issues are welcome.</p>
-<p>If you open a pull request make sure to <a class="reference external" href=".run_test">run the tests before</a>.</p>
+<p>If you open a pull request make sure to <a class="reference external" href="./run_test">run the tests before</a>.</p>
 </div>
 </div>
 
@@ -368,7 +393,13 @@ Build the docs (should be run in docs folder): <span class="raw-html-m2r"><br></
 </ul>
 </li>
 <li><a class="reference internal" href="#limitations">Limitations</a></li>
-<li><a class="reference internal" href="#development-notes">Development notes</a></li>
+<li><a class="reference internal" href="#development-notes">Development notes</a><ul>
+<li><a class="reference internal" href="#documentation">documentation</a></li>
+<li><a class="reference internal" href="#packages">packages</a></li>
+<li><a class="reference internal" href="#testing">testing</a></li>
+<li><a class="reference internal" href="#building-the-wheel">building the wheel</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#additional-notes">Additional Notes</a></li>
 </ul>
 </li>
