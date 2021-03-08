@@ -76,6 +76,64 @@ class etldr(unittest.TestCase):
 
         self.assertEqual(len(_labels), 141319)
 
+    def test_read_dataset_part_parallel(self):
+        """Test the ETLDataReader.read_dataset_part method in parallel mode.
+        """
+        
+        print("started: test_read_dataset_part_parallel")
+        
+        reader = ETLDataReader(os.path.join(os.getcwd(), "etl_data_set"))
+
+        t_1_1 = time.perf_counter()
+        _imgs_1, _labels_1 = reader.read_dataset_part(ETLDataNames.ETL9, [ETLCharacterGroups.all])
+        t_1_2 = time.perf_counter()
+        
+        t_2_1 = time.perf_counter()
+        _imgs_2, _labels_2 = reader.read_dataset_part(ETLDataNames.ETL9, [ETLCharacterGroups.all], mp.cpu_count())
+        t_2_2 = time.perf_counter()
+
+        time_1 = t_1_2 - t_1_1
+        time_2 = t_2_2 - t_2_1
+
+        print("running with 1 process in", time_1)
+        print("running with", mp.cpu_count(), "processes in", time_2)
+        print("absolute difference:", time_1 - time_2)
+        print("speedup:", time_1 / time_2)
+        print("efficiency:", time_2 / mp.cpu_count())
+
+        self.assertEqual(len(_labels_2), len(_labels_1))
+
+        print("finished: test_read_dataset_part_parallel")
+    
+    def test_read_dataset_whole_parallel(self):
+        """Test the ETLDataReader.read_dataset_whole method in parallel mode.
+        """
+        
+        print("started: test_read_dataset_whole_parallel")
+        
+        reader = ETLDataReader(os.path.join(os.getcwd(), "etl_data_set"))
+
+        t_1_1 = time.perf_counter()
+        _imgs_1, _labels_1 = reader.read_dataset_whole([ETLCharacterGroups.all])
+        t_1_2 = time.perf_counter()
+        
+        t_2_1 = time.perf_counter()
+        _imgs_2, _labels_2 = reader.read_dataset_whole([ETLCharacterGroups.all], mp.cpu_count())
+        t_2_2 = time.perf_counter()
+
+        time_1 = t_1_2 - t_1_1
+        time_2 = t_2_2 - t_2_1
+
+        print("running with 1 process in", time_1)
+        print("running with", mp.cpu_count(), "processes in", time_2)
+        print("absolute difference:", time_1 - time_2)
+        print("speedup:", time_1 / time_2)
+        print("efficiency:", time_2 / mp.cpu_count())
+
+        self.assertEqual(len(_labels_2), len(_labels_1))
+
+        print("finished: test_read_dataset_whole_parallel")
+
     def test_read_dataset_selection(self):
         """Test the ETLDataReader.read_dataset_file method with filtering.
         """
