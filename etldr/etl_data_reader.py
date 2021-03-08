@@ -168,7 +168,44 @@ class ETLDataReader():
 
         return imgs, labels
 
-    def read_dataset_whole(self, *include : ETLCharacterGroups,
+    def read_dataset_whole(self, include : List[ETLCharacterGroups] = [ETLCharacterGroups.all],
+                            processes : int = 1,
+                            resize : Tuple[int, int] = (64, 64),
+                            normalize : bool = True) -> Tuple[np.array, np.array]:
+        """ Read, process and filter the whole ETL data set (ETL1 - ETL9G) in multiple processes.
+
+        Note:
+            The loaded images will be a numpy array with dtype=float16.
+
+        Caution:
+            Reading the whole dataset with all available entries will use up a lot of memory (>50GB).
+
+        Warning:
+            Will throw an error if not all parts and files of the data set can be found in 'self.path'.
+            Also if the images do not get resized to the same size.
+
+        Arguments:
+            include   : All character types (Kanji, Hiragana, Symbols, stc.) which should be included.
+            processes : The number of processes which should be used for loading the data.
+                        Every process will run on a separate CPU core.
+                        Therefore it is recommended to not use more than (virtual) processor cores are available.
+            resize    : The size the image should be resized (if resize < 1 the images will not be resized). Defaults to (64, 64).
+            normalize : Should the gray values be normalized between [0.0, 1.0]. Defaults to True.
+
+        Returns:
+            The loaded and filtered data set entries in the form: (images, labels).
+        """
+        
+        if(processes == 1):
+            return self.__read_dataset_whole_sequential(include, resize, normalize)
+        elif(processes > 1):
+            return self.__read_dataset_whole_parallel(include, processes, resize, normalize)
+        else:
+            print(processes + "is not a valid amount of processes.")
+            print("Loading in sequential mode...")
+
+            return self.__read_dataset_whole_sequential(include, resize, normalize)
+
                             resize : Tuple[int, int] = (64, 64),
                             normalize : bool = True) -> Tuple[np.array, np.array]:
         """ Read, process and filter the whole ETL data set (ETL1 - ETL9G).
