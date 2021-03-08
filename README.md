@@ -174,7 +174,11 @@ However this package should be easily extendable to add support for accessing th
 For development *python 3.9* was used. <br/>
 The documentation was made with Sphinx and m2r.
 m2r is being used to automatically convert this README.md to .rst.
-This happens when the ```sphinx-build```-command is invoked in the 'docs'-folder.
+This happens when the ```sphinx-build```-command is invoked in the 'docs'-folder. <br>
+Build the docs (should be run in docs folder): <br>
+```
+sphinx-build source build
+```
 
 A list of all packages needed for development can be found in 'requirements.txt'.
 
