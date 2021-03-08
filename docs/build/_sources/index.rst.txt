@@ -20,6 +20,7 @@ If something is unclear first take a look at the :ref:`API <API>` or open an iss
    ./getting_started.rst
    ./API.rst
    ./indices_and_tables.rst 
+   ./CHANGELOG.rst
 
 
 

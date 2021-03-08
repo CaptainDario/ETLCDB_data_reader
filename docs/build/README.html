@@ -48,7 +48,7 @@ The data set can be found <a class="reference external" href="http://etlcdb.db.a
 <span class="raw-html-m2r"><br/></span>
 Because the data set is stored in a custom data structure it can be hard to load.
 This python package provides an easy way to load this data set and filter entries.<span class="raw-html-m2r"><br/></span>
-An example of using this package can be found in my application: <a class="reference external" href="https://github.com/CaptainDario/DaKanjiRecognizer">DaKanjiRecognizer</a>. There it was used for <a class="reference external" href="UPDATEHEREPLEASE">training an CNN to recognize japanese kanji characters</a>.<span class="raw-html-m2r"><br/></span>
+An example of using this package can be found in my application: <a class="reference external" href="https://github.com/CaptainDario/DaKanjiRecognizer">DaKanjiRecognizer</a>. There it was used for <a class="reference external" href="https://github.com/CaptainDario/DaKanjiRecognizer-ML">training an CNN to recognize Japanese kanji characters</a>.<span class="raw-html-m2r"><br/></span>
 General information about the data set can be found in the table below.</p>
 <table class="docutils align-default">
 <colgroup>
@@ -68,7 +68,7 @@ General information about the data set can be found in the table below.</p>
 <th class="head"><p>res</p></th>
 <th class="head"><p>Bit depth</p></th>
 <th class="head"><p>code</p></th>
-<th class="head"><p>samples perlabel</p></th>
+<th class="head"><p>samples per label</p></th>
 <th class="head"><p>total samples</p></th>
 </tr>
 </thead>
@@ -179,7 +179,11 @@ General information about the data set can be found in the table below.</p>
 <h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
 <p>First download the wheel from the <a class="reference external" href="https://github.com/CaptainDario/ETL_data_reader/releases">releases page</a>.
 Now install the wheel with:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">.</span>\<span class="n">path</span>\<span class="n">to</span>\<span class="n">ETL_data_reader_xxx</span><span class="o">.</span><span class="n">whl</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install .<span class="se">\p</span>ath<span class="se">\t</span>o<span class="se">\e</span>tl_data_reader_CaptainDario-2.0-py3-none-any.whl
+</pre></div>
+</div>
+<p>Or install it directly via https:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install https://github.com/CaptainDario/ETL_data_reader/releases/download/2.0/etl_data_reader_CaptainDario-2.0-py3-none-any.whl
 </pre></div>
 </div>
 <p>Assuming you already have <a class="reference external" href="http://etlcdb.db.aist.go.jp/obtaining-etl-character-database">downloaded the ETL data set</a>.
@@ -232,7 +236,7 @@ First rename the folders like this:</p>
 <p>To load the data set you need an <code class="docutils literal notranslate"><span class="pre">ETLDataReader</span></code>-instance.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">path_to_data_set</span> <span class="o">=</span> <span class="s2">&quot;the\path</span><span class="se">\t</span><span class="s2">o</span><span class="se">\t</span><span class="s2">he\data\set&quot;</span>
 
-<span class="n">reader</span> <span class="o">=</span> <span class="n">ETLDataReader</span><span class="p">(</span><span class="n">path_to_data_set</span><span class="p">)</span>
+<span class="n">reader</span> <span class="o">=</span> <span class="n">etldr</span><span class="o">.</span><span class="n">ETLDataReader</span><span class="p">(</span><span class="n">path_to_data_set</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>where <code class="docutils literal notranslate"><span class="pre">path_to_data_set</span></code> should be the path to the main folder of your data set copy.<span class="raw-html-m2r"><br/></span>
@@ -242,10 +246,11 @@ Example: “E:/data/ETL_data_set/” <span class="raw-html-m2r"><br/></span>
 <div class="section" id="load-one-data-set-file">
 <h3>Load one data set file<a class="headerlink" href="#load-one-data-set-file" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">etldr.etl_data_names</span> <span class="kn">import</span> <span class="n">ETLDataNames</span>
+<span class="kn">from</span> <span class="nn">etldr.etl_character_groups</span> <span class="kn">import</span> <span class="n">ETLCharacterGroups</span>
 
-<span class="n">katakana</span><span class="p">,</span> <span class="n">number</span> <span class="o">=</span> <span class="n">ETLCharacterGroups</span><span class="o">.</span><span class="n">katakana</span><span class="p">,</span> <span class="n">ETLCharacterGroups</span><span class="o">.</span><span class="n">number</span>
+<span class="n">include</span> <span class="o">=</span> <span class="p">[</span><span class="n">ETLCharacterGroups</span><span class="o">.</span><span class="n">katakana</span><span class="p">,</span> <span class="n">ETLCharacterGroups</span><span class="o">.</span><span class="n">number</span><span class="p">]</span>
 
-<span class="n">imgs</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read_dataset_file</span><span class="p">(</span><span class="n">part</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">data_set</span><span class="o">=</span><span class="n">ETLDataNames</span><span class="o">.</span><span class="n">ETL7</span><span class="p">,</span> <span class="n">katakana</span><span class="p">,</span> <span class="n">number</span><span class="p">)</span>
+<span class="n">imgs</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read_dataset_file</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">ETLDataNames</span><span class="o">.</span><span class="n">ETL7</span><span class="p">,</span> <span class="n">include</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>This will load “…ETL_data_set_folderETL7ETL7_2”. <span class="raw-html-m2r"><br/></span></p>
@@ -254,10 +259,11 @@ Example: “E:/data/ETL_data_set/” <span class="raw-html-m2r"><br/></span>
 <div class="section" id="load-one-data-set-part">
 <h3>Load one data set part<a class="headerlink" href="#load-one-data-set-part" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">etldr.etl_data_names</span> <span class="kn">import</span> <span class="n">ETLDataNames</span>
+<span class="kn">from</span> <span class="nn">etldr.etl_character_groups</span> <span class="kn">import</span> <span class="n">ETLCharacterGroups</span>
 
-<span class="n">kanji</span><span class="p">,</span> <span class="n">hiragana</span> <span class="o">=</span> <span class="n">ETLCharacterGroups</span><span class="o">.</span><span class="n">kanji</span><span class="p">,</span> <span class="n">ETLCharacterGroups</span><span class="o">.</span><span class="n">hiragana</span>
+<span class="n">include</span> <span class="o">=</span> <span class="p">[</span><span class="n">ETLCharacterGroups</span><span class="o">.</span><span class="n">kanji</span><span class="p">,</span> <span class="n">ETLCharacterGroups</span><span class="o">.</span><span class="n">hiragana</span><span class="p">]</span>
 
-<span class="n">imgs</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read_dataset_part</span><span class="p">(</span><span class="n">data_set</span><span class="o">=</span><span class="n">ETL_data_names</span><span class="o">.</span><span class="n">ETL2</span><span class="p">,</span> <span class="n">kanji</span><span class="p">,</span> <span class="n">hiragana</span><span class="p">)</span>
+<span class="n">imgs</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read_dataset_part</span><span class="p">(</span><span class="n">ETLDataNames</span><span class="o">.</span><span class="n">ETL2</span><span class="p">,</span> <span class="n">include</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>This will load all files in the folder “…ETL_data_set_folderETL2&quot;.
@@ -267,14 +273,26 @@ Namely: …ETL2ETL2_1, …ETL2ETL2_1 ,…, …ETL2ETL2_5. <span class="raw-html-
 <div class="section" id="load-the-whole-data-set">
 <h3>Load the whole data set<a class="headerlink" href="#load-the-whole-data-set" title="Permalink to this headline">¶</a></h3>
 <p><strong>Warning: This will use a lot of memory.</strong> <span class="raw-html-m2r"><br/></span></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">etldr.etl_data_names</span> <span class="kn">import</span> <span class="n">ETLDataNames</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">etldr.etl_character_groups</span> <span class="kn">import</span> <span class="n">ETLCharacterGroups</span>
 
-<span class="n">roman</span><span class="p">,</span> <span class="n">symbol</span> <span class="o">=</span> <span class="n">ETLCharacterGroups</span><span class="o">.</span><span class="n">roman</span><span class="p">,</span> <span class="n">ETLCharacterGroups</span><span class="o">.</span><span class="n">symbols</span>
+<span class="n">include</span> <span class="o">=</span> <span class="p">[</span><span class="n">ETLCharacterGroups</span><span class="o">.</span><span class="n">roman</span><span class="p">,</span> <span class="n">ETLCharacterGroups</span><span class="o">.</span><span class="n">symbols</span><span class="p">]</span>
 
-<span class="n">imgs</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read_dataset_whole</span><span class="p">(</span><span class="n">roman</span><span class="p">,</span> <span class="n">symbol</span><span class="p">)</span>
+<span class="n">imgs</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read_dataset_whole</span><span class="p">(</span><span class="n">include</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>This will load all <em>roman</em> and <em>symbol</em> characters from the whole ETL data set.</p>
+</div>
+<div class="section" id="load-the-whole-data-set-using-multiple-processes">
+<h3>Load the whole data set using multiple processes<a class="headerlink" href="#load-the-whole-data-set-using-multiple-processes" title="Permalink to this headline">¶</a></h3>
+<p><strong>Warning: This will use a lot of memory.</strong> <span class="raw-html-m2r"><br/></span></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">etldr.etl_character_groups</span> <span class="kn">import</span> <span class="n">ETLCharacterGroups</span>
+
+<span class="n">include</span> <span class="o">=</span> <span class="p">[</span><span class="n">ETLCharacterGroups</span><span class="o">.</span><span class="n">roman</span><span class="p">,</span> <span class="n">ETLCharacterGroups</span><span class="o">.</span><span class="n">symbols</span><span class="p">]</span>
+
+<span class="n">imgs</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read_dataset_whole</span><span class="p">(</span><span class="n">include</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This will load all <em>roman</em> and <em>symbol</em> characters from the whole ETL data set using 16 processes.</p>
 <div class="section" id="note-filtering-data-set-entries">
 <h4><strong>Note: filtering data set entries</strong><a class="headerlink" href="#note-filtering-data-set-entries" title="Permalink to this headline">¶</a></h4>
 <p>As the examples above already showed the loading of data set entries can be restricted to certain groups.
@@ -307,10 +325,14 @@ Currently one can load:</p>
 </div>
 <div class="section" id="development-notes">
 <h2>Development notes<a class="headerlink" href="#development-notes" title="Permalink to this headline">¶</a></h2>
-<p>For development <em>python 3.8</em> was used. <span class="raw-html-m2r"><br/></span>
+<p>For development <em>python 3.9</em> was used. <span class="raw-html-m2r"><br/></span>
 The documentation was made with Sphinx and m2r.
 m2r is being used to automatically convert this README.md to .rst.
-This happens when the <code class="docutils literal notranslate"><span class="pre">sphinx-build</span></code>-command is invoked in the ‘docs’-folder.</p>
+This happens when the <code class="docutils literal notranslate"><span class="pre">sphinx-build</span></code>-command is invoked in the ‘docs’-folder. <span class="raw-html-m2r"><br></span>
+Build the docs (should be run in docs folder): <span class="raw-html-m2r"><br></span></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sphinx</span><span class="o">-</span><span class="n">build</span> <span class="n">source</span> <span class="n">build</span>
+</pre></div>
+</div>
 <p>A list of all packages needed for development can be found in ‘requirements.txt’.</p>
 <p>Some <a class="reference external" href=".teststest_etldr.py">simple test cases</a> are defined in the tests folder.</p>
 <p>Testing was only performed on Windows 10.</p>
@@ -337,7 +359,8 @@ This happens when the <code class="docutils literal notranslate"><span class="pr
 <li><a class="reference internal" href="#usage">Usage</a><ul>
 <li><a class="reference internal" href="#load-one-data-set-file">Load one data set file</a></li>
 <li><a class="reference internal" href="#load-one-data-set-part">Load one data set part</a></li>
-<li><a class="reference internal" href="#load-the-whole-data-set">Load the whole data set</a><ul>
+<li><a class="reference internal" href="#load-the-whole-data-set">Load the whole data set</a></li>
+<li><a class="reference internal" href="#load-the-whole-data-set-using-multiple-processes">Load the whole data set using multiple processes</a><ul>
 <li><a class="reference internal" href="#note-filtering-data-set-entries"><strong>Note: filtering data set entries</strong></a></li>
 <li><a class="reference internal" href="#note-processing-the-images-while-loading"><strong>Note: processing the images while loading</strong></a></li>
 </ul>

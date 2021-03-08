@@ -117,14 +117,18 @@
 
 <dl class="py method">
 <dt id="etl_data_reader.ETLDataReader.read_dataset_file">
-<code class="sig-name descname">read_dataset_file</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">part</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">data_set</span><span class="p">:</span> <span class="n">etldr.etl_data_names.ETLDataNames</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">include</span><span class="p">:</span> <span class="n">etldr.etl_character_groups.ETLCharacterGroups</span></em>, <em class="sig-param"><span class="n">resize</span><span class="p">:</span> <span class="n">Tuple<span class="p">[</span>int<span class="p">, </span>int<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">(64, 64)</span></em>, <em class="sig-param"><span class="n">normalize</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em><span class="sig-paren">)</span> &#x2192; Tuple<span class="p">[</span>numpy.array<span class="p">, </span>numpy.array<span class="p">]</span><a class="headerlink" href="#etl_data_reader.ETLDataReader.read_dataset_file" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">read_dataset_file</code><span class="sig-paren">(</span><em class="sig-param">part: int, data_set: etldr.etl_data_names.ETLDataNames, include: List[etldr.etl_character_groups.ETLCharacterGroups] = [&lt;ETLCharacterGroups.all: '.*'&gt;], resize: Tuple[int, int] = (64, 64), normalize: bool = True, show_loading_bar: bool = True</em><span class="sig-paren">)</span> &#x2192; Tuple<span class="p">[</span>numpy.array<span class="p">, </span>numpy.array<span class="p">]</span><a class="headerlink" href="#etl_data_reader.ETLDataReader.read_dataset_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads, process and filters all entries from the ETL data set file.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The loaded images will be a numpy array with dtype=float16.</p>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>part</strong> – The part which should be loaded from the given data set part (only the number).</p></li>
 <li><p><strong>data_set</strong> – The data set part which should be loaded (ex.: ‘ETL1’).</p></li>
-<li><p><strong>*include</strong> – All character types (Kanji, Hiragana, Symbols, stc.) which should be included. If unset everyting will be loaded.</p></li>
+<li><p><strong>include</strong> – All character types (Kanji, Hiragana, Symbols, stc.) which should be included.</p></li>
 <li><p><strong>resize</strong> – The size the image should be resized (if resize &lt; 1 the images will not be resized). Defaults to (64, 64).</p></li>
 <li><p><strong>normalize</strong> – Should the gray values be normalized between [0.0, 1.0]. Defaults to True.</p></li>
 </ul>
@@ -140,8 +144,12 @@
 
 <dl class="py method">
 <dt id="etl_data_reader.ETLDataReader.read_dataset_part">
-<code class="sig-name descname">read_dataset_part</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data_set</span><span class="p">:</span> <span class="n">etldr.etl_data_names.ETLDataNames</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">include</span><span class="p">:</span> <span class="n">etldr.etl_character_groups.ETLCharacterGroups</span></em>, <em class="sig-param"><span class="n">resize</span><span class="p">:</span> <span class="n">Tuple<span class="p">[</span>int<span class="p">, </span>int<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">(64, 64)</span></em>, <em class="sig-param"><span class="n">normalize</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em><span class="sig-paren">)</span> &#x2192; Tuple<span class="p">[</span>numpy.array<span class="p">, </span>numpy.array<span class="p">]</span><a class="headerlink" href="#etl_data_reader.ETLDataReader.read_dataset_part" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">read_dataset_part</code><span class="sig-paren">(</span><em class="sig-param">data_set: etldr.etl_data_names.ETLDataNames, include: List[etldr.etl_character_groups.ETLCharacterGroups] = [&lt;ETLCharacterGroups.all: '.*'&gt;], processes: int = 1, resize: Tuple[int, int] = (64, 64), normalize: bool = True</em><span class="sig-paren">)</span> &#x2192; Tuple<span class="p">[</span>numpy.array<span class="p">, </span>numpy.array<span class="p">]</span><a class="headerlink" href="#etl_data_reader.ETLDataReader.read_dataset_part" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read, process and filter one part (ex.: ETL1) of the ETL data set.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The loaded images will be a numpy array with dtype=float16.</p>
+</div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>Will throw an error if not all parts of the data set can be found in ‘self.pathdata_set’.
@@ -151,7 +159,10 @@ Also if the images do not get resized to the same size.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>data_set</strong> – The data set part which should be loaded.</p></li>
-<li><p><strong>*include</strong> – All character types (Kanji, Hiragana, Symbols, stc.) which should be included. If unset everyting will be loaded.</p></li>
+<li><p><strong>include</strong> – All character types (Kanji, Hiragana, Symbols, stc.) which should be included.</p></li>
+<li><p><strong>processes</strong> – The number of processes which should be used for loading the data.
+Every process will run on a separate CPU core.
+Therefore it is recommended to not use more than (virtual) processor cores are available.</p></li>
 <li><p><strong>resize</strong> – The size the image should be resized (if resize &lt; 1 the images will not be resized). Defaults to (64, 64).</p></li>
 <li><p><strong>normalize</strong> – Should the gray values be normalized between [0.0, 1.0]. Defaults to True.</p></li>
 </ul>
@@ -167,11 +178,15 @@ Also if the images do not get resized to the same size.</p>
 
 <dl class="py method">
 <dt id="etl_data_reader.ETLDataReader.read_dataset_whole">
-<code class="sig-name descname">read_dataset_whole</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">include</span><span class="p">:</span> <span class="n">etldr.etl_character_groups.ETLCharacterGroups</span></em>, <em class="sig-param"><span class="n">resize</span><span class="p">:</span> <span class="n">Tuple<span class="p">[</span>int<span class="p">, </span>int<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">(64, 64)</span></em>, <em class="sig-param"><span class="n">normalize</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em><span class="sig-paren">)</span> &#x2192; Tuple<span class="p">[</span>numpy.array<span class="p">, </span>numpy.array<span class="p">]</span><a class="headerlink" href="#etl_data_reader.ETLDataReader.read_dataset_whole" title="Permalink to this definition">¶</a></dt>
-<dd><p>Read, process and filter the whole ETL data set (ETL1 - ETL9G).</p>
+<code class="sig-name descname">read_dataset_whole</code><span class="sig-paren">(</span><em class="sig-param">include: List[etldr.etl_character_groups.ETLCharacterGroups] = [&lt;ETLCharacterGroups.all: '.*'&gt;], processes: int = 1, resize: Tuple[int, int] = (64, 64), normalize: bool = True</em><span class="sig-paren">)</span> &#x2192; Tuple<span class="p">[</span>numpy.array<span class="p">, </span>numpy.array<span class="p">]</span><a class="headerlink" href="#etl_data_reader.ETLDataReader.read_dataset_whole" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read, process and filter the whole ETL data set (ETL1 - ETL9G) in multiple processes.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The loaded images will be a numpy array with dtype=float16.</p>
+</div>
 <div class="admonition caution">
 <p class="admonition-title">Caution</p>
-<p>Reading the whole dataset with all available entries will use up a lot of memory (&gt;50GB).</p>
+<p>Reading the whole dataset with all available entries will use up a lot of memory.</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -181,7 +196,10 @@ Also if the images do not get resized to the same size.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>*include</strong> – All character types (Kanji, Hiragana, Symbols, stc.) which should be included. If unset everyting will be loaded.</p></li>
+<li><p><strong>include</strong> – All character types (Kanji, Hiragana, Symbols, stc.) which should be included.</p></li>
+<li><p><strong>processes</strong> – The number of processes which should be used for loading the data.
+Every process will run on a separate CPU core.
+Therefore it is recommended to not use more than (virtual) processor cores are available.</p></li>
 <li><p><strong>resize</strong> – The size the image should be resized (if resize &lt; 1 the images will not be resized). Defaults to (64, 64).</p></li>
 <li><p><strong>normalize</strong> – Should the gray values be normalized between [0.0, 1.0]. Defaults to True.</p></li>
 </ul>
@@ -197,13 +215,13 @@ Also if the images do not get resized to the same size.</p>
 
 <dl class="py method">
 <dt id="etl_data_reader.ETLDataReader.select_entries">
-<code class="sig-name descname">select_entries</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">label</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">include</span><span class="p">:</span> <span class="n">etldr.etl_character_groups.ETLCharacterGroups</span></em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#etl_data_reader.ETLDataReader.select_entries" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">select_entries</code><span class="sig-paren">(</span><em class="sig-param">label: str, include: List[etldr.etl_character_groups.ETLCharacterGroups] = [&lt;ETLCharacterGroups.all: '.*'&gt;]</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#etl_data_reader.ETLDataReader.select_entries" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks if the given entry given by ‘label’ should be included in the loaded data set.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>label</strong> – The label which should be checked if it should be included.</p></li>
-<li><p><strong>*include</strong> – All character types which should be included. Defaults to all if unset.</p></li>
+<li><p><strong>include</strong> – All character types which should be included.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>

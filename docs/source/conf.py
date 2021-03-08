@@ -20,12 +20,20 @@ sys.path.insert(0, path_2)
 # -- use m2r to convert README to *.rst --------------------------------------
 import m2r
 path_to_readme = os.path.join(os.path.dirname(os.path.dirname(os.getcwd())), "README.md")
-rst = m2r.parse_from_file(path_to_readme)
+path_to_changelog = os.path.join(os.path.dirname(os.path.dirname(os.getcwd())), "CHANGELOG.md")
+
+readme_rst = m2r.parse_from_file(path_to_readme)
+changelog_rst = m2r.parse_from_file(path_to_changelog)
 
 with open("README.rst", "a+") as file:
     file.seek(0)
     file.truncate()
-    file.write(rst)
+    file.write(readme_rst)
+
+with open("CHANGELOG.rst", "a+") as file:
+    file.seek(0)
+    file.truncate()
+    file.write(changelog_rst)
 
 # -- Project information -----------------------------------------------------
 
