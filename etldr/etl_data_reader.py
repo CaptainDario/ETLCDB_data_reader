@@ -123,8 +123,43 @@ class ETLDataReader():
         #convert lists to numpy arrays
         return np.array(imgs, dtype="float16"), np.array(labels, dtype="str")
 
+    
     def read_dataset_part(self, data_set : ETLDataNames,
-                            *include : ETLCharacterGroups,
+                            include : List[ETLCharacterGroups] = [ETLCharacterGroups.all],
+                            processes : int = 1,
+                            resize : Tuple[int, int] = (64, 64),
+                            normalize : bool = True) -> Tuple[np.array, np.array]:
+        """Read, process and filter one part (ex.: ETL1) of the ETL data set.
+        
+        Note:
+            The loaded images will be a numpy array with dtype=float16.
+
+        Warning:
+            Will throw an error if not all parts of the data set can be found in 'self.path\data_set'.
+            Also if the images do not get resized to the same size.
+
+        Args:
+            data_set  : The data set part which should be loaded.
+            include   : All character types (Kanji, Hiragana, Symbols, stc.) which should be included.
+            processes : The number of processes which should be used for loading the data.
+                        Every process will run on a separate CPU core.
+                        Therefore it is recommended to not use more than (virtual) processor cores are available.
+            resize    : The size the image should be resized (if resize < 1 the images will not be resized). Defaults to (64, 64).
+            normalize : Should the gray values be normalized between [0.0, 1.0]. Defaults to True.
+
+        Returns:
+            The loaded and filtered data set entries in the form: (images, labels).
+        """
+
+        if(processes == 1):
+            return self.__read_dataset_part_sequential(data_set, include, resize, normalize)
+        elif(processes > 1):
+            return self.__read_dataset_part_parallel(data_set, include, processes, resize, normalize)
+        else:
+            print(processes + "is not a valid amount of processes.")
+            print("Loading in sequential mode...")
+
+            return self.__read_dataset_part_sequential(data_set, include, resize, normalize)
                             resize : Tuple[int, int] = (64, 64),
                             normalize : bool = True) -> Tuple[np.array, np.array]:
         """Read, process and filter one part (ex.: ETL1) of the ETL data set.
