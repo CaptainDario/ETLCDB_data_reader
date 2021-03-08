@@ -298,7 +298,7 @@ class ETLDataReader():
             The loaded images will be a numpy array with dtype=float16.
 
         Caution:
-            Reading the whole dataset with all available entries will use up a lot of memory (>50GB).
+            Reading the whole dataset with all available entries will use up a lot of memory.
 
         Warning:
             Will throw an error if not all parts and files of the data set can be found in 'self.path'.
@@ -336,7 +336,7 @@ class ETLDataReader():
             This method should only be called through the 'read_dataset_whole' method.
 
         Caution:
-            Reading the whole dataset with all available entries will use up a lot of memory (>50GB).
+            Reading the whole dataset with all available entries will use up a lot of memory.
 
         Warning:
             Will throw an error if not all parts and files of the data set can be found in 'self.path'.
@@ -384,7 +384,7 @@ class ETLDataReader():
             This method should only be called through the 'read_dataset_whole' method.
 
         Caution:
-            Reading the whole dataset with all available entries will use up a lot of memory (>50GB).
+            Reading the whole dataset with all available entries will use up a lot of memory.
 
         Warning:
             Will throw an error if not all parts and files of the data set can be found in 'self.path'.
