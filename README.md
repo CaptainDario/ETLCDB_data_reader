@@ -10,10 +10,10 @@ The data set can be found [on the ETL website](http://etlcdb.db.aist.go.jp/) (a 
 <br/>
 Because the data set is stored in a custom data structure it can be hard to load.
 This python package provides an easy way to load this data set and filter entries.<br/>
-An example of using this package can be found in my application: [DaKanjiRecognizer](https://github.com/CaptainDario/DaKanjiRecognizer). There it was used for [training an CNN to recognize japanese kanji characters](UPDATE HERE PLEASE).<br/>
+An example of using this package can be found in my application: [DaKanjiRecognizer](https://github.com/CaptainDario/DaKanjiRecognizer). There it was used for [training an CNN to recognize Japanese kanji characters](UPDATE HERE PLEASE).<br/>
 General information about the data set can be found in the table below.
 
-|    name    |   type  |                    content                                              |   res   | Bit depth |    code    | samples perlabel | total samples | 
+|    name    |   type  |                    content                                              |   res   | Bit depth |    code    | samples per label | total samples | 
 |:----------:|:-------:|:-----------------------------------------------------------------------:|:-------:|:---------:|:----------:|:----------------:|:-------------:|
 | ETL1       | M-Type  | Numbers <br/> Roman <br/> Symbols <br/> Katakana                        |  64x63  |     4     | JIS X 0201 |   ~1400          |     141319    |
 | ETL2       | K-Type  | Hiragana <br/> Katakana <br/> Kanji <br/> Roman <br/> Symbols           |  60x60  |     6     |    CO59    |     ~24          |      52796    |
@@ -84,7 +84,7 @@ To load the data set you need an ```ETLDataReader```-instance.
 ```python
 path_to_data_set = "the\path\to\the\data\set"
 
-reader = ETLDataReader(path_to_data_set)
+reader = etldr.ETLDataReader(path_to_data_set)
 ```
 where ```path_to_data_set``` should be the path to the main folder of your data set copy.<br/>
 Example: "E:/data/ETL_data_set/" <br/>
@@ -95,6 +95,7 @@ Now there are basically three ways to load data.
 ### Load one data set file
 ```python
 from etldr.etl_data_names import ETLDataNames
+from etldr.etl_character_groups import ETLCharacterGroups
 
 katakana, number = ETLCharacterGroups.katakana, ETLCharacterGroups.number
 
@@ -107,10 +108,11 @@ And store the images and labels which are either *katakana* or *number* in the v
 ### Load one data set part
 ```python
 from etldr.etl_data_names import ETLDataNames
+from etldr.etl_character_groups import ETLCharacterGroups
 
 kanji, hiragana = ETLCharacterGroups.kanji, ETLCharacterGroups.hiragana
 
-imgs, labels = reader.read_dataset_part(data_set=ETL_data_names.ETL2, kanji, hiragana)
+imgs, labels = reader.read_dataset_part(ETLDataNames.ETL2, kanji, hiragana)
 ```
 This will load all files in the folder "...\ETL_data_set_folder\ETL2\".
 Namely: ...\ETL2\ETL2_1, ...\ETL2\ETL2_1 ,..., ...\ETL2\ETL2_5. <br/>
@@ -120,13 +122,24 @@ And store the images and labels which are either *kanji* or *hiragana* in the va
 ### Load the whole data set
 **Warning: This will use a lot of memory.** <br/>
 ```python
-from etldr.etl_data_names import ETLDataNames
+from etldr.etl_character_groups import ETLCharacterGroups
 
-roman, symbol = ETLCharacterGroups.roman, ETLCharacterGroups.symbols
+include = [ETLCharacterGroups.roman, ETLCharacterGroups.symbols]
 
-imgs, labels = reader.read_dataset_whole(roman, symbol)
+imgs, labels = reader.read_dataset_whole(include)
 ```
 This will load all *roman* and *symbol* characters from the whole ETL data set.
+### Load the whole data set using multiple processes
+**Warning: This will use a lot of memory.** <br/>
+```python
+from etldr.etl_character_groups import ETLCharacterGroups
+
+include = [ETLCharacterGroups.roman, ETLCharacterGroups.symbols]
+
+imgs, labels = reader.read_dataset_whole(include, 16)
+```
+This will load all *roman* and *symbol* characters from the whole ETL data set using 16 processes.
+
 
 #### **Note: filtering data set entries**
 As the examples above already showed the loading of data set entries can be restricted to certain groups.
@@ -154,7 +167,7 @@ of every ETL data set entry.
 
 However this package should be easily extendable to add support for accessing the other data.
 ## Development notes
-For development *python 3.8* was used. <br/>
+For development *python 3.9* was used. <br/>
 The documentation was made with Sphinx and m2r.
 m2r is being used to automatically convert this README.md to .rst.
 This happens when the ```sphinx-build```-command is invoked in the 'docs'-folder.
