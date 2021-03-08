@@ -96,7 +96,8 @@ class ETLDataReader():
                 f.seek(data_info.struct_size, 0)
                 file_size -= 1
 
-            with tqdm(total=file_size, position=0, leave=False) as prog_bar:
+            if(show_loading_bar):
+                prog_bar = tqdm(total=file_size, position=0, leave=False)
                 prog_bar.set_description("Loading: " + os.path.basename(path) + "   ")
 
                 #iterate over the data set entries
@@ -115,10 +116,16 @@ class ETLDataReader():
                     #decode the label
                     label = data_info.decoder(*list(raw[i] for i in data_info.label_index)).replace(" ", "")
 
-                    if(self.select_entries(label, *include)):
+                # apply the filter 
+                if(self.select_entries(label, include)):
                         imgs.append(img)
                         labels.append(label)
+
+                if(show_loading_bar):
                     prog_bar.update(1)
+
+            if(show_loading_bar):
+                prog_bar.close()
 
         #convert lists to numpy arrays
         return np.array(imgs, dtype="float16"), np.array(labels, dtype="str")
