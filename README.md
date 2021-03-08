@@ -10,7 +10,7 @@ The data set can be found [on the ETL website](http://etlcdb.db.aist.go.jp/) (a 
 <br/>
 Because the data set is stored in a custom data structure it can be hard to load.
 This python package provides an easy way to load this data set and filter entries.<br/>
-An example of using this package can be found in my application: [DaKanjiRecognizer](https://github.com/CaptainDario/DaKanjiRecognizer). There it was used for [training an CNN to recognize Japanese kanji characters](UPDATE HERE PLEASE).<br/>
+An example of using this package can be found in my application: [DaKanjiRecognizer](https://github.com/CaptainDario/DaKanjiRecognizer). There it was used for [training an CNN to recognize Japanese kanji characters](https://github.com/CaptainDario/DaKanjiRecognizer-ML).<br/>
 General information about the data set can be found in the table below.
 
 |    name    |   type  |                    content                                              |   res   | Bit depth |    code    | samples per label | total samples | 
