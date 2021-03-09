@@ -121,6 +121,10 @@ General information about the data set can be found in the table below.
      - 607200
 
 
+**Caution:** :raw-html-m2r:`<br>`
+The ETL6 and ETL7 data set parts have labels which are saved in roman letters.
+As an example: "け" is stored as "ke".
+
 Setup
 -----
 

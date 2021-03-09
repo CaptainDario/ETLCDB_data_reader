@@ -178,7 +178,10 @@ class ETLDataReader():
                             include : List[ETLCharacterGroups] = [ETLCharacterGroups.all],
                             resize : Tuple[int, int] = (64, 64),
                             normalize : bool = True) -> Tuple[np.array, np.array]:
-        """Read, process and filter one part (ex.: ETL1) of the ETL data set.
+        """Read, process and filter one part (ex.: ETL1) of the ETL data set sequentially.
+
+        This method is the actual sequential implementation of the 'read_dataset_part' method.
+        It is run completely in the main process.
         
         Note:
             The loaded images will be a numpy array with dtype=float16.
@@ -228,7 +231,10 @@ class ETLDataReader():
                             processes : int = 1,
                             resize : Tuple[int, int] = (64, 64),
                             normalize : bool = True) -> Tuple[np.array, np.array]:
-        """Read, process and filter one part (ex.: ETL1) of the ETL data set.
+        """Read, process and filter one part (ex.: ETL1) of the ETL data set in parallel.
+
+        This method is the actual parallel implementation of the 'read_dataset_part' method.
+        It is run in 'processes' many subprocesses.
 
         Note:
             The loaded images will be a numpy array with dtype=float16.
@@ -292,7 +298,7 @@ class ETLDataReader():
                             processes : int = 1,
                             resize : Tuple[int, int] = (64, 64),
                             normalize : bool = True) -> Tuple[np.array, np.array]:
-        """ Read, process and filter the whole ETL data set (ETL1 - ETL9G) in multiple processes.
+        """ Read, process and filter the whole ETL data set (ETL1 - ETL9G).
 
         Note:
             The loaded images will be a numpy array with dtype=float16.
@@ -329,7 +335,10 @@ class ETLDataReader():
     def __read_dataset_whole_sequential(self, include : List[ETLCharacterGroups] = [ETLCharacterGroups.all],
                             resize : Tuple[int, int] = (64, 64),
                             normalize : bool = True) -> Tuple[np.array, np.array]:
-        """ Read, process and filter the whole ETL data set (ETL1 - ETL9G) in the main process.
+        """ Read, process and filter the whole ETL data set (ETL1 - ETL9G) sequentially.
+        
+        This method is the actual parallel implementation of the 'read_dataset_part' method.
+        It is run in completely in the main process.
 
         Note:
             The loaded images will be a numpy array with dtype=float16.
@@ -378,6 +387,9 @@ class ETLDataReader():
                             resize : Tuple[int, int] = (64, 64),
                             normalize : bool = True) -> Tuple[np.array, np.array]:
         """ Read, process and filter the whole ETL data set (ETL1 - ETL9G) in multiple processes.
+        
+        This method is the actual parallel implementation of the 'read_dataset_whole' method.
+        It is run in 'processes' many subprocesses.
 
         Note:
             The loaded images will be a numpy array with dtype=float16.

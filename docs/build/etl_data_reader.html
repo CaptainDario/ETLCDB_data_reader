@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>etl_data_reader.py &#8212; ETL_data_reader 1.0 documentation</title>
+    <title>etl_data_reader.py &#8212; ETL_data_reader 2.0 documentation</title>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     
@@ -34,7 +34,7 @@
         <li class="right" >
           <a href="etl_data_names.html" title="etl_data_names.py"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">ETL_data_reader 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">ETL_data_reader 2.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="API.html" accesskey="U">API</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">etl_data_reader.py</a></li> 
       </ul>
@@ -88,6 +88,157 @@
 <dt>
 <code class="sig-name descname">data_set_parts_with_dummy [ETLDataNames]</code></dt>
 <dd><p>A list of the data set parts which have a dummy entry at the beginning.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="etl_data_reader.ETLDataReader.__read_dataset_part_parallel">
+<code class="sig-name descname">__read_dataset_part_parallel</code><span class="sig-paren">(</span><em class="sig-param">data_set: etldr.etl_data_names.ETLDataNames, include: List[etldr.etl_character_groups.ETLCharacterGroups] = [&lt;ETLCharacterGroups.all: '.*'&gt;], processes: int = 1, resize: Tuple[int, int] = (64, 64), normalize: bool = True</em><span class="sig-paren">)</span> &#x2192; Tuple<span class="p">[</span>numpy.array<span class="p">, </span>numpy.array<span class="p">]</span><a class="headerlink" href="#etl_data_reader.ETLDataReader.__read_dataset_part_parallel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read, process and filter one part (ex.: ETL1) of the ETL data set in parallel.</p>
+<p>This method is the actual parallel implementation of the ‘read_dataset_part’ method.
+It is run in ‘processes’ many subprocesses.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The loaded images will be a numpy array with dtype=float16.
+This method should only be called through the ‘read_dataset_part’ method.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Will throw an error if not all parts of the data set can be found in ‘self.pathdata_set’.
+Also if the images do not get resized to the same size.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_set</strong> – The data set part which should be loaded.</p></li>
+<li><p><strong>include</strong> – All character types (Kanji, Hiragana, Symbols, stc.) which should be included.</p></li>
+<li><p><strong>processes</strong> – The number of processes which should be used for loading the data.
+Every process will run on a separate CPU core.
+Therefore it is recommended to not use more than (virtual) processor cores are available.</p></li>
+<li><p><strong>resize</strong> – The size the image should be resized (if resize &lt; 1 the images will not be resized). Defaults to (64, 64).</p></li>
+<li><p><strong>normalize</strong> – Should the gray values be normalized between [0.0, 1.0]. Defaults to True.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(images, labels).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>The loaded and filtered data set entries in the form</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="etl_data_reader.ETLDataReader.__read_dataset_part_sequential">
+<code class="sig-name descname">__read_dataset_part_sequential</code><span class="sig-paren">(</span><em class="sig-param">data_set: etldr.etl_data_names.ETLDataNames, include: List[etldr.etl_character_groups.ETLCharacterGroups] = [&lt;ETLCharacterGroups.all: '.*'&gt;], resize: Tuple[int, int] = (64, 64), normalize: bool = True</em><span class="sig-paren">)</span> &#x2192; Tuple<span class="p">[</span>numpy.array<span class="p">, </span>numpy.array<span class="p">]</span><a class="headerlink" href="#etl_data_reader.ETLDataReader.__read_dataset_part_sequential" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read, process and filter one part (ex.: ETL1) of the ETL data set sequentially.</p>
+<p>This method is the actual sequential implementation of the ‘read_dataset_part’ method.
+It is run completely in the main process.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The loaded images will be a numpy array with dtype=float16.
+This method should only be called through the ‘read_dataset_part’ method.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Will throw an error if not all parts of the data set can be found in ‘self.pathdata_set’.
+Also if the images do not get resized to the same size.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_set</strong> – The data set part which should be loaded.</p></li>
+<li><p><strong>include</strong> – All character types (Kanji, Hiragana, Symbols, stc.) which should be included.</p></li>
+<li><p><strong>resize</strong> – The size the image should be resized (if resize &lt; 1 the images will not be resized). Defaults to (64, 64).</p></li>
+<li><p><strong>normalize</strong> – Should the gray values be normalized between [0.0, 1.0]. Defaults to True.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(images, labels).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>The loaded and filtered data set entries in the form</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="etl_data_reader.ETLDataReader.__read_dataset_whole_parallel">
+<code class="sig-name descname">__read_dataset_whole_parallel</code><span class="sig-paren">(</span><em class="sig-param">include: List[etldr.etl_character_groups.ETLCharacterGroups] = [&lt;ETLCharacterGroups.all: '.*'&gt;], processes: int = 1, resize: Tuple[int, int] = (64, 64), normalize: bool = True</em><span class="sig-paren">)</span> &#x2192; Tuple<span class="p">[</span>numpy.array<span class="p">, </span>numpy.array<span class="p">]</span><a class="headerlink" href="#etl_data_reader.ETLDataReader.__read_dataset_whole_parallel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read, process and filter the whole ETL data set (ETL1 - ETL9G) in multiple processes.</p>
+<p>This method is the actual parallel implementation of the ‘read_dataset_whole’ method.
+It is run in ‘processes’ many subprocesses.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The loaded images will be a numpy array with dtype=float16.
+This method should only be called through the ‘read_dataset_whole’ method.</p>
+</div>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Reading the whole dataset with all available entries will use up a lot of memory.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Will throw an error if not all parts and files of the data set can be found in ‘self.path’.
+Also if the images do not get resized to the same size.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>include</strong> – All character types (Kanji, Hiragana, Symbols, stc.) which should be included.</p></li>
+<li><p><strong>processes</strong> – The number of processes which should be used for loading the data.
+Every process will run on a separate CPU core.
+Therefore it is recommended to not use more than (virtual) processor cores are available.</p></li>
+<li><p><strong>resize</strong> – The size the image should be resized (if resize &lt; 1 the images will not be resized). Defaults to (64, 64).</p></li>
+<li><p><strong>normalize</strong> – Should the gray values be normalized between [0.0, 1.0]. Defaults to True.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(images, labels).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>The loaded and filtered data set entries in the form</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="etl_data_reader.ETLDataReader.__read_dataset_whole_sequential">
+<code class="sig-name descname">__read_dataset_whole_sequential</code><span class="sig-paren">(</span><em class="sig-param">include: List[etldr.etl_character_groups.ETLCharacterGroups] = [&lt;ETLCharacterGroups.all: '.*'&gt;], resize: Tuple[int, int] = (64, 64), normalize: bool = True</em><span class="sig-paren">)</span> &#x2192; Tuple<span class="p">[</span>numpy.array<span class="p">, </span>numpy.array<span class="p">]</span><a class="headerlink" href="#etl_data_reader.ETLDataReader.__read_dataset_whole_sequential" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read, process and filter the whole ETL data set (ETL1 - ETL9G) sequentially.</p>
+<p>This method is the actual parallel implementation of the ‘read_dataset_part’ method.
+It is run in completely in the main process.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The loaded images will be a numpy array with dtype=float16.
+This method should only be called through the ‘read_dataset_whole’ method.</p>
+</div>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Reading the whole dataset with all available entries will use up a lot of memory.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Will throw an error if not all parts and files of the data set can be found in ‘self.path’.
+Also if the images do not get resized to the same size.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>include</strong> – All character types (Kanji, Hiragana, Symbols, stc.) which should be included.</p></li>
+<li><p><strong>processes</strong> – The number of processes which should be used for loading the data.
+Every process will run on a separate CPU core.
+Therefore it is recommended to not use more than (virtual) processor cores are available.</p></li>
+<li><p><strong>resize</strong> – The size the image should be resized (if resize &lt; 1 the images will not be resized). Defaults to (64, 64).</p></li>
+<li><p><strong>normalize</strong> – Should the gray values be normalized between [0.0, 1.0]. Defaults to True.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(images, labels).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>The loaded and filtered data set entries in the form</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -179,7 +330,7 @@ Therefore it is recommended to not use more than (virtual) processor cores are a
 <dl class="py method">
 <dt id="etl_data_reader.ETLDataReader.read_dataset_whole">
 <code class="sig-name descname">read_dataset_whole</code><span class="sig-paren">(</span><em class="sig-param">include: List[etldr.etl_character_groups.ETLCharacterGroups] = [&lt;ETLCharacterGroups.all: '.*'&gt;], processes: int = 1, resize: Tuple[int, int] = (64, 64), normalize: bool = True</em><span class="sig-paren">)</span> &#x2192; Tuple<span class="p">[</span>numpy.array<span class="p">, </span>numpy.array<span class="p">]</span><a class="headerlink" href="#etl_data_reader.ETLDataReader.read_dataset_whole" title="Permalink to this definition">¶</a></dt>
-<dd><p>Read, process and filter the whole ETL data set (ETL1 - ETL9G) in multiple processes.</p>
+<dd><p>Read, process and filter the whole ETL data set (ETL1 - ETL9G).</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The loaded images will be a numpy array with dtype=float16.</p>
@@ -286,7 +437,7 @@ Therefore it is recommended to not use more than (virtual) processor cores are a
         <li class="right" >
           <a href="etl_data_names.html" title="etl_data_names.py"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">ETL_data_reader 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">ETL_data_reader 2.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="API.html" >API</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">etl_data_reader.py</a></li> 
       </ul>

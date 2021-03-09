@@ -27,6 +27,10 @@ General information about the data set can be found in the table below.
 | ETL10 (9B) | 9B-Type | Hiragana <br/> Kanji                                                    |  64x63  |     1     | JIS X 0208 |     160          |     152960    |
 | ETL11 (9G) | 9G-Type | Hiragana <br/> Kanji                                                    | 128x127 |     4     | JIS X 0208 |     200          |     607200    |
 
+**Caution:** <br>
+The ETL6 and ETL7 data set parts have labels which are saved in roman letters.
+As an example: "け" is stored as "ke".
+
 ## Setup
 First download the wheel from the [releases page](https://github.com/CaptainDario/ETL_data_reader/releases).
 Now install the wheel with:
