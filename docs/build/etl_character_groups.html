@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>etl_character_groups.py &#8212; ETL_data_reader 2.0 documentation</title>
+    <title>etl_character_groups.py &#8212; ETL_data_reader 2.1 documentation</title>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     
@@ -34,7 +34,7 @@
         <li class="right" >
           <a href="API.html" title="API"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">ETL_data_reader 2.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">ETL_data_reader 2.1 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="API.html" accesskey="U">API</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">etl_character_groups.py</a></li> 
       </ul>
@@ -77,19 +77,19 @@
 
 <dl class="py attribute">
 <dt id="etl_character_groups.ETLCharacterGroups.number">
-<code class="sig-name descname">number</code><em class="property"> = '[0-9]'</em><a class="headerlink" href="#etl_character_groups.ETLCharacterGroups.number" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">number</code><em class="property"> = '[0-9]|０|１|２|３|４|５|６|７|８|９'</em><a class="headerlink" href="#etl_character_groups.ETLCharacterGroups.number" title="Permalink to this definition">¶</a></dt>
 <dd><p>numbers</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="etl_character_groups.ETLCharacterGroups.roman">
-<code class="sig-name descname">roman</code><em class="property"> = '[A-Za-z]'</em><a class="headerlink" href="#etl_character_groups.ETLCharacterGroups.roman" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">roman</code><em class="property"> = '[A-Z]|[a-z]|[Ａ-Ｚ]'</em><a class="headerlink" href="#etl_character_groups.ETLCharacterGroups.roman" title="Permalink to this definition">¶</a></dt>
 <dd><p>roman characters (capital and not capital)</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="etl_character_groups.ETLCharacterGroups.symbols">
-<code class="sig-name descname">symbols</code><em class="property"> = '^(?![一-龯]|[ァ-ン]|[ぁ-ん]|[0-9]|[A-Za-z])'</em><a class="headerlink" href="#etl_character_groups.ETLCharacterGroups.symbols" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">symbols</code><em class="property"> = '^(?![一-龯]|[ァ-ン]|[ぁ-ん]|[0-9]|０|１|２|３|４|５|６|７|８|９|[A-Z]|[a-z]|[Ａ-Ｚ])'</em><a class="headerlink" href="#etl_character_groups.ETLCharacterGroups.symbols" title="Permalink to this definition">¶</a></dt>
 <dd><p>if it is none of the above, it has to be a symbol</p>
 </dd></dl>
 
@@ -146,7 +146,7 @@
         <li class="right" >
           <a href="API.html" title="API"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">ETL_data_reader 2.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">ETL_data_reader 2.1 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="API.html" >API</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">etl_character_groups.py</a></li> 
       </ul>
