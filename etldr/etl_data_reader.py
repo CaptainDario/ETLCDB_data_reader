@@ -506,3 +506,25 @@ class ETLDataReader():
         should_include = reg.match(label) 
 
         return should_include
+
+    def save_to_file(self, x : np.ndarray, y : np.ndarray, save_to : str, resize : Tuple[int, int]):
+        """
+        
+        """
+    
+        if(save_to != ""):
+            if(os.path.isdir(save_to)):
+                description = ""
+                for cnt, img in enumerate(x):
+                    p_img = ((img * 255).astype(np.uint8)).reshape(resize[0], resize[1])
+                    p_img = Image.fromarray(p_img, mode="L")
+                    try:
+                        p_img.save(os.path.join(save_to, str(cnt) + "_" + y[cnt] + ".jpg"))
+                    except:
+                        p_img.save(os.path.join(save_to, str(cnt) + "_" + "xxx" + ".jpg"))
+
+                    description += y[cnt]
+                with open(os.path.join(save_to, "description.txt"), "w+", encoding="utf8") as f:
+                    f.write(description)
+            else:
+                raise FileNotFoundError("The given path:", save_to, "is not a valid directory.")
