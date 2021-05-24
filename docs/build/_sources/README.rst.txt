@@ -17,7 +17,7 @@ The data set can be found `on the ETL website <http://etlcdb.db.aist.go.jp/>`_ (
 :raw-html-m2r:`<br/>`
 Because the data set is stored in a custom data structure it can be hard to load.
 This python package provides an easy way to load this data set and filter entries.\ :raw-html-m2r:`<br/>`
-An example of using this package can be found in my application: `DaKanjiRecognizer <https://github.com/CaptainDario/DaKanjiRecognizer>`_. There it was used for `training an CNN to recognize japanese kanji characters <UPDATE HERE PLEASE>`_.\ :raw-html-m2r:`<br/>`
+An example of using this package can be found in my application: `DaKanjiRecognizer <https://github.com/CaptainDario/DaKanjiRecognizer>`_. There it was used for `training an CNN to recognize Japanese kanji characters <https://github.com/CaptainDario/DaKanjiRecognizer-ML>`_.\ :raw-html-m2r:`<br/>`
 General information about the data set can be found in the table below.
 
 .. list-table::
@@ -29,7 +29,7 @@ General information about the data set can be found in the table below.
      - res
      - Bit depth
      - code
-     - samples perlabel
+     - samples per label
      - total samples
    * - ETL1
      - M-Type
@@ -121,15 +121,25 @@ General information about the data set can be found in the table below.
      - 607200
 
 
+**Caution:** :raw-html-m2r:`<br>`
+The ETL6 and ETL7 data set parts have labels which are saved in roman letters.
+As an example: "け" is stored as "ke".
+
 Setup
 -----
 
 First download the wheel from the `releases page <https://github.com/CaptainDario/ETL_data_reader/releases>`_.
 Now install the wheel with:
 
-.. code-block::
+.. code-block:: bash
 
-   pip install .\path\to\ETL_data_reader_xxx.whl
+   pip install .\path\to\etl_data_reader_CaptainDario-2.0-py3-none-any.whl
+
+Or install it directly via https:
+
+.. code-block:: bash
+
+   pip install https://github.com/CaptainDario/ETL_data_reader/releases/download/2.0/etl_data_reader_CaptainDario-2.0-py3-none-any.whl
 
 Assuming you already have `downloaded the ETL data set <http://etlcdb.db.aist.go.jp/obtaining-etl-character-database>`_.
 You have to do some renaming of the data set folders and files.
@@ -191,7 +201,7 @@ To load the data set you need an ``ETLDataReader``\ -instance.
 
    path_to_data_set = "the\path\to\the\data\set"
 
-   reader = ETLDataReader(path_to_data_set)
+   reader = etldr.ETLDataReader(path_to_data_set)
 
 where ``path_to_data_set`` should be the path to the main folder of your data set copy.\ :raw-html-m2r:`<br/>`
 Example: "E:/data/ETL_data_set/" :raw-html-m2r:`<br/>`
@@ -205,10 +215,11 @@ Load one data set file
 .. code-block:: python
 
    from etldr.etl_data_names import ETLDataNames
+   from etldr.etl_character_groups import ETLCharacterGroups
 
-   katakana, number = ETLCharacterGroups.katakana, ETLCharacterGroups.number
+   include = [ETLCharacterGroups.katakana, ETLCharacterGroups.number]
 
-   imgs, labels = reader.read_dataset_file(part=2, data_set=ETLDataNames.ETL7, katakana, number)
+   imgs, labels = reader.read_dataset_file(2, ETLDataNames.ETL7, include)
 
 This will load "...\ETL_data_set_folder\ETL7\ETL7_2". :raw-html-m2r:`<br/>`
 
@@ -220,10 +231,11 @@ Load one data set part
 .. code-block:: python
 
    from etldr.etl_data_names import ETLDataNames
+   from etldr.etl_character_groups import ETLCharacterGroups
 
-   kanji, hiragana = ETLCharacterGroups.kanji, ETLCharacterGroups.hiragana
+   include = [ETLCharacterGroups.kanji, ETLCharacterGroups.hiragana]
 
-   imgs, labels = reader.read_dataset_part(data_set=ETL_data_names.ETL2, kanji, hiragana)
+   imgs, labels = reader.read_dataset_part(ETLDataNames.ETL2, include)
 
 This will load all files in the folder "...\ETL_data_set_folder\ETL2\".
 Namely: ...\ETL2\ETL2_1, ...\ETL2\ETL2_1 ,..., ...\ETL2\ETL2_5. :raw-html-m2r:`<br/>`
@@ -237,13 +249,28 @@ Load the whole data set
 
 .. code-block:: python
 
-   from etldr.etl_data_names import ETLDataNames
+   from etldr.etl_character_groups import ETLCharacterGroups
 
-   roman, symbol = ETLCharacterGroups.roman, ETLCharacterGroups.symbols
+   include = [ETLCharacterGroups.roman, ETLCharacterGroups.symbols]
 
-   imgs, labels = reader.read_dataset_whole(roman, symbol)
+   imgs, labels = reader.read_dataset_whole(include)
 
 This will load all *roman* and *symbol* characters from the whole ETL data set.
+
+Load the whole data set using multiple processes
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Warning: This will use a lot of memory.** :raw-html-m2r:`<br/>`
+
+.. code-block:: python
+
+   from etldr.etl_character_groups import ETLCharacterGroups
+
+   include = [ETLCharacterGroups.roman, ETLCharacterGroups.symbols]
+
+   imgs, labels = reader.read_dataset_whole(include, 16)
+
+This will load all *roman* and *symbol* characters from the whole ETL data set using 16 processes.
 
 **Note: filtering data set entries**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -282,20 +309,56 @@ However this package should be easily extendable to add support for accessing th
 Development notes
 -----------------
 
-For development *python 3.8* was used. :raw-html-m2r:`<br/>`
+For development *python 3.9* was used. :raw-html-m2r:`<br/>`
+
+documentation
+^^^^^^^^^^^^^
+
 The documentation was made with Sphinx and m2r.
 m2r is being used to automatically convert this README.md to .rst.
-This happens when the ``sphinx-build``\ -command is invoked in the 'docs'-folder.
+This happens when the ``sphinx-build``\ -command is invoked in the 'docs'-folder. :raw-html-m2r:`<br>`
+Build the docs (should be run in docs folder): :raw-html-m2r:`<br>`
+
+.. code-block::
+
+   sphinx-build source build
+
+packages
+^^^^^^^^
 
 A list of all packages needed for development can be found in 'requirements.txt'.
 
-Some `simple test cases <.\tests\test_etldr.py>`_ are defined in the tests folder.
+testing
+^^^^^^^
 
-Testing was only performed on Windows 10.
+Some `simple test cases <./tests/test_etldr.py>`_ are defined in the tests folder.
+Testing was only performed on Windows 10.\ :raw-html-m2r:`<br>`
+All tests can be executed with:
+
+.. code-block::
+
+   python tests\test_etldr.py
+
+Specific tests can be run with:
+
+.. code-block::
+
+   python tests\test_etldr.py etldr.test_read_dataset_part_parallel
+
+Those commands should be executed on the top level of this package.
+
+building the wheel
+^^^^^^^^^^^^^^^^^^
+
+The wheel can be build with:
+
+.. code-block::
+
+   python setup.py sdist bdist_wheel
 
 Additional Notes
 ----------------
 
 Pull requests and issues are welcome.
 
-If you open a pull request make sure to `run the tests before <.\run_test>`_.
+If you open a pull request make sure to `run the tests before <./run_test>`_.

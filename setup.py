@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="etl_data_reader-CaptainDario",
-    version="1.0",
+    version="2.0",
     author="CaptainDario",
     author_email="daapplab@gmail.com",
     description="A python package for conveniently handling the ETL data set",

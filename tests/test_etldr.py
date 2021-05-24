@@ -3,7 +3,10 @@
 # etl-data set is located
 
 import unittest
-import os, sys
+import os
+import sys
+import time
+import multiprocessing as mp
 
 sys.path.append(os.path.abspath(os.getcwd()))
 
@@ -20,13 +23,15 @@ class etldr(unittest.TestCase):
     def test_read_dataset_file(self):
         """Test the ETLDataReader.read_dataset_file method.
         """
+        
+        print("started: test_read_dataset_file")
 
         reader = ETLDataReader(os.path.join(os.getcwd(), "etl_data_set"))
 
         imgs, labels = [], []
 
         for name in ETLDataNames:
-            _imgs, _labels = reader.read_dataset_file(1, name, ETLCharacterGroups.all)
+            _imgs, _labels = reader.read_dataset_file(1, name, [ETLCharacterGroups.all])
             #imgs.append(_imgs)
             labels.append(_labels)
         
@@ -34,11 +39,15 @@ class etldr(unittest.TestCase):
         for i in range(11):
             #compare the byte representation
             self.assertEqual(str.encode(labels[i][0]), str.encode(correct_labels[i]))
+
+        print("finished: test_read_dataset_file")
     
     
     def test_image_resize(self):
         """Test the ETLDataReader.read_dataset_file method with different resizing options.
         """
+
+        print("started: test_image_resize")
 
         size_in = [(12, 12), (12, 37), (-1, 12), (35, 0)]
 
@@ -48,7 +57,7 @@ class etldr(unittest.TestCase):
         imgs, labels = [], []
 
         for i in range(3):
-            _imgs, _labels = reader.read_dataset_file(1, ETLDataNames.ETL1, ETLCharacterGroups.all, resize=size_in[i])
+            _imgs, _labels = reader.read_dataset_file(1, ETLDataNames.ETL1, [ETLCharacterGroups.all], resize=size_in[i])
             imgs.append(_imgs)
             #labels.append(_labels)
 
@@ -56,56 +65,128 @@ class etldr(unittest.TestCase):
             #compare the byte representation
             self.assertEqual(imgs[i][0].shape, correct_out[i])
 
+        print("finished: test_image_resize")
+
     def test_image_normalizing(self):
         """Test the ETLDataReader.read_dataset_file method with normalizing.
         """
         
+        print("started: test_image_normalizing")
+        
         reader = ETLDataReader(os.path.join(os.getcwd(), "etl_data_set"))
 
-        _imgs, _labels = reader.read_dataset_file(1, ETLDataNames.ETL1, ETLCharacterGroups.all, normalize=True)
+        _imgs, _labels = reader.read_dataset_file(1, ETLDataNames.ETL1, [ETLCharacterGroups.all], normalize=True)
 
         self.assertTrue(_imgs[0].max() <= 1.0)
+
+        print("finished: test_image_normalizing")
 
     def test_read_dataset_part(self):
         """Test the ETLDataReader.read_dataset_part method.
         """
         
+        print("started: test_read_dataset_part")
+        
         reader = ETLDataReader(os.path.join(os.getcwd(), "etl_data_set"))
 
-        _imgs, _labels = reader.read_dataset_part(ETLDataNames.ETL1, ETLCharacterGroups.all)
+        _imgs, _labels = reader.read_dataset_part(ETLDataNames.ETL1, [ETLCharacterGroups.all])
 
         self.assertEqual(len(_labels), 141319)
+
+        print("finished: test_read_dataset_part")
+    
+    def test_read_dataset_part_parallel(self):
+        """Test the ETLDataReader.read_dataset_part method in parallel mode.
+        """
+        
+        print("started: test_read_dataset_part_parallel")
+        
+        reader = ETLDataReader(os.path.join(os.getcwd(), "etl_data_set"))
+
+        t_1_1 = time.perf_counter()
+        _imgs_1, _labels_1 = reader.read_dataset_part(ETLDataNames.ETL9, [ETLCharacterGroups.all])
+        t_1_2 = time.perf_counter()
+        
+        t_2_1 = time.perf_counter()
+        _imgs_2, _labels_2 = reader.read_dataset_part(ETLDataNames.ETL9, [ETLCharacterGroups.all], mp.cpu_count())
+        t_2_2 = time.perf_counter()
+
+        time_1 = t_1_2 - t_1_1
+        time_2 = t_2_2 - t_2_1
+
+        print("running with 1 process in", time_1)
+        print("running with", mp.cpu_count(), "processes in", time_2)
+        print("absolute difference:", time_1 - time_2)
+        print("speedup:", time_1 / time_2)
+        print("efficiency:", time_2 / mp.cpu_count())
+
+        self.assertEqual(len(_labels_2), len(_labels_1))
+
+        print("finished: test_read_dataset_part_parallel")
+    
+    def test_read_dataset_whole_parallel(self):
+        """Test the ETLDataReader.read_dataset_whole method in parallel mode.
+        """
+        
+        print("started: test_read_dataset_whole_parallel")
+        
+        reader = ETLDataReader(os.path.join(os.getcwd(), "etl_data_set"))
+
+        t_1_1 = time.perf_counter()
+        _imgs_1, _labels_1 = reader.read_dataset_whole([ETLCharacterGroups.all])
+        t_1_2 = time.perf_counter()
+        
+        t_2_1 = time.perf_counter()
+        _imgs_2, _labels_2 = reader.read_dataset_whole([ETLCharacterGroups.all], mp.cpu_count())
+        t_2_2 = time.perf_counter()
+
+        time_1 = t_1_2 - t_1_1
+        time_2 = t_2_2 - t_2_1
+
+        print("running with 1 process in", time_1)
+        print("running with", mp.cpu_count(), "processes in", time_2)
+        print("absolute difference:", time_1 - time_2)
+        print("speedup:", time_1 / time_2)
+        print("efficiency:", time_2 / mp.cpu_count())
+
+        self.assertEqual(len(_labels_2), len(_labels_1))
+
+        print("finished: test_read_dataset_whole_parallel")
 
     def test_read_dataset_selection(self):
         """Test the ETLDataReader.read_dataset_file method with filtering.
         """
         
+        print("started: test_read_dataset_selection")
+        
         reader = ETLDataReader(os.path.join(os.getcwd(), "etl_data_set"))
 
         # test number filter
-        _imgs, _labels = reader.read_dataset_file(1, ETLDataNames.ETL1, ETLCharacterGroups.number)
+        _imgs, _labels = reader.read_dataset_file(1, ETLDataNames.ETL1, [ETLCharacterGroups.number])
         self.assertEqual(len(_labels), 11560)
         # test number roman latter filter
-        _imgs, _labels = reader.read_dataset_file(3, ETLDataNames.ETL1, ETLCharacterGroups.roman)
+        _imgs, _labels = reader.read_dataset_file(3, ETLDataNames.ETL1, [ETLCharacterGroups.roman])
         self.assertEqual(len(_labels), 11560)
         # test symbol filter
-        _imgs, _labels = reader.read_dataset_file(6, ETLDataNames.ETL1, ETLCharacterGroups.symbols)
+        _imgs, _labels = reader.read_dataset_file(6, ETLDataNames.ETL1, [ETLCharacterGroups.symbols])
         self.assertEqual(len(_labels), 11560)
         # test all filter with mixed data set file
-        _imgs, _labels = reader.read_dataset_file(5, ETLDataNames.ETL1, ETLCharacterGroups.all)
+        _imgs, _labels = reader.read_dataset_file(5, ETLDataNames.ETL1, [ETLCharacterGroups.all])
         self.assertEqual(len(_labels), 11560)
         # test kanji filter
-        _imgs, _labels = reader.read_dataset_file(1, ETLDataNames.ETL8G, ETLCharacterGroups.kanji)
+        _imgs, _labels = reader.read_dataset_file(1, ETLDataNames.ETL8G, [ETLCharacterGroups.kanji])
         self.assertEqual(len(_labels), 4405)
         # test hiragana filter
-        _imgs, _labels = reader.read_dataset_file(1, ETLDataNames.ETL4, ETLCharacterGroups.hiragana)
+        _imgs, _labels = reader.read_dataset_file(1, ETLDataNames.ETL4, [ETLCharacterGroups.hiragana])
         self.assertEqual(len(_labels), 6120)
         # test katakana filter
-        _imgs, _labels = reader.read_dataset_file(1, ETLDataNames.ETL5, ETLCharacterGroups.katakana)
+        _imgs, _labels = reader.read_dataset_file(1, ETLDataNames.ETL5, [ETLCharacterGroups.katakana])
         self.assertEqual(len(_labels), 10608)
         # test *implicit* all filter with mixed data set file
         _imgs, _labels = reader.read_dataset_file(5, ETLDataNames.ETL1)
         self.assertEqual(len(_labels), 11560)
+
+        print("finished: test_read_dataset_selection")
 
 
 
