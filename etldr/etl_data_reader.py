@@ -527,7 +527,7 @@ class ETLDataReader():
 
         return should_include
 
-    def save_to_file(self, x : np.ndarray, y : np.ndarray, save_to : str, resize : Tuple[int, int]):
+    def save_to_file(self, x : np.ndarray, y : np.ndarray, save_to : str):
         """
         Saves all images and labels to file.
 
@@ -544,7 +544,7 @@ class ETLDataReader():
             if(os.path.isdir(save_to)):
                 description = ""
                 for cnt, img in enumerate(x):
-                    p_img = ((img * 255).astype(np.uint8)).reshape(img[0], img[1])
+                    p_img = ((img * 255).astype(np.uint8)).reshape(img.shape[0], img.shape[1])
                     p_img = Image.fromarray(p_img, mode="L")
                     try:
                         p_img.save(os.path.join(save_to, str(cnt) + "_" + y[cnt] + ".jpg"))
@@ -552,7 +552,7 @@ class ETLDataReader():
                         p_img.save(os.path.join(save_to, str(cnt) + "_" + "xxx" + ".jpg"))
 
                     description += y[cnt]
-                with open(os.path.join(save_to, "description.txt"), "w+", encoding="utf8") as f:
+                with open(os.path.join(save_to, "labels.txt"), "w+", encoding="utf8") as f:
                     f.write(description)
             else:
                 raise FileNotFoundError("The given path:", save_to, "is not a valid directory.")
