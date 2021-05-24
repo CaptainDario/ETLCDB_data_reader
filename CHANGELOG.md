@@ -1,5 +1,8 @@
 # ETL Data Reader : Changelog
 
+## v 2.1
+fixed:
+  - loading always returns numpy arrays 
 ## v 2.0:
 features:
 - multi processed loading of the data is now possible
