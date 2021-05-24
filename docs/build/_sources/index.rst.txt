@@ -8,7 +8,7 @@
 Welcome to ETL_data_reader's documentation!
 ==============================================
 
-A python package for conveniently loading the ETL data set.
+A python package for conveniently loading the ETLCDB.
 You should first head over to :ref:`getting_started <getting_started>` and learn the basics.
 If something is unclear first take a look at the :ref:`API <API>` or open an issue.
 
