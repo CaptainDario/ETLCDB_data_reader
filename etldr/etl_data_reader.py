@@ -11,6 +11,7 @@ import multiprocessing as mp
 from PIL import Image
 import numpy as np
 import bitstring
+import jaconv
 
 from tqdm.auto import tqdm
 from typing import List, Tuple
@@ -120,7 +121,11 @@ class ETLDataReader():
                 img = self.process_image(imageF, resize, data_info.img_depth if normalize else -1)
 
                 #decode the label
-                label = data_info.decoder(*list(raw[i] for i in data_info.label_index)).replace(" ", "")
+                label = data_info.decoder(*[raw[i] for i in data_info.label_index])
+                if(label is None):
+                    continue
+                label = jaconv.h2z(label, kana=True, digit=False, ascii=False)
+                label = jaconv.z2h(label, kana=False, digit=True, ascii=True)
 
                 # apply the filter 
                 if(self.select_entries(label, include)):
@@ -141,7 +146,8 @@ class ETLDataReader():
                             include : List[ETLCharacterGroups] = [ETLCharacterGroups.all],
                             processes : int = 1,
                             resize : Tuple[int, int] = (64, 64),
-                            normalize : bool = True) -> Tuple[np.array, np.array]:
+                            normalize : bool = True,
+                            save_to : str = "") -> Tuple[np.array, np.array]:
         """Read, process and filter one part (ex.: ETL1) of the ETL data set.
         
         Note:
@@ -150,6 +156,7 @@ class ETLDataReader():
         Warning:
             Will throw an error if not all parts of the data set can be found in 'self.path\data_set'.
             Also if the images do not get resized to the same size.
+            Throws an FileNotFoundError if the path to save the images to is not valid. 
 
         Args:
             data_set  : The data set part which should be loaded.
@@ -159,20 +166,26 @@ class ETLDataReader():
                         Therefore it is recommended to not use more than (virtual) processor cores are available.
             resize    : The size the image should be resized (if resize < 1 the images will not be resized). Defaults to (64, 64).
             normalize : Should the gray values be normalized between [0.0, 1.0]. Defaults to True.
+            save_to   : If set to a path to a directory all images will be saved there as a jpg image.
 
         Returns:
             The loaded and filtered data set entries in the form: (images, labels).
         """
 
         if(processes == 1):
-            return self.__read_dataset_part_sequential(data_set, include, resize, normalize)
+            x, y = self.__read_dataset_part_sequential(data_set, include, resize, normalize)
         elif(processes > 1):
-            return self.__read_dataset_part_parallel(data_set, include, processes, resize, normalize)
+            x, y = self.__read_dataset_part_parallel(data_set, include, processes, resize, normalize)
         else:
             print(processes + "is not a valid amount of processes.")
             print("Loading in sequential mode...")
 
-            return self.__read_dataset_part_sequential(data_set, include, resize, normalize)
+            x, y = self.__read_dataset_part_sequential(data_set, include, resize, normalize)
+
+        self.save_to_file(x, y, save_to, resize)
+
+        return x, y
+
 
     def __read_dataset_part_sequential(self, data_set : ETLDataNames,
                             include : List[ETLCharacterGroups] = [ETLCharacterGroups.all],
@@ -301,7 +314,8 @@ class ETLDataReader():
     def read_dataset_whole(self, include : List[ETLCharacterGroups] = [ETLCharacterGroups.all],
                             processes : int = 1,
                             resize : Tuple[int, int] = (64, 64),
-                            normalize : bool = True) -> Tuple[np.array, np.array]:
+                            normalize : bool = True,
+                            save_to : str = "") -> Tuple[np.array, np.array]:
         """ Read, process and filter the whole ETL data set (ETL1 - ETL9G).
 
         Note:
@@ -313,6 +327,7 @@ class ETLDataReader():
         Warning:
             Will throw an error if not all parts and files of the data set can be found in 'self.path'.
             Also if the images do not get resized to the same size.
+            Throws an FileNotFoundError if the path to save the images to is not valid. 
 
         Arguments:
             include   : All character types (Kanji, Hiragana, Symbols, stc.) which should be included.
@@ -321,20 +336,25 @@ class ETLDataReader():
                         Therefore it is recommended to not use more than (virtual) processor cores are available.
             resize    : The size the image should be resized (if resize < 1 the images will not be resized). Defaults to (64, 64).
             normalize : Should the gray values be normalized between [0.0, 1.0]. Defaults to True.
+            save_to   : If set to a path to a directory all images will be saved there as a jpg image.
 
         Returns:
             The loaded and filtered data set entries in the form: (images, labels).
         """
         
         if(processes == 1):
-            return self.__read_dataset_whole_sequential(include, resize, normalize)
+            x, y = self.__read_dataset_whole_sequential(include, resize, normalize)
         elif(processes > 1):
-            return self.__read_dataset_whole_parallel(include, processes, resize, normalize)
+            x, y = self.__read_dataset_whole_parallel(include, processes, resize, normalize)
         else:
             print(processes + "is not a valid amount of processes.")
             print("Loading in sequential mode...")
 
-            return self.__read_dataset_whole_sequential(include, resize, normalize)
+            x, y = self.__read_dataset_whole_sequential(include, resize, normalize)
+        
+        self.save_to_file(x, y, save_to, resize)
+
+        return x, y
 
     def __read_dataset_whole_sequential(self, include : List[ETLCharacterGroups] = [ETLCharacterGroups.all],
                             resize : Tuple[int, int] = (64, 64),

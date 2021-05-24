@@ -1,5 +1,7 @@
 import codecs
 import jaconv
+
+import etldr.jis0201
 from etldr.etl_data_names import ETLDataNames 
 from etldr.etl_data_set_info import ETLDataSetInfo
 
@@ -39,8 +41,8 @@ class ETLCodes():
         """
 
         # TYPE_M -> ETL 1, 6, 7 - works
-        self.code_M = ETLDataSetInfo(">H 2s H 6B I 4H 4B 4x 2016s 4x".replace(" ", ""),
-                                    2052, (64, 63), 4, [1], self.decode_M_type_character)
+        self.code_M = ETLDataSetInfo("uint:16,bytes:2,uint:16,hex:8,hex:8,4*uint:8,uint:32,4*uint:16,4*uint:8,pad:32,bytes:2016,pad:32",
+                                    2052, (64, 63), 4, [3], self.decode_M_type_character)
         # TYPE_K -> ETL 2
         self.code_K = ETLDataSetInfo("uint:36, uint:6, pad:30, bits:36, bits:36, pad:24, bits:12, pad:180, bytes:2700",
                                     2745, (60, 60), 6, [-2], self.decode_K_type_character)
@@ -93,8 +95,19 @@ class ETLCodes():
         Returns:
             The decoded label.
         """
-    
-        return bytes.fromhex(_bytes.hex()).decode('iso2022_jp')
+
+        jis = _bytes
+
+        # try to convert the bytes with jis 0201 encoding
+        try:
+            t = etldr.jis0201.JIS0201_map[jis.upper()]
+            t = chr(t)
+        # fallback to iso2022
+        except Exception:
+            return None
+
+        return t
+
 
     def decode_K_type_character(self, _bytes : bytes) -> str:
         """Decodes _bytes which encode the label from an entry which has the ETL-K type. 

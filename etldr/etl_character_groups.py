@@ -14,10 +14,10 @@ class ETLCharacterGroups(Enum):
     hiragana = r"[ぁ-ん]"
     """all hiragana characters"""
     
-    number   = r"[0-9０－９]"
+    number   = r"[0-9]|０|１|２|３|４|５|６|７|８|９"
     """numbers"""
     
-    roman    = r"[A-Za-zＡ-Ｚ]"
+    roman    = r"[A-Z]|[a-z]|[Ａ-Ｚ]"
     """roman characters (capital and not capital)"""
 
     symbols  = r"^(?!" + "|".join([kanji, katakana, hiragana, number, roman]) + ")"
