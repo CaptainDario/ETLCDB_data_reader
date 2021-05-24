@@ -1,12 +1,12 @@
-# ETL_data_reader
-A python package for conveniently loading the ETL data set.
+# ETLCDB_data_reader
+A python package for conveniently loading the ETLCDB data set.
 The complete documentation including the API can be found [here](https://captaindario.github.io/ETL_data_reader/build/index.html).
 
 ## Intro
 
-The ETL data set is a collection of roughly 1.600.000 handwritten characters.
+The ETLCDB data set is a collection of roughly 1.600.000 handwritten characters.
 Notably it includes Japanese Kanji, Hiragana and Katakana.
-The data set can be found [on the ETL website](http://etlcdb.db.aist.go.jp/) (a registration is needed to download the data set).
+The data set can be found [on the ETLCDB website](http://etlcdb.db.aist.go.jp/) (a registration is needed to download the data set).
 <br/>
 Because the data set is stored in a custom data structure it can be hard to load.
 This python package provides an easy way to load this data set and filter entries.<br/>
@@ -30,6 +30,7 @@ General information about the data set can be found in the table below.
 **Caution:** <br>
 The ETL6 and ETL7 data set parts have labels which are saved in roman letters.
 As an example: "け" is stored as "ke".
+Those are automatically converted from this package.
 
 ## Setup
 First download the wheel from the [releases page](https://github.com/CaptainDario/ETL_data_reader/releases).
@@ -41,7 +42,7 @@ Or install it directly via https:
 ```bash
 pip install https://github.com/CaptainDario/ETL_data_reader/releases/download/2.0/etl_data_reader_CaptainDario-2.0-py3-none-any.whl
 ```
-Assuming you already have [downloaded the ETL data set](http://etlcdb.db.aist.go.jp/obtaining-etl-character-database).
+Assuming you already have [downloaded the ETLCDB](http://etlcdb.db.aist.go.jp/obtaining-etl-character-database).
 You have to do some renaming of the data set folders and files.
 First rename the folders like this:
 * ETL8B -> ETL1
@@ -53,7 +54,7 @@ Finally rename all files in the folders to have a naming scheme like: <br/>
 * ETL_data_set\ETLX\ETLX_Y <br/>
 (*X and Y are numbers*)
 
-On the [ETL website](http://etlcdb.db.aist.go.jp/file-formats-and-sample-unpacking-code) is also a file called "euc_co59.dat" provided. This **file should also be included in the "data set"-folder** on the same level as the data set part folders.
+On the [ETLCDB website](http://etlcdb.db.aist.go.jp/file-formats-and-sample-unpacking-code) is also a file called "euc_co59.dat" provided. This **file should also be included in the "data set"-folder** on the same level as the data set part folders.
 
 The folder structure should look like this now: <br/>
 ```bash
@@ -136,7 +137,7 @@ include = [ETLCharacterGroups.roman, ETLCharacterGroups.symbols]
 
 imgs, labels = reader.read_dataset_whole(include)
 ```
-This will load all *roman* and *symbol* characters from the whole ETL data set.
+This will load all *roman* and *symbol* characters from the whole ETLCDB data set.
 ### Load the whole data set using multiple processes
 **Warning: This will use a lot of memory.** <br/>
 ```python
@@ -146,7 +147,7 @@ include = [ETLCharacterGroups.roman, ETLCharacterGroups.symbols]
 
 imgs, labels = reader.read_dataset_whole(include, 16)
 ```
-This will load all *roman* and *symbol* characters from the whole ETL data set using 16 processes.
+This will load all *roman* and *symbol* characters from the whole ETLCDB data set using 16 processes.
 
 
 #### **Note: filtering data set entries**
@@ -171,7 +172,7 @@ Currently one can load:
 * image
 * label of the image
   
-of every ETL data set entry.
+of every ETLCDB data set entry.
 
 However this package should be easily extendable to add support for accessing the other data.
 ## Development notes
