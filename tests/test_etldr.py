@@ -7,6 +7,7 @@ import os
 import sys
 import time
 import multiprocessing as mp
+import numpy as np
 
 sys.path.append(os.path.abspath(os.getcwd()))
 
@@ -32,10 +33,10 @@ class etldr(unittest.TestCase):
 
         for name in ETLDataNames:
             _imgs, _labels = reader.read_dataset_file(1, name, [ETLCharacterGroups.all])
-            #imgs.append(_imgs)
             labels.append(_labels)
         
-        correct_labels = ["0", "上", "0", "あ", "ア", "A", "A", "あ", "あ", "あ", "亜"]
+        print(labels)
+        correct_labels = ["0", "上", "0", "あ", "ア", "ア", "ア", "あ", "あ", "あ", "亜"]
         for i in range(11):
             #compare the byte representation
             self.assertEqual(str.encode(labels[i][0]), str.encode(correct_labels[i]))
@@ -91,7 +92,7 @@ class etldr(unittest.TestCase):
 
         _imgs, _labels = reader.read_dataset_part(ETLDataNames.ETL1, [ETLCharacterGroups.all])
 
-        self.assertEqual(len(_labels), 141319)
+        self.assertEqual(len(_labels), 141251)
 
         print("finished: test_read_dataset_part")
     
@@ -161,30 +162,39 @@ class etldr(unittest.TestCase):
         
         reader = ETLDataReader(os.path.join(os.getcwd(), "etl_data_set"))
 
-        # test number filter
+        # test all filter with mixed data set file
         _imgs, _labels = reader.read_dataset_file(1, ETLDataNames.ETL1, [ETLCharacterGroups.number])
-        self.assertEqual(len(_labels), 11560)
+        self.assertEqual(len(_labels), 11530)
+        self.assertEqual(len(_imgs), 11530)
+        # test number filter
+        _imgs, _labels = reader.read_dataset_file(1, ETLDataNames.ETL1, [ETLCharacterGroups.all])
+        print(len(_imgs), len(_labels))
+        self.assertEqual(len(_labels), 11530)
+        self.assertEqual(len(_imgs), 11530)
         # test number roman latter filter
         _imgs, _labels = reader.read_dataset_file(3, ETLDataNames.ETL1, [ETLCharacterGroups.roman])
-        self.assertEqual(len(_labels), 11560)
+        self.assertEqual(len(_labels), 11558)
+        self.assertEqual(len(_imgs), 11558)
         # test symbol filter
         _imgs, _labels = reader.read_dataset_file(6, ETLDataNames.ETL1, [ETLCharacterGroups.symbols])
-        self.assertEqual(len(_labels), 11560)
-        # test all filter with mixed data set file
-        _imgs, _labels = reader.read_dataset_file(5, ETLDataNames.ETL1, [ETLCharacterGroups.all])
-        self.assertEqual(len(_labels), 11560)
+        self.assertEqual(len(_labels), 11554)
+        self.assertEqual(len(_imgs), 11554)
         # test kanji filter
         _imgs, _labels = reader.read_dataset_file(1, ETLDataNames.ETL8G, [ETLCharacterGroups.kanji])
         self.assertEqual(len(_labels), 4405)
+        self.assertEqual(len(_imgs), 4405)
         # test hiragana filter
         _imgs, _labels = reader.read_dataset_file(1, ETLDataNames.ETL4, [ETLCharacterGroups.hiragana])
         self.assertEqual(len(_labels), 6120)
+        self.assertEqual(len(_imgs), 6120)
         # test katakana filter
         _imgs, _labels = reader.read_dataset_file(1, ETLDataNames.ETL5, [ETLCharacterGroups.katakana])
         self.assertEqual(len(_labels), 10608)
+        self.assertEqual(len(_imgs), 10608)
         # test *implicit* all filter with mixed data set file
         _imgs, _labels = reader.read_dataset_file(5, ETLDataNames.ETL1)
-        self.assertEqual(len(_labels), 11560)
+        self.assertEqual(len(_labels), 11545)
+        self.assertEqual(len(_imgs), 11545)
 
         print("finished: test_read_dataset_selection")
 
@@ -192,4 +202,3 @@ class etldr(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-    
