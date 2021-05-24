@@ -223,6 +223,8 @@ class ETLDataReader():
         #only concatenate if there were arrays loaded
         if(len(imgs) > 0 and len(labels) > 0):
             imgs, labels = np.concatenate(imgs), np.concatenate(labels)
+        else:
+            imgs, labels = np.empty(shape=0), np.empty(shape=0)
 
         return imgs, labels
 
@@ -290,6 +292,8 @@ class ETLDataReader():
         #only concatenate if there were arrays loaded
         if(len(imgs) > 0 and len(labels) > 0):
             imgs, labels = np.concatenate(imgs), np.concatenate(labels)
+        else:
+            imgs, labels = np.empty(shape=0), np.empty(shape=0)
 
         return imgs, labels
 
