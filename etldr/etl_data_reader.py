@@ -529,14 +529,22 @@ class ETLDataReader():
 
     def save_to_file(self, x : np.ndarray, y : np.ndarray, save_to : str, resize : Tuple[int, int]):
         """
-        
+        Saves all images and labels to file.
+
+        Warning:
+            Throws an FileNotFoundError if the path to save the images to is not valid.
+
+        Args:
+            x       : a numpy array containing all images.
+            y       : a numpy array containing all labels.
+            save_to : the path to the folder where the image and labels should be saved
         """
     
         if(save_to != ""):
             if(os.path.isdir(save_to)):
                 description = ""
                 for cnt, img in enumerate(x):
-                    p_img = ((img * 255).astype(np.uint8)).reshape(resize[0], resize[1])
+                    p_img = ((img * 255).astype(np.uint8)).reshape(img[0], img[1])
                     p_img = Image.fromarray(p_img, mode="L")
                     try:
                         p_img.save(os.path.join(save_to, str(cnt) + "_" + y[cnt] + ".jpg"))
