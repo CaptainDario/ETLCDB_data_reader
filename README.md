@@ -1,16 +1,16 @@
-# ETL_data_reader
-A python package for conveniently loading the ETL data set.
+# ETLCDB_data_reader
+A python package for conveniently loading the ETLCDB.
 The complete documentation including the API can be found [here](https://captaindario.github.io/ETL_data_reader/build/index.html).
 
 ## Intro
 
-The ETL data set is a collection of roughly 1.600.000 handwritten characters.
+The ETLCDB is a collection of roughly 1.600.000 handwritten characters.
 Notably it includes Japanese Kanji, Hiragana and Katakana.
-The data set can be found [on the ETL website](http://etlcdb.db.aist.go.jp/) (a registration is needed to download the data set).
+The data set can be found [on the ETLCDB website](http://etlcdb.db.aist.go.jp/) (a registration is needed to download the data set).
 <br/>
 Because the data set is stored in a custom data structure it can be hard to load.
 This python package provides an easy way to load this data set and filter entries.<br/>
-An example of using this package can be found in my application: [DaKanjiRecognizer](https://github.com/CaptainDario/DaKanjiRecognizer). There it was used for [training an CNN to recognize Japanese kanji characters](https://github.com/CaptainDario/DaKanjiRecognizer-ML).<br/>
+An example of using this package can be found in my application: [DaKanji](https://github.com/CaptainDario/DaKanji-mobile). There it was used for [training an CNN to recognize hand written Japanese characters, numbers and roman letters](https://github.com/CaptainDario/DaKanjiRecognizer-ML).<br/>
 General information about the data set can be found in the table below.
 
 |    name    |   type  |                    content                                              |   res   | Bit depth |    code    | samples per label | total samples | 
@@ -27,12 +27,16 @@ General information about the data set can be found in the table below.
 | ETL10 (9B) | 9B-Type | Hiragana <br/> Kanji                                                    |  64x63  |     1     | JIS X 0208 |     160          |     152960    |
 | ETL11 (9G) | 9G-Type | Hiragana <br/> Kanji                                                    | 128x127 |     4     | JIS X 0208 |     200          |     607200    |
 
-**Caution:** <br>
-The ETL6 and ETL7 data set parts have labels which are saved in roman letters.
-As an example: "け" is stored as "ke".
+**Note:** <br>
+The ETL6 and ETL7 parts include half width katakana which are stored as roman letters.
+As an example: "ｹ" is stored as "ke".
+Those are automatically converted from this package.
+Also full width numbers and letters are converted when using the package.
+Example: ０ -> 0 and Ａ -> A
+
 
 ## Setup
-First download the wheel from the [releases page](https://github.com/CaptainDario/ETL_data_reader/releases).
+First download the wheel from the [releases page](https://github.com/CaptainDario/ETLCDB_data_reader/releases).
 Now install the wheel with:
 ```bash
 pip install .\path\to\etl_data_reader_CaptainDario-2.0-py3-none-any.whl
@@ -41,7 +45,7 @@ Or install it directly via https:
 ```bash
 pip install https://github.com/CaptainDario/ETL_data_reader/releases/download/2.0/etl_data_reader_CaptainDario-2.0-py3-none-any.whl
 ```
-Assuming you already have [downloaded the ETL data set](http://etlcdb.db.aist.go.jp/obtaining-etl-character-database).
+Assuming you already have [downloaded the ETLCDB](http://etlcdb.db.aist.go.jp/obtaining-etl-character-database).
 You have to do some renaming of the data set folders and files.
 First rename the folders like this:
 * ETL8B -> ETL1
@@ -53,7 +57,7 @@ Finally rename all files in the folders to have a naming scheme like: <br/>
 * ETL_data_set\ETLX\ETLX_Y <br/>
 (*X and Y are numbers*)
 
-On the [ETL website](http://etlcdb.db.aist.go.jp/file-formats-and-sample-unpacking-code) is also a file called "euc_co59.dat" provided. This **file should also be included in the "data set"-folder** on the same level as the data set part folders.
+On the [ETLCDB website](http://etlcdb.db.aist.go.jp/file-formats-and-sample-unpacking-code) is also a file called "euc_co59.dat" provided. This **file should also be included in the "data set"-folder** on the same level as the data set part folders.
 
 The folder structure should look like this now: <br/>
 ```bash
@@ -92,7 +96,7 @@ To load the data set you need an ```ETLDataReader```-instance.
 ```python
 path_to_data_set = "the\path\to\the\data\set"
 
-reader = etldr.ETLDataReader(path_to_data_set)
+reader = etldr.DataReader(path_to_data_set)
 ```
 where ```path_to_data_set``` should be the path to the main folder of your data set copy.<br/>
 Example: "E:/data/ETL_data_set/" <br/>
@@ -136,7 +140,7 @@ include = [ETLCharacterGroups.roman, ETLCharacterGroups.symbols]
 
 imgs, labels = reader.read_dataset_whole(include)
 ```
-This will load all *roman* and *symbol* characters from the whole ETL data set.
+This will load all *roman* and *symbol* characters from the whole ETLCDB.
 ### Load the whole data set using multiple processes
 **Warning: This will use a lot of memory.** <br/>
 ```python
@@ -146,12 +150,12 @@ include = [ETLCharacterGroups.roman, ETLCharacterGroups.symbols]
 
 imgs, labels = reader.read_dataset_whole(include, 16)
 ```
-This will load all *roman* and *symbol* characters from the whole ETL data set using 16 processes.
+This will load all *roman* and *symbol* characters from the whole ETLCDB using 16 processes.
 
 
 #### **Note: filtering data set entries**
 As the examples above already showed the loading of data set entries can be restricted to certain groups.
-Those groups can be seen in: [etl_character_groups.py](https://captaindario.github.io/ETL_data_reader/build/etl_character_groups.html)
+Those groups can be seen in: [etl_character_groups.py](https://captaindario.github.io/ETLCDB_data_reader/build/etl_character_groups.html)
 
 #### **Note: processing the images while loading**
 All of the above methods have the optional parameters: <br/>
@@ -171,7 +175,7 @@ Currently one can load:
 * image
 * label of the image
   
-of every ETL data set entry.
+of every ETLCDB entry.
 
 However this package should be easily extendable to add support for accessing the other data.
 ## Development notes
