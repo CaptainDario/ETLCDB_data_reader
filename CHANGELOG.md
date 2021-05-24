@@ -9,6 +9,8 @@ fixed:
   - loading always returns numpy arrays
   - katakana encoded with "KE", etc. are now converted to ケ, etc.
   - some of the empty images are not loaded anymore
+
+------------------------------------------------------------
 ## v 2.0:
 features:
 - multi processed loading of the data is now possible

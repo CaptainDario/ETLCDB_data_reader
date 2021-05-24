@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Getting started &#8212; ETL_data_reader 2.0 documentation</title>
+    <title>Getting started &#8212; ETL_data_reader 2.1 documentation</title>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     
@@ -34,7 +34,7 @@
         <li class="right" >
           <a href="index.html" title="Welcome to ETL_data_reader’s documentation!"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">ETL_data_reader 2.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">ETL_data_reader 2.1 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Getting started</a></li> 
       </ul>
     </div>  
@@ -47,19 +47,19 @@
   <div class="section" id="getting-started">
 <span id="id1"></span><h1>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
 </div>
-<div class="section" id="etl-data-reader">
-<h1>ETL_data_reader<a class="headerlink" href="#etl-data-reader" title="Permalink to this headline">¶</a></h1>
-<p>A python package for conveniently loading the ETL data set.
+<div class="section" id="etlcdb-data-reader">
+<h1>ETLCDB_data_reader<a class="headerlink" href="#etlcdb-data-reader" title="Permalink to this headline">¶</a></h1>
+<p>A python package for conveniently loading the ETLCDB.
 The complete documentation including the API can be found <a class="reference external" href="https://captaindario.github.io/ETL_data_reader/build/index.html">here</a>.</p>
 <div class="section" id="intro">
 <h2>Intro<a class="headerlink" href="#intro" title="Permalink to this headline">¶</a></h2>
-<p>The ETL data set is a collection of roughly 1.600.000 handwritten characters.
+<p>The ETLCDB is a collection of roughly 1.600.000 handwritten characters.
 Notably it includes Japanese Kanji, Hiragana and Katakana.
-The data set can be found <a class="reference external" href="http://etlcdb.db.aist.go.jp/">on the ETL website</a> (a registration is needed to download the data set).
+The data set can be found <a class="reference external" href="http://etlcdb.db.aist.go.jp/">on the ETLCDB website</a> (a registration is needed to download the data set).
 <span class="raw-html-m2r"><br/></span>
 Because the data set is stored in a custom data structure it can be hard to load.
 This python package provides an easy way to load this data set and filter entries.<span class="raw-html-m2r"><br/></span>
-An example of using this package can be found in my application: <a class="reference external" href="https://github.com/CaptainDario/DaKanjiRecognizer">DaKanjiRecognizer</a>. There it was used for <a class="reference external" href="https://github.com/CaptainDario/DaKanjiRecognizer-ML">training an CNN to recognize Japanese kanji characters</a>.<span class="raw-html-m2r"><br/></span>
+An example of using this package can be found in my application: <a class="reference external" href="https://github.com/CaptainDario/DaKanji-mobile">DaKanji</a>. There it was used for <a class="reference external" href="https://github.com/CaptainDario/DaKanjiRecognizer-ML">training an CNN to recognize hand written Japanese characters, numbers and roman letters</a>.<span class="raw-html-m2r"><br/></span>
 General information about the data set can be found in the table below.</p>
 <table class="docutils align-default">
 <colgroup>
@@ -185,13 +185,16 @@ General information about the data set can be found in the table below.</p>
 </tr>
 </tbody>
 </table>
-<p><strong>Caution:</strong> <span class="raw-html-m2r"><br></span>
-The ETL6 and ETL7 data set parts have labels which are saved in roman letters.
-As an example: “け” is stored as “ke”.</p>
+<p><strong>Note:</strong> <span class="raw-html-m2r"><br></span>
+The ETL6 and ETL7 parts include half width katakana which are stored as roman letters.
+As an example: “ｹ” is stored as “ke”.
+Those are automatically converted from this package.
+Also full width numbers and letters are converted when using the package.
+Example: ０ -&gt; 0 and Ａ -&gt; A</p>
 </div>
 <div class="section" id="setup">
 <h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
-<p>First download the wheel from the <a class="reference external" href="https://github.com/CaptainDario/ETL_data_reader/releases">releases page</a>.
+<p>First download the wheel from the <a class="reference external" href="https://github.com/CaptainDario/ETLCDB_data_reader/releases">releases page</a>.
 Now install the wheel with:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install .<span class="se">\p</span>ath<span class="se">\t</span>o<span class="se">\e</span>tl_data_reader_CaptainDario-2.0-py3-none-any.whl
 </pre></div>
@@ -200,7 +203,7 @@ Now install the wheel with:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install https://github.com/CaptainDario/ETL_data_reader/releases/download/2.0/etl_data_reader_CaptainDario-2.0-py3-none-any.whl
 </pre></div>
 </div>
-<p>Assuming you already have <a class="reference external" href="http://etlcdb.db.aist.go.jp/obtaining-etl-character-database">downloaded the ETL data set</a>.
+<p>Assuming you already have <a class="reference external" href="http://etlcdb.db.aist.go.jp/obtaining-etl-character-database">downloaded the ETLCDB</a>.
 You have to do some renaming of the data set folders and files.
 First rename the folders like this:</p>
 <ul class="simple">
@@ -214,7 +217,7 @@ First rename the folders like this:</p>
 <li><p>ETL_data_setETLXETLX_Y <span class="raw-html-m2r"><br/></span>
 (<em>X and Y are numbers</em>)</p></li>
 </ul>
-<p>On the <a class="reference external" href="http://etlcdb.db.aist.go.jp/file-formats-and-sample-unpacking-code">ETL website</a> is also a file called “euc_co59.dat” provided. This <strong>file should also be included in the “data set”-folder</strong> on the same level as the data set part folders.</p>
+<p>On the <a class="reference external" href="http://etlcdb.db.aist.go.jp/file-formats-and-sample-unpacking-code">ETLCDB website</a> is also a file called “euc_co59.dat” provided. This <strong>file should also be included in the “data set”-folder</strong> on the same level as the data set part folders.</p>
 <p>The folder structure should look like this now: <span class="raw-html-m2r"><br/></span></p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ETL_data_set_folder <span class="o">(</span>main folder<span class="o">)</span>
 <span class="p">|</span>   euc_co59.dat
@@ -250,7 +253,7 @@ First rename the folders like this:</p>
 <p>To load the data set you need an <code class="docutils literal notranslate"><span class="pre">ETLDataReader</span></code>-instance.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">path_to_data_set</span> <span class="o">=</span> <span class="s2">&quot;the\path</span><span class="se">\t</span><span class="s2">o</span><span class="se">\t</span><span class="s2">he\data\set&quot;</span>
 
-<span class="n">reader</span> <span class="o">=</span> <span class="n">etldr</span><span class="o">.</span><span class="n">ETLDataReader</span><span class="p">(</span><span class="n">path_to_data_set</span><span class="p">)</span>
+<span class="n">reader</span> <span class="o">=</span> <span class="n">etldr</span><span class="o">.</span><span class="n">DataReader</span><span class="p">(</span><span class="n">path_to_data_set</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>where <code class="docutils literal notranslate"><span class="pre">path_to_data_set</span></code> should be the path to the main folder of your data set copy.<span class="raw-html-m2r"><br/></span>
@@ -294,7 +297,7 @@ Namely: …ETL2ETL2_1, …ETL2ETL2_1 ,…, …ETL2ETL2_5. <span class="raw-html-
 <span class="n">imgs</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read_dataset_whole</span><span class="p">(</span><span class="n">include</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>This will load all <em>roman</em> and <em>symbol</em> characters from the whole ETL data set.</p>
+<p>This will load all <em>roman</em> and <em>symbol</em> characters from the whole ETLCDB.</p>
 </div>
 <div class="section" id="load-the-whole-data-set-using-multiple-processes">
 <h3>Load the whole data set using multiple processes<a class="headerlink" href="#load-the-whole-data-set-using-multiple-processes" title="Permalink to this headline">¶</a></h3>
@@ -306,11 +309,11 @@ Namely: …ETL2ETL2_1, …ETL2ETL2_1 ,…, …ETL2ETL2_5. <span class="raw-html-
 <span class="n">imgs</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">read_dataset_whole</span><span class="p">(</span><span class="n">include</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>This will load all <em>roman</em> and <em>symbol</em> characters from the whole ETL data set using 16 processes.</p>
+<p>This will load all <em>roman</em> and <em>symbol</em> characters from the whole ETLCDB using 16 processes.</p>
 <div class="section" id="note-filtering-data-set-entries">
 <h4><strong>Note: filtering data set entries</strong><a class="headerlink" href="#note-filtering-data-set-entries" title="Permalink to this headline">¶</a></h4>
 <p>As the examples above already showed the loading of data set entries can be restricted to certain groups.
-Those groups can be seen in: <a class="reference external" href="https://captaindario.github.io/ETL_data_reader/build/etl_character_groups.html">etl_character_groups.py</a></p>
+Those groups can be seen in: <a class="reference external" href="https://captaindario.github.io/ETLCDB_data_reader/build/etl_character_groups.html">etl_character_groups.py</a></p>
 </div>
 <div class="section" id="note-processing-the-images-while-loading">
 <h4><strong>Note: processing the images while loading</strong><a class="headerlink" href="#note-processing-the-images-while-loading" title="Permalink to this headline">¶</a></h4>
@@ -334,7 +337,7 @@ Currently one can load:</p>
 <li><p>image</p></li>
 <li><p>label of the image</p></li>
 </ul>
-<p>of every ETL data set entry.</p>
+<p>of every ETLCDB entry.</p>
 <p>However this package should be easily extendable to add support for accessing the other data.</p>
 </div>
 <div class="section" id="development-notes">
@@ -393,7 +396,7 @@ All tests can be executed with:</p>
   <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Getting started</a></li>
-<li><a class="reference internal" href="#etl-data-reader">ETL_data_reader</a><ul>
+<li><a class="reference internal" href="#etlcdb-data-reader">ETLCDB_data_reader</a><ul>
 <li><a class="reference internal" href="#intro">Intro</a></li>
 <li><a class="reference internal" href="#setup">Setup</a></li>
 <li><a class="reference internal" href="#usage">Usage</a><ul>
@@ -462,7 +465,7 @@ All tests can be executed with:</p>
         <li class="right" >
           <a href="index.html" title="Welcome to ETL_data_reader’s documentation!"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">ETL_data_reader 2.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">ETL_data_reader 2.1 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Getting started</a></li> 
       </ul>
     </div>
