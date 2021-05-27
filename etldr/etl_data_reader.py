@@ -182,7 +182,7 @@ class ETLDataReader():
 
             x, y = self.__read_dataset_part_sequential(data_set, include, resize, normalize)
 
-        self.save_to_file(x, y, save_to, resize)
+        self.save_to_file(x, y, save_to)
 
         return x, y
 
@@ -352,7 +352,7 @@ class ETLDataReader():
 
             x, y = self.__read_dataset_whole_sequential(include, resize, normalize)
         
-        self.save_to_file(x, y, save_to, resize)
+        self.save_to_file(x, y, save_to)
 
         return x, y
 
