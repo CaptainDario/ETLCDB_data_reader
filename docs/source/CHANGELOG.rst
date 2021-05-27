@@ -2,6 +2,16 @@
 ETL Data Reader : Changelog
 ===========================
 
+v 2.1.1
+-------
+
+fixed:
+
+
+* ``save_to`` has obsolete parameter which causes a crash
+
+----
+
 v 2.1
 -----
 
