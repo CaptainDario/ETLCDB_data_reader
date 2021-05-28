@@ -60,7 +60,7 @@ class ETLCodes():
                                     576, (64, 63), 1, [1], self.decode_9B_type_character)
         # TYPE_9G -> ETL 9G
         self.code_9G = ETLDataSetInfo(">H 2s 8s I 4B 4H 2B 34x 8128s 7x".replace(" ", ""),
-                                    8199, (128, 127), 4, [1], self.decode_9B_type_character)
+                                    8199, (128, 127), 4, [1], self.decode_9G_type_character)
 
     def T56(self, c : int) -> str:
         """Decodes c into a string using the T56-code.
