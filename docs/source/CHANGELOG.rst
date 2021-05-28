@@ -2,6 +2,17 @@
 ETL Data Reader : Changelog
 ===========================
 
+v 2.1.2
+-------
+
+fixed:
+
+
+* ``save_to`` crashes when some special characters should be saved to file
+* certain images were not saved correctly (were saved completely black) 
+
+----
+
 v 2.1.1
 -------
 
