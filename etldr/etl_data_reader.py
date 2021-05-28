@@ -531,6 +531,14 @@ class ETLDataReader():
         """
         Saves all images and labels to file.
 
+        Creates a folder structure in which all images for one label are
+        stored in a folder. The names of these folders are the labels encoded
+        as an int.
+        Additionally a file "encoding.txt" is saved. This file contains a string 
+        representaiton of a dict to convert from the int encoding to the matching
+        string label. It can be restored with loading the string from disk and than 
+        calling `eval()` or `ast.literal_eval()` on this string.
+
         Warning:
             Throws an FileNotFoundError if the path to save the images to is not valid.
 
@@ -542,17 +550,42 @@ class ETLDataReader():
     
         if(save_to != ""):
             if(os.path.isdir(save_to)):
-                description = ""
-                for cnt, img in enumerate(x):
-                    p_img = ((img * 255).astype(np.uint8)).reshape(img.shape[0], img.shape[1])
-                    p_img = Image.fromarray(p_img, mode="L")
-                    try:
-                        p_img.save(os.path.join(save_to, str(cnt) + "_" + y[cnt] + ".jpg"))
-                    except:
-                        p_img.save(os.path.join(save_to, str(cnt) + "_" + "xxx" + ".jpg"))
 
-                    description += y[cnt]
-                with open(os.path.join(save_to, "labels.txt"), "w+", encoding="utf8") as f:
-                    f.write(description)
+                # create folders for all labels
+                unique_labels = np.unique(y)
+                class_dict = {}
+                for cnt, i in enumerate(unique_labels):
+                    if(not os.path.isdir(os.path.join(save_to, str(cnt)))):
+                        os.mkdir(os.path.join(save_to, str(cnt)))
+
+                    # start counting every class from 0
+                    class_dict[i] = [str(cnt), 0]
+
+                # save all images to the matching folders
+                with tqdm(total=len(x)) as pbar:
+                    for cnt, img in enumerate(x):
+                        # image was normalized between (range: [0, 1])
+                        if(img.max() <= 1):
+                            p_img = ((img * 255).astype(np.uint8)).reshape(img.shape[0], img.shape[1])
+                        # image was not normalized (range: [0, 255])
+                        else:
+                            p_img = (img.astype(np.uint8)).reshape(img.shape[0], img.shape[1])
+
+                        p_img = Image.fromarray(p_img, mode="L")
+
+                        # save to file
+                        label = class_dict[y[cnt]][0]
+                        label_count = str(class_dict[y[cnt]][1])
+                        p_img.save(os.path.join(save_to, label, label_count + ".jpg"))
+
+                        class_dict[y[cnt]][1] += 1
+
+                        pbar.update(1)
+
+                # save the int -> label, count to a file
+                with open(os.path.join(save_to, "encoding.txt"), "w+", encoding="utf-8") as f:
+                    f.write(str(class_dict).replace("],", "],\n"))
+
+
             else:
                 raise FileNotFoundError("The given path:", save_to, "is not a valid directory.")
