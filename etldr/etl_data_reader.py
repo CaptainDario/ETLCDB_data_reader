@@ -566,7 +566,6 @@ class ETLDataReader():
                 # save all images to the matching folders
                 with tqdm(total=len(x)) as pbar:
                     for cnt, img in enumerate(x):
-                        cnt += name
                         # image was normalized between (range: [0, 1])
                         if(img.max() <= 1):
                             p_img = ((img * 255).astype(np.uint8)).reshape(img.shape[0], img.shape[1])
