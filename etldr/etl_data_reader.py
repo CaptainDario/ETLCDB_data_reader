@@ -527,7 +527,7 @@ class ETLDataReader():
 
         return should_include
 
-    def save_to_file(self, x : np.ndarray, y : np.ndarray, save_to : str):
+    def save_to_file(self, x : np.ndarray, y : np.ndarray, save_to : str, name : int = 1):
         """
         Saves all images and labels to file.
 
@@ -546,6 +546,7 @@ class ETLDataReader():
             x       : a numpy array containing all images.
             y       : a numpy array containing all labels.
             save_to : the path to the folder where the image and labels should be saved
+            name    : an integer from which the names should start (Defaults to 1).
         """
     
         if(save_to != ""):
@@ -555,6 +556,7 @@ class ETLDataReader():
                 unique_labels = np.unique(y)
                 class_dict = {}
                 for cnt, i in enumerate(unique_labels):
+                    cnt += name
                     if(not os.path.isdir(os.path.join(save_to, str(cnt)))):
                         os.mkdir(os.path.join(save_to, str(cnt)))
 
@@ -564,6 +566,7 @@ class ETLDataReader():
                 # save all images to the matching folders
                 with tqdm(total=len(x)) as pbar:
                     for cnt, img in enumerate(x):
+                        cnt += name
                         # image was normalized between (range: [0, 1])
                         if(img.max() <= 1):
                             p_img = ((img * 255).astype(np.uint8)).reshape(img.shape[0], img.shape[1])

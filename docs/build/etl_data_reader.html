@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>etl_data_reader.py &#8212; ETL_data_reader 2.1.2 documentation</title>
+    <title>etl_data_reader.py &#8212; ETL_data_reader 2.1.3 documentation</title>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     
@@ -34,7 +34,7 @@
         <li class="right" >
           <a href="etl_data_names.html" title="etl_data_names.py"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">ETL_data_reader 2.1.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">ETL_data_reader 2.1.3 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="API.html" accesskey="U">API</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">etl_data_reader.py</a></li> 
       </ul>
@@ -370,7 +370,7 @@ Therefore it is recommended to not use more than (virtual) processor cores are a
 
 <dl class="py method">
 <dt id="etl_data_reader.ETLDataReader.save_to_file">
-<code class="sig-name descname">save_to_file</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em>, <em class="sig-param"><span class="n">y</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em>, <em class="sig-param"><span class="n">save_to</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#etl_data_reader.ETLDataReader.save_to_file" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">save_to_file</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em>, <em class="sig-param"><span class="n">y</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em>, <em class="sig-param"><span class="n">save_to</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">name</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#etl_data_reader.ETLDataReader.save_to_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Saves all images and labels to file.</p>
 <p>Creates a folder structure in which all images for one label are
 stored in a folder. The names of these folders are the labels encoded
@@ -389,6 +389,7 @@ calling <cite>eval()</cite> or <cite>ast.literal_eval()</cite> on this string.</
 <li><p><strong>x</strong> – a numpy array containing all images.</p></li>
 <li><p><strong>y</strong> – a numpy array containing all labels.</p></li>
 <li><p><strong>save_to</strong> – the path to the folder where the image and labels should be saved</p></li>
+<li><p><strong>name</strong> – an integer from which the names should start (Defaults to 1).</p></li>
 </ul>
 </dd>
 </dl>
@@ -467,7 +468,7 @@ calling <cite>eval()</cite> or <cite>ast.literal_eval()</cite> on this string.</
         <li class="right" >
           <a href="etl_data_names.html" title="etl_data_names.py"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">ETL_data_reader 2.1.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">ETL_data_reader 2.1.3 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="API.html" >API</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">etl_data_reader.py</a></li> 
       </ul>
