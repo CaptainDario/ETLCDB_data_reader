@@ -142,7 +142,7 @@ Or install it directly via https:
 
 .. code-block:: bash
 
-   pip install https://github.com/CaptainDario/ETLCDB_data_reader/releases/download/v2.1/etl_data_reader_CaptainDario-2.1-py3-none-any.whl
+   pip install https://github.com/CaptainDario/ETLCDB_data_reader/releases/download/v2.1.3/etl_data_reader_CaptainDario-2.1.3-py3-none-any.whl
 
 Assuming you already have `downloaded the ETLCDB <http://etlcdb.db.aist.go.jp/obtaining-etl-character-database>`_.
 You have to do some renaming of the data set folders and files.
