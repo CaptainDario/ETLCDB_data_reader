@@ -45,10 +45,23 @@ Or install it directly via https:
 ```bash
 pip install https://github.com/CaptainDario/ETLCDB_data_reader/releases/download/v2.1.4/etl_data_reader_CaptainDario-2.1.4-py3-none-any.whl
 ```
-Assuming you already have [downloaded the ETLCDB](http://etlcdb.db.aist.go.jp/obtaining-etl-character-database).
+Assuming you already have [downloaded the ETLCDB](http://etlcdb.db.aist.go.jp/obtaining-etl-character-database) and [unpack.zip](http://etlcdb.db.aist.go.jp/file-formats-and-sample-unpacking-code).
+
+You can either run
+
+``` python
+from etldr.extract_downloads import *
+
+extract_etlcdb("path/to/etlcdb")
+```
+
+
+<details>
+  <summary>Or do the preprocessing yourself</summary>
+  
 You have to do some renaming of the data set folders and files.
 First rename the folders like this:
-* ETL8B -> ETL1
+* ETL8B -> ETL8
 * ETL8G -> ETL9
 * ETL9B -> ETL10
 * ETL9G -> ETL11.<br/>
@@ -57,7 +70,8 @@ Finally rename all files in the folders to have a naming scheme like: <br/>
 * ETL_data_set\ETLX\ETLX_Y <br/>
 (*X and Y are numbers*)
 
-On the [ETLCDB website](http://etlcdb.db.aist.go.jp/file-formats-and-sample-unpacking-code) is also a file called "euc_co59.dat" provided. This **file should also be included in the "data set"-folder** on the same level as the data set part folders.
+On the [ETLCDB website](http://etlcdb.db.aist.go.jp/file-formats-and-sample-unpacking-code) is also a file called "euc_co59.dat" provided in a zip called `unpack.zip`. This **file should also be included in the "data set"-folder** on the same level as the data set part folders.
+</details>
 
 The folder structure should look like this now: <br/>
 ```bash
