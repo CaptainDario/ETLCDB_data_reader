@@ -63,7 +63,7 @@ class ETLDataReader():
         self.dataset_types[ETLDataNames.ETL9G] = self.codes.code_9G
 
 
-    def read_dataset_file(self, part : int,
+    def read_dataset_file(self, part : str,
                             data_set : ETLDataNames,
                             include : List[ETLCharacterGroups] = [ETLCharacterGroups.all],
                             resize : Tuple[int, int] = (64, 64),
@@ -75,7 +75,7 @@ class ETLDataReader():
             The loaded images will be a numpy array with dtype=float16.
 
         Args:
-            part      : The part which should be loaded from the given data set part (only the number).
+            name      : The name of the file to load.
             data_set  : The data set part which should be loaded (ex.: 'ETL1').
             include   : All character types (Kanji, Hiragana, Symbols, stc.) which should be included.
             resize    : The size the image should be resized (if resize < 1 the images will not be resized). Defaults to (64, 64).
@@ -91,7 +91,7 @@ class ETLDataReader():
         data_info = self.dataset_types[data_set]
 
         #open the file and read it byte by byte
-        path = os.path.join(self.path, data_set.value, data_set.value + "_" + str(part))
+        path = os.path.join(self.path, data_set.value, part)
         with open(path, "rb") as f:
             
             #get file size 
@@ -139,7 +139,8 @@ class ETLDataReader():
                 prog_bar.close()
 
         #convert lists to numpy arrays
-        return np.array(imgs, dtype="float16"), np.array(labels, dtype="str")
+        imgs, lbl = np.array(imgs, dtype="float16"), np.array(labels, dtype="str")
+        return imgs, lbl
     
     
     def read_dataset_part(self, data_set : ETLDataNames,
@@ -182,7 +183,8 @@ class ETLDataReader():
 
             x, y = self.__read_dataset_part_sequential(data_set, include, resize, normalize)
 
-        self.save_to_file(x, y, save_to)
+        if(save_to != ""):
+            self.save_to_file(x, y, save_to)
 
         return x, y
 
@@ -219,14 +221,15 @@ class ETLDataReader():
         print("Loading all data set files (" + data_set.value + "_x) from: " + os.path.join(self.path, data_set.value) + "...", flush=True)
 
         #regex to check if file is valid
-        reg = re.compile((data_set.value + r"_\d+"))
+        reg = re.compile((data_set.value + r".*_\d+"))
 
         #get all ETL files in the directory
         data_set_files = [f for f in os.listdir(os.path.join(self.path, data_set.value)) if not (reg.match(f) is None)]
+        print(data_set_files)
 
         for cnt, file in enumerate(data_set_files, start=1):
 
-            _imgs, _labels = self.read_dataset_file(cnt, data_set, include, resize=resize, normalize=normalize)
+            _imgs, _labels = self.read_dataset_file(file, data_set, include, resize=resize, normalize=normalize)
 
             #make sure that data was loaded and not empty arrays get appended 
             if(len(_imgs) > 0 and len(_labels) > 0):
@@ -277,7 +280,7 @@ class ETLDataReader():
         print("Loading all data set files (" + data_set.value + "_x) from: " + os.path.join(self.path, data_set.value) + "...", flush=True)
 
         #regex to check if file is valid
-        reg = re.compile((data_set.value + r"_\d+"))
+        reg = re.compile((data_set.value + r".*_\d+"))
 
         #get all ETL files in the directory
         data_set_files = [f for f in os.listdir(os.path.join(self.path, data_set.value)) if not (reg.match(f) is None)]
@@ -285,7 +288,7 @@ class ETLDataReader():
         # get the arguments for all processes
         arguments = []
         for cnt, file in enumerate(data_set_files, start=1):
-            arguments.append([cnt, data_set, include, resize, normalize, False])
+            arguments.append([file, data_set, include, resize, normalize, False])
 
         # run the function in all processes
         return_values = []
@@ -452,7 +455,7 @@ class ETLDataReader():
 
             # get a list of arguments for all processes
             for cnt, file in enumerate(_type_files, start=1):
-                arguments.append([cnt, _type, include, resize, normalize, False])
+                arguments.append([file, _type, include, resize, normalize, False])
 
         # run the function in all processes
         return_values = []
